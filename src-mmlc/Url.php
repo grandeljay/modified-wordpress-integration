@@ -83,8 +83,10 @@ class Url
         \curl_setopt($curl_handler, \CURLOPT_RETURNTRANSFER, true);
 
         $curl_response = \curl_exec($curl_handler);
+        $curl_error    = \curl_error($curl_handler);
 
-        if (\curl_error($curl_handler)) {
+        if ($curl_error) {
+            echo $curl_error;
         }
 
         $curl_response_header_size = \curl_getinfo($curl_handler, \CURLINFO_HEADER_SIZE);
