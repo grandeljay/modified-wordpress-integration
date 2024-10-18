@@ -12,6 +12,10 @@ namespace Grandeljay\WordpressIntegration;
 
 require 'includes/application_top.php';
 
+if (!\class_exists(__NAMESPACE__ . '\\Constants')) {
+    return;
+}
+
 if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
