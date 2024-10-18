@@ -18,6 +18,15 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
+$allowed_pages = [
+    Constants::BLOG_URL_HOME,
+    Constants::BLOG_URL_POSTS,
+];
+
+if (!\in_array($PHP_SELF, $allowed_pages, true)) {
+    return;
+}
+
 include \DIR_FS_BOXES_INC . 'smarty_default.php';
 
 /**
