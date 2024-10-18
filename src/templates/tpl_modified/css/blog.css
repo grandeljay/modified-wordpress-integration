@@ -1,0 +1,127 @@
+/**
+ * Post Listing
+ */
+ul.post_listing {
+    --gap: 1rem;
+
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: repeat(1, 1fr);
+
+    margin-bottom: var(--gap);
+
+    list-style: none;
+    hyphens: auto;
+}
+@media (min-width: 768px) {
+    ul.post_listing {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+ul.post_listing > li {
+    min-width: 0;
+}
+
+/**
+ * Post
+ */
+.post {
+    --backgroundColor: #f4f4f4;
+
+    transition: 0.4s ease top;
+
+    position: relative;
+    top: 0;
+    border-radius: 4px;
+    overflow: hidden;
+
+    background-color: var(--backgroundColor);
+}
+@media (pointer: fine) {
+    .post:hover {
+        top: -0.4rem;
+    }
+}
+
+/**
+ * Post Image
+ */
+.post > .image > img,
+.post > .image > a > img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    object-position: 50%;
+}
+
+.post > .image > a:has(img):hover {
+    border: none;
+}
+
+/**
+ * Post Content
+ */
+.post > .content {
+    padding: var(--gap);
+}
+
+/**
+ * Post Content Title
+ */
+.post > .content > .title {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+/**
+ * Post Content Excerpt
+ */
+.post > .content > .excerpt {
+    --lineHeight: 1.6;
+    --maxRows: 3;
+
+    position: relative;
+
+    height: calc(1em * var(--maxRows) * var(--lineHeight));
+
+    overflow: hidden;
+}
+.post > .content > .excerpt::after {
+    height: calc(1em * var(--lineHeight));
+
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background-image: linear-gradient(90deg, transparent, var(--backgroundColor));
+}
+
+/**
+ * Post Content Meta
+ */
+.post > .content > .meta {
+    margin-top: var(--gap);
+    padding-top: var(--gap);
+
+    font-size: smaller;
+
+    border-top: 1px dashed #d9d9d9;
+}
+
+.post > .content > .meta > div {
+    display: flex;
+    gap: 1ch;
+}
+
+.post > .content > .meta > div > span:first-of-type {
+    flex: 0 0 10ch;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

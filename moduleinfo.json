@@ -1,0 +1,33 @@
+{
+    "name": "WordPress Integration",
+    "archiveName": "grandeljay/wordpress-integration",
+    "sourceDir": "src",
+    "version": "auto",
+    "shortDescription": "Adds a blog to your modified shop using WordPress as a back end.",
+    "description": "Adds a blog to your modified shop using WordPress as a back end.",
+    "developer": "grandeljay",
+    "developerWebsite": "https://github.com/grandeljay",
+    "website": "https://github.com/grandeljay/modified-wordpress-integration",
+    "modifiedCompatibility": [
+        "3.1.0"
+    ],
+    "category": "nocategory",
+    "price": "free",
+    "tags": "wordpress, blog",
+    "require": {
+        "composer/autoload": "^1.5.0",
+        "robinthehood/modified-std-module": "^0.12.0",
+        "grandeljay/modified-translator": "^0.3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Grandeljay\\WordpressIntegration\\": "src-mmlc"
+        }
+    },
+    "php": {
+        "version": "^8.3.0"
+    },
+    "mmlc": {
+        "version": "^1.23.0"
+    }
+}

@@ -1,0 +1,17 @@
+{config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_recent"}
+
+{if $posts_recent}
+    <h2>{#recent_posts#}</h2>
+
+    <ul class="post_listing">
+        {foreach $posts_recent as $post}
+            {include file="module/blog/post_template.html"}
+        {/foreach}
+    </ul>
+
+    <p>
+        <a href="{$posts_all_link}">{$posts_all_button}</a>
+    </p>
+{else}
+    <p>{#posts_not_found#}</p>
+{/if}

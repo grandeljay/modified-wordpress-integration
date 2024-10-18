@@ -1,0 +1,24 @@
+<div class="pagination_bar cf">
+    <div class="pagination_text">
+        Zeige <strong>{$pagination_offset_start}</strong> bis <strong>{$pagination_offset_end}</strong> (von insgesamt <strong>{$pagination_posts_total}</strong>
+        Artikeln)
+    </div>
+
+    <div class="pagination_list">
+        <ul>
+            <li class="plain">{$smarty.const.TEXT_RESULT_PAGE}</li>
+
+            {for $i=1 to $posts_pages_total}
+                {if $i === $posts_page}
+                    <li class="current">{$i}</li>
+                {else}
+                    <li>
+                        <a class="pageResults" href="{$posts_page_links[$i]}">
+                            {$i}
+                        </a>
+                    </li>
+                {/if}
+            {/for}
+        </ul>
+    </div>
+</div>

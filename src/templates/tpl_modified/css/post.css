@@ -1,0 +1,95 @@
+/**
+ * Alignment
+ */
+.has-text-align-left {
+    text-align: left;
+}
+
+.has-text-align-center {
+    text-align: center;
+}
+
+.has-text-align-right {
+    text-align: right;
+}
+
+/**
+ * Featured Image
+ */
+.wp-block-post-featured-image {
+    overflow: hidden;
+
+    border-radius: 4px;
+}
+
+.wp-block-post-featured-image > img {
+    width: 100%;
+    height: 40vh;
+
+    object-fit: cover;
+    object-position: 50%;
+}
+
+/**
+ * Columns
+ */
+.wp-block-columns.is-layout-flex {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    flex-direction: column;
+}
+@media (min-width: 768px) {
+    .wp-block-columns.is-layout-flex {
+        flex-direction: row;
+    }
+}
+
+.wp-block-columns.is-layout-flex > .wp-block-column {
+    flex: 1 0 0;
+}
+
+/** Image */
+.wp-block-columns.is-layout-flex > .wp-block-column > .wp-block-image {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+
+    overflow: hidden;
+}
+
+.wp-block-columns.is-layout-flex > .wp-block-column > .wp-block-image > img,
+.wp-block-columns.is-layout-flex > .wp-block-column > .wp-block-image > a > img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.wp-block-columns.is-layout-flex > .wp-block-column > .wp-block-image > a:hover {
+    border-bottom: none;
+}
+
+/**
+ * Table
+ */
+figure.wp-block-table {
+    display: inline-block;
+}
+
+figure.wp-block-table > table {
+    border-collapse: collapse;
+}
+
+figure.wp-block-table > table > tbody > tr > td,
+figure.wp-block-table > table > thead > tr > th {
+    border: 1px solid #d9d9d9;
+}
+
+figure.wp-block-table > figcaption.wp-element-caption {
+    padding: 2px 4px;
+
+    font-size: smaller;
+
+    background-color: #f4f4f4;
+    border: 1px solid #d9d9d9;
+    border-top: none;
+}
