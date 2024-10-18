@@ -14,7 +14,6 @@ class Url
     private string $fragment;
 
     private array $request_headers;
-    private string $request_headers_debug;
     private string $request_body;
 
     public function __construct(string $url)
@@ -77,11 +76,44 @@ class Url
 
     public function makeRequest(): void
     {
-        $request_url  = $this->toString();
+        $request_url = $this->toString();
+
+        $response_headers = [];
+
         $curl_handler = \curl_init($request_url);
 
         \curl_setopt($curl_handler, \CURLOPT_HEADER, true);
         \curl_setopt($curl_handler, \CURLOPT_RETURNTRANSFER, true);
+        \curl_setopt(
+            $curl_handler,
+            \CURLOPT_HEADERFUNCTION,
+            function (\CurlHandle $curl_handler, string $header) use (&$response_headers): int {
+                $colon_position = \strpos($header, ':');
+
+                $header_length  = \mb_strlen($header);
+                $header_trimmed = \trim($header);
+
+                if (false !== $colon_position) {
+                    $key   = \substr($header, 0, $colon_position);
+                    $value = \substr($header, $colon_position + 2);
+
+                    $response_headers[$key] = $value;
+                } else {
+                    if (empty($header_trimmed)) {
+                        return $header_length;
+                    }
+
+                    $http_version_and_status = \explode(' ', \trim($header_trimmed));
+                    $http_version            = $http_version_and_status[0];
+                    $http_status             = $http_version_and_status[1];
+
+                    $response_headers['version'] = $http_version;
+                    $response_headers['status']  = $http_status;
+                }
+
+                return $header_length;
+            }
+        );
 
         $curl_response = \curl_exec($curl_handler);
         $curl_error    = \curl_error($curl_handler);
@@ -94,55 +126,13 @@ class Url
 
         \curl_close($curl_handler);
 
-        $this->request_headers_debug = $this->_getRequestHeadersDebug($curl_response, $curl_response_header_size);
-        $this->request_headers       = $this->_getRequestHeaders($curl_response, $curl_response_header_size);
-        $this->request_body          = $this->_getRequestBody($curl_response, $curl_response_header_size);
-    }
-
-    private function _getRequestHeaders(string $curl_response, int $curl_response_header_size): array
-    {
-        $curl_response_headers_string = \substr($curl_response, 0, $curl_response_header_size);
-        $curl_response_headers_array  = \explode(\PHP_EOL, $curl_response_headers_string);
-        $curl_response_headers_array  = \array_filter($curl_response_headers_array);
-
-        $curl_response_headers = [];
-
-        foreach ($curl_response_headers_array as $key => $value) {
-            $colon_position = \strpos($value, ':');
-
-            if (false !== $colon_position) {
-                $key   = \substr($value, 0, $colon_position);
-                $value = \substr($value, $colon_position + 2);
-
-                $curl_response_headers[$key] = $value;
-            } else {
-                $http_version_and_status = \explode(' ', \trim($value));
-                $http_version            = $http_version_and_status[0];
-                $http_status             = $http_version_and_status[1];
-
-                $curl_response_headers['version'] = $http_version;
-                $curl_response_headers['status']  = $http_status;
-            }
-        }
-
-        return $curl_response_headers;
+        $this->request_headers = $response_headers;
+        $this->request_body    = $this->_getRequestBody($curl_response, $curl_response_header_size);
     }
 
     public function getRequestHeaders(): array
     {
         return $this->request_headers;
-    }
-
-    private function _getRequestHeadersDebug(string $curl_response, int $curl_response_header_size): string
-    {
-        $curl_response_headers_string = \substr($curl_response, 0, $curl_response_header_size);
-
-        return $curl_response_headers_string;
-    }
-
-    public function getRequestHeadersDebug(): string
-    {
-        return $this->request_headers_debug;
     }
 
     private function _getRequestBody(string $curl_response, int $curl_response_header_size): string

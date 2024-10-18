@@ -12,8 +12,6 @@ class Blog
         $url->makeRequest();
 
         if (!$url->isRequestSuccessful()) {
-            echo $url->getRequestHeadersDebug();
-
             return [];
         }
 
@@ -36,8 +34,6 @@ class Blog
         $url->makeRequest();
 
         if (!$url->isRequestSuccessful()) {
-            echo $url->getRequestHeadersDebug();
-
             return [];
         }
 
@@ -72,8 +68,6 @@ class Blog
         $url->makeRequest();
 
         if (!$url->isRequestSuccessful()) {
-            echo $url->getRequestHeadersDebug();
-
             return [];
         }
 
@@ -91,8 +85,6 @@ class Blog
         $url->makeRequest();
 
         if (!$url->isRequestSuccessful()) {
-            echo $url->getRequestHeadersDebug();
-
             return [];
         }
 
