@@ -17,7 +17,7 @@ class Post
     {
         $this->title    = $post['title']['rendered'];
         $this->excerpt  = $post['excerpt']['rendered'];
-        $this->link     = Constants::BLOG_URL_API_POSTS . '?language=' . $_SESSION['language_code'] . '&post=' . $post['id'];
+        $this->link     = Constants::BLOG_URL_POSTS . '?language=' . $_SESSION['language_code'] . '&post=' . $post['id'];
         $this->content  = $post['content']['rendered'];
         $this->language = $this->getLanguageWp($post['link']);
 
