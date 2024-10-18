@@ -14,6 +14,7 @@ class Url
     private string $fragment;
 
     private array $request_headers;
+    private string $request_headers_debug;
     private string $request_body;
 
     public function __construct(string $url)
@@ -93,8 +94,9 @@ class Url
 
         \curl_close($curl_handler);
 
-        $this->request_headers = $this->_getRequestHeaders($curl_response, $curl_response_header_size);
-        $this->request_body    = $this->_getRequestBody($curl_response, $curl_response_header_size);
+        $this->request_headers_debug = $this->_getRequestHeadersDebug($curl_response, $curl_response_header_size);
+        $this->request_headers       = $this->_getRequestHeaders($curl_response, $curl_response_header_size);
+        $this->request_body          = $this->_getRequestBody($curl_response, $curl_response_header_size);
     }
 
     private function _getRequestHeaders(string $curl_response, int $curl_response_header_size): array
@@ -129,6 +131,18 @@ class Url
     public function getRequestHeaders(): array
     {
         return $this->request_headers;
+    }
+
+    private function _getRequestHeadersDebug(string $curl_response, int $curl_response_header_size): string
+    {
+        $curl_response_headers_string = \substr($curl_response, 0, $curl_response_header_size);
+
+        return $curl_response_headers_string;
+    }
+
+    public function getRequestHeadersDebug(): string
+    {
+        return $this->request_headers_debug;
     }
 
     private function _getRequestBody(string $curl_response, int $curl_response_header_size): string
