@@ -17,6 +17,8 @@
  * Featured Image
  */
 .wp-block-post-featured-image {
+    margin: 2rem 0;
+
     overflow: hidden;
 
     border-radius: 4px;

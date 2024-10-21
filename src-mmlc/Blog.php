@@ -15,8 +15,20 @@ class Blog
             return [];
         }
 
+        $categories_options = [
+            'lang' => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+        ];
+        $categories         = self::getCategories($categories_options);
+
+        $tags_options = [
+            'lang' => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+        ];
+        $tags         = self::getTags($tags_options);
+
         $post_wp = $url->getRequestBody();
         $post    = new Post($post_wp);
+        $post->setCategories($categories);
+        $post->setTags($tags);
 
         if ($post->getLanguage() !== $_SESSION['language_code']) {
             return [];

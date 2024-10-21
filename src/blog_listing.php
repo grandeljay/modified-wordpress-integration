@@ -36,7 +36,7 @@ if (isset($_GET['post'])) {
 
         $smarty->assign('post', $post);
 
-        $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog_post.html');
+        $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog/post_template.html');
     }
 } elseif (isset($_GET['categories'])) {
     $options = [
