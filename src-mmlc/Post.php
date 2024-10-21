@@ -11,24 +11,25 @@ class Post
     private string $language;
     private string $featured_image;
     private string $date_published;
-    private array $categories;
 
-    public function __construct(array $post)
+    private array $categories = [];
+    private array $tags       = [];
+
+    public function __construct(private array $response_data)
     {
-        $this->title    = $post['title']['rendered'];
-        $this->excerpt  = $post['excerpt']['rendered'];
-        $this->link     = Constants::BLOG_URL_POSTS . '?language=' . $_SESSION['language_code'] . '&post=' . $post['id'];
-        $this->content  = $post['content']['rendered'];
-        $this->language = $this->getLanguageWp($post['link']);
+        $this->title    = $response_data['title']['rendered'];
+        $this->excerpt  = $response_data['excerpt']['rendered'];
+        $this->link     = Constants::BLOG_URL_POSTS . '?language=' . $_SESSION['language_code'] . '&post=' . $response_data['id'];
+        $this->content  = $response_data['content']['rendered'];
+        $this->language = $this->getLanguageWp($response_data['link']);
 
-        if ($post['featured_media']) {
-            $this->featured_image = $this->getFeaturedImageWp($post['featured_media']);
+        if ($response_data['featured_media']) {
+            $this->featured_image = $this->getFeaturedImageWp($response_data['featured_media']);
         } else {
             $this->featured_image = '';
         }
 
-        $this->date_published = $this->getDatePublishedWp($post['date']);
-        $this->categories     = $this->getCategoriesWp($post['categories']);
+        $this->date_published = $this->getDatePublishedWp($response_data['date']);
     }
 
     private function getLanguageWp(string $link): string
@@ -58,17 +59,6 @@ class Post
         };
 
         return \date($pattern, \strtotime($date));
-    }
-
-    private function getCategoriesWp(array $category_ids): array
-    {
-        $categories = [];
-
-        foreach ($category_ids as $category_id) {
-            $categories[] = Blog::getCategory($category_id);
-        }
-
-        return $categories;
     }
 
     public function getTitle(): string
@@ -111,8 +101,45 @@ class Post
         return $this->categories;
     }
 
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function setCategories(array $categories): void
+    {
+        foreach ($this->response_data['categories'] as $category_id) {
+            if (isset($categories[$category_id])) {
+                $this->categories[] = $categories[$category_id];
+            }
+        }
+    }
+
+    public function setTags(array $tags): void
+    {
+        foreach ($this->response_data['tags'] as $tag_id) {
+            if (isset($tags[$tag_id])) {
+                $this->tags[] = $tags[$tag_id];
+            }
+        }
+    }
+
     public function toArray(): array
     {
+        $categories = \array_map(
+            function (Category $category) {
+                return $category->toArray();
+            },
+            $this->getCategories()
+        );
+
+        $tags = \array_map(
+            function (Tag $tag) {
+                return $tag->toArray();
+            },
+            $this->getTags()
+        );
+
         return [
             'title'          => $this->getTitle(),
             'excerpt'        => $this->getExcerpt(),
@@ -121,7 +148,8 @@ class Post
             'language'       => $this->getLanguage(),
             'featured_image' => $this->getFeaturedImage(),
             'date_published' => $this->getDatePublished(),
-            'categories'     => $this->getCategories(),
+            'categories'     => $categories,
+            'tags'           => $tags,
         ];
     }
 }

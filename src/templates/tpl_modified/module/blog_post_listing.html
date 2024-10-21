@@ -1,48 +1,11 @@
 <h1>Blog</h1>
 
 {if $posts}
+    {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_template"}
+
     <ul class="post_listing">
         {foreach $posts as $post}
-            <li>
-                <div class="post">
-                    {if $post.featured_image}
-                        <div class="image">
-                            <a href="{$post.link}">
-                                <img src="{$post.featured_image}" alt="{$post.alt_text}" title="{$post.title}">
-                            </a>
-                        </div>
-                    {/if}
-
-                    <div class="content">
-                        <div class="title">
-                            <a href="{$post.link}">{$post.title}</a>
-                        </div>
-
-                        {if $post.excerpt}
-                            <div class="excerpt">
-                                {$post.excerpt}
-                            </div>
-                        {/if}
-
-                        <div class="meta">
-                            <div class="date_posted">
-                                <span>Published:</span>
-                                <span>{$post.date_published}</span>
-                            </div>
-
-                            {if $post.categories}
-                                <div class="categories">
-                                    <span>Category:</span>
-
-                                    {foreach $post.categories as $category}
-                                        <span>{$category.name}</span>
-                                    {/foreach}
-                                </div>
-                            {/if}
-                        </div>
-                    </div>
-                </div>
-            </li>
+            {include file="module/blog/post_template.html"}
         {/foreach}
     </ul>
 {/if}

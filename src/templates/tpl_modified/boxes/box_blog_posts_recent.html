@@ -1,6 +1,8 @@
 {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_recent"}
 
 {if $posts_recent}
+    {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_template"}
+
     <h2>{#recent_posts#}</h2>
 
     <ul class="post_listing">

@@ -119,7 +119,7 @@ ul.post_listing > li {
 }
 
 .post > .content > .meta > div > span:first-of-type {
-    flex: 0 0 10ch;
+    flex: 0 0 12ch;
 
     white-space: nowrap;
     text-overflow: ellipsis;

@@ -2,7 +2,7 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-class Category
+class Tag
 {
     private int $id;
     private string $name;
@@ -29,7 +29,7 @@ class Category
     {
         $link = new Url(Constants::BLOG_URL_POSTS);
         $link->addDefaultParameters();
-        $link->addParameters(['categories' => $this->id]);
+        $link->addParameters(['tags' => $this->id]);
 
         $this->link = $link->toString();
     }
