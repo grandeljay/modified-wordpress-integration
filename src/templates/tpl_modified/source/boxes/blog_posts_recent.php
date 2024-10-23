@@ -42,7 +42,12 @@ $posts_options   = [
     'order'    => 'desc',
 ];
 $posts_with_meta = Blog::getPosts($posts_options);
-$posts_recent    = $posts_with_meta['posts'];
+$posts_recent    = \array_map(
+    function (Post $post) {
+        return $post->toArray();
+    },
+    $posts_with_meta['posts']
+);
 
 $posts_all_link = new Url(Constants::BLOG_URL_POSTS);
 $posts_all_link->addDefaultParameters();

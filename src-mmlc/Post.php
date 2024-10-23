@@ -4,61 +4,111 @@ namespace Grandeljay\WordpressIntegration;
 
 class Post
 {
+    private int $id;
     private string $title;
     private string $excerpt;
     private string $link;
     private string $content;
+    private Media $featured_image;
+
     private string $language;
-    private string $featured_image;
-    private string $date_published;
+    private array $translations;
+
+    private int $date_published;
+    private int $date_modified;
 
     private array $categories = [];
     private array $tags       = [];
 
     public function __construct(private array $response_data)
     {
-        $this->title    = $response_data['title']['rendered'];
-        $this->excerpt  = $response_data['excerpt']['rendered'];
-        $this->link     = Constants::BLOG_URL_POSTS . '?language=' . $_SESSION['language_code'] . '&post=' . $response_data['id'];
-        $this->content  = $response_data['content']['rendered'];
-        $this->language = $this->getLanguageWp($response_data['link']);
+        $this->setId();
+        $this->setTitle();
+        $this->setExcerpt();
+        $this->setLink();
+        $this->setContent();
+        $this->setLanguage();
+        $this->setTranslations();
+        $this->setFeaturedImage();
+        $this->setDatePublished();
+        $this->setDateModified();
+    }
 
-        if ($response_data['featured_media']) {
-            $this->featured_image = $this->getFeaturedImageWp($response_data['featured_media']);
-        } else {
-            $this->featured_image = '';
+    private function setId(): void
+    {
+        $this->id = $this->response_data['id'];
+    }
+
+    private function setTitle(): void
+    {
+        $this->title = $this->response_data['title']['rendered'];
+    }
+
+    private function setExcerpt(): void
+    {
+        $this->excerpt = $this->response_data['excerpt']['rendered'];
+    }
+
+    private function setLink(): void
+    {
+        $link_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
+
+        $link = new Url($link_server . Constants::BLOG_URL_POSTS);
+        $link->addParameters(
+            [
+                'language' => $this->response_data['lang'],
+                'post'     => $this->response_data['id'],
+            ]
+        );
+
+        $this->link = $link->toString();
+    }
+
+    private function setContent(): void
+    {
+        $this->content = $this->response_data['content']['rendered'];
+    }
+
+    private function setLanguage(): void
+    {
+        $this->language = $this->response_data['lang'];
+    }
+
+    private function setTranslations(): void
+    {
+        $this->translations = $this->response_data['translations'];
+    }
+
+    private function setFeaturedImage(): void
+    {
+        $endpoint = $this->response_data['_links']['wp:featuredmedia'][0]['href'] ?? '';
+
+        $url = new Url($endpoint);
+        $url->makeRequest();
+
+        if (!$url->isRequestSuccessful()) {
+            return;
         }
 
-        $this->date_published = $this->getDatePublishedWp($response_data['date']);
+        $media_wp = $url->getRequestBody();
+        $media    = new Media($media_wp);
+
+        $this->featured_image = $media;
     }
 
-    private function getLanguageWp(string $link): string
+    private function setDatePublished(): void
     {
-        $query = \parse_url($link, \PHP_URL_QUERY);
-        \parse_str($query, $parameters);
-
-        return $parameters['lang'];
+        $this->date_published = \strtotime($this->response_data['date']);
     }
 
-    private function getFeaturedImageWp(int $id): string
+    private function setDateModified(): void
     {
-        $media = Blog::getFeaturedImage($id);
-
-        return $media['source_url'];
+        $this->date_modified = \strtotime($this->response_data['modified']);
     }
 
-    private function getDatePublishedWp(string $date): string
+    public function getId(): int
     {
-        $pattern = match ($_SESSION['language_code']) {
-            'de'    => 'd.m.y',
-            'en'    => 'd/m/y',
-            'es'    => 'd/m/y',
-            'fr'    => 'd/m/y',
-            'it'    => 'd/m/y',
-            default => 'o-m-d',
-        };
-
-        return \date($pattern, \strtotime($date));
+        return $this->id;
     }
 
     public function getTitle(): string
@@ -86,14 +136,44 @@ class Post
         return $this->language;
     }
 
-    public function getFeaturedImage(): string
+    public function getTranslations(): array
+    {
+        return $this->translations;
+    }
+
+    public function getFeaturedImage(): Media
     {
         return $this->featured_image;
     }
 
-    public function getDatePublished(): string
+    public function getDatePublished(): int
     {
         return $this->date_published;
+    }
+
+    public function getDateModified(): int
+    {
+        return $this->date_modified;
+    }
+
+    public function getDateFormatted(int $timestamp, string $language_code = null): string
+    {
+        if (null === $language_code) {
+            $language_code = $this->getLanguage();
+        }
+
+        $pattern = match ($language_code) {
+            'de'    => 'd.m.y',
+            'en'    => 'd/m/y',
+            'es'    => 'd/m/y',
+            'fr'    => 'd/m/y',
+            'it'    => 'd/m/y',
+            default => 'o-m-d',
+        };
+
+        $date_formatted = \date($pattern, $timestamp);
+
+        return $date_formatted;
     }
 
     public function getCategories(): array
@@ -126,6 +206,9 @@ class Post
 
     public function toArray(): array
     {
+        $featured_image = $this->getFeaturedImage()
+                               ->toArray();
+
         $categories = \array_map(
             function (Category $category) {
                 return $category->toArray();
@@ -146,7 +229,7 @@ class Post
             'link'           => $this->getLink(),
             'content'        => $this->getContent(),
             'language'       => $this->getLanguage(),
-            'featured_image' => $this->getFeaturedImage(),
+            'featured_image' => $featured_image,
             'date_published' => $this->getDatePublished(),
             'categories'     => $categories,
             'tags'           => $tags,

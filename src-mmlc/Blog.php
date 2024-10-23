@@ -68,11 +68,39 @@ class Blog
             $post->setCategories($categories);
             $post->setTags($tags);
 
-            $posts[] = $post->toArray();
+            $posts[] = $post;
         }
 
         $posts_total       = $posts_meta['x-wp-total'];
         $posts_total_pages = $posts_meta['x-wp-totalpages'];
+
+        /**
+         * `per_page` is capped at 100.
+         *
+         * @link https://developer.wordpress.org/rest-api/using-the-rest-api/pagination/
+         */
+        if ($posts_total > 100) {
+            for ($posts_page = 2; $posts_page <= $posts_total_pages; $posts_page++) {
+                $options['page'] = $posts_page;
+
+                $url->addParameters($options);
+                $url->makeRequest();
+
+                if (!$url->isRequestSuccessful()) {
+                    continue;
+                }
+
+                $posts_wp = $url->getRequestBody();
+
+                foreach ($posts_wp as $post_wp) {
+                    $post = new Post($post_wp);
+                    $post->setCategories($categories);
+                    $post->setTags($tags);
+
+                    $posts[] = $post;
+                }
+            }
+        }
 
         $posts_with_meta = [
             'total'       => $posts_total,
@@ -89,7 +117,12 @@ class Blog
         $posts_html = '';
 
         $posts_with_meta   = self::getPosts($options);
-        $posts             = $posts_with_meta['posts'];
+        $posts             = \array_map(
+            function (Post $post) {
+                return $post->toArray();
+            },
+            $posts_with_meta['posts']
+        );
         $posts_page        = $posts_with_meta['page'];
         $posts_page_links  = [];
         $posts_pages       = $posts_with_meta['total'];
@@ -165,23 +198,6 @@ class Blog
         }
 
         return $tags;
-    }
-
-    public static function getFeaturedImage(int $id): array
-    {
-        $endpoint = Constants::BLOG_URL_API_MEDIA . $id;
-
-        $url = new Url($endpoint);
-        $url->makeRequest();
-
-        if (!$url->isRequestSuccessful()) {
-            return [];
-        }
-
-        $media_wp = $url->getRequestBody();
-        $media    = new Media($media_wp);
-
-        return $media->toArray();
     }
 
     public static function getCategory(int $id): array

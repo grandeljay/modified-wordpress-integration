@@ -97,7 +97,7 @@ class Url
                     $key   = \substr($header, 0, $colon_position);
                     $value = \substr($header, $colon_position + 2);
 
-                    $response_headers[$key] = $value;
+                    $response_headers[$key] = \trim($value);
                 } else {
                     if (empty($header_trimmed)) {
                         return $header_length;
