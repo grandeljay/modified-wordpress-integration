@@ -1,13 +1,27 @@
-<h1>Blog</h1>
+<div class="blog">
+    <h1>Blog</h1>
 
-{if $posts}
-    {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_template"}
+    {if $filter_category}
+        {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_filter"}
 
-    <ul class="post_listing">
-        {foreach $posts as $post}
-            {include file="module/blog/listing_post_template.html"}
-        {/foreach}
-    </ul>
-{/if}
+        <div class="filter">
+            <p>
+                {#filter_by_category#|sprintf:"<strong>`$filter_category.name`</strong>"}
 
-<div class="pagination_listing cf">{$pagination}</div>
+                <a href="{$filter_reset_link}">{#filter_reset#}</a>
+            </p>
+        </div>
+    {/if}
+
+    {if $posts}
+        {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_template"}
+
+        <ul class="post_listing">
+            {foreach $posts as $post}
+                {include file="module/blog/listing_post_template.html"}
+            {/foreach}
+        </ul>
+    {/if}
+
+    <div class="pagination_listing cf">{$pagination}</div>
+</div>

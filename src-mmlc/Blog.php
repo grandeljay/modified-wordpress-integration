@@ -149,6 +149,7 @@ class Blog
 
             $posts_html = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog_posts_not_found.html');
         } else {
+            /** Pagination */
             $per_page = \min($options['per_page'], $posts_with_meta['total']);
             $offset   = $per_page * ($options['page'] - 1) + 1;
             $page     = $options['page'];
@@ -164,7 +165,23 @@ class Blog
             $pagination = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog_post_pagination.html');
             $smarty->assign('pagination', $pagination);
 
+            /** Posts */
             $smarty->assign('posts', $posts);
+
+            /** Categories */
+            if (isset($_GET['categories'])) {
+                $category = self::getCategory($_GET['categories']);
+                $smarty->assign('filter_category', $category);
+
+                $filter_reset_parameters = $_GET;
+                unset($filter_reset_parameters['categories']);
+
+                $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
+                $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
+                $filter_reset_link->addParameters($filter_reset_parameters);
+                $smarty->assign('filter_reset_link', $filter_reset_link->toString());
+            }
+
             $posts_html = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog_post_listing.html');
         }
 
