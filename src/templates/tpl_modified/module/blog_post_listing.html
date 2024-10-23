@@ -1,12 +1,18 @@
 <div class="blog">
     <h1>Blog</h1>
 
-    {if $filter_category}
+    {if $filter_category || $filter_tag}
         {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_filter"}
 
         <div class="filter">
             <p>
-                {#filter_by_category#|sprintf:"<strong>`$filter_category.name`</strong>"}
+                {if $filter_category}
+                    {#filter_by_category#|sprintf:"<strong>`$filter_category.name`</strong>"}
+                {/if}
+
+                {if $filter_tag}
+                    {#filter_by_tag#|sprintf:"<strong>`$filter_tag.name`</strong>"}
+                {/if}
 
                 <a href="{$filter_reset_link}">{#filter_reset#}</a>
             </p>

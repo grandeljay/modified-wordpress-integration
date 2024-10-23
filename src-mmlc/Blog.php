@@ -168,11 +168,19 @@ class Blog
             /** Posts */
             $smarty->assign('posts', $posts);
 
-            /** Categories */
-            if (isset($_GET['category_id'])) {
-                $category = self::getCategory($_GET['category_id']);
-                $smarty->assign('filter_category', $category->toArray());
+            /** Taxonomies */
+            if (isset($_GET['category_id']) || isset($_GET['tag_id'])) {
+                if (isset($_GET['category_id'])) {
+                    $category = self::getCategory($_GET['category_id']);
+                    $smarty->assign('filter_category', $category->toArray());
+                }
 
+                if (isset($_GET['tag_id'])) {
+                    $tag = self::getTag($_GET['tag_id']);
+                    $smarty->assign('filter_tag', $tag->toArray());
+                }
+
+                /** Filter reset */
                 $filter_reset_parameters = $_GET;
                 unset($filter_reset_parameters['categories']);
 
@@ -257,6 +265,23 @@ class Blog
         }
 
         return $categories;
+    }
+
+    public static function getTag(int $id): Tag|null
+    {
+        $endpoint = Constants::BLOG_URL_API_TAGS . $id;
+
+        $url = new Url($endpoint);
+        $url->makeRequest();
+
+        if (!$url->isRequestSuccessful()) {
+            return null;
+        }
+
+        $tag_wp = $url->getRequestBody();
+        $tag    = new Tag($tag_wp);
+
+        return $tag;
     }
 
     public static function getTags(array $options): array
