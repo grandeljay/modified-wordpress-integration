@@ -1,3 +1,7 @@
+:root {
+    --lineHeight: 1.6;
+}
+
 /**
  * Post Listing
  */
@@ -76,11 +80,24 @@ ul.post_listing > li {
     overflow: hidden;
 }
 
+.post > .content > .title:hover {
+    white-space: wrap;
+
+    position: absolute;
+    right: var(--gap);
+    left: var(--gap);
+    z-index: 1;
+    background-color: #f4f4f4;
+    max-height: calc(1em * var(--lineHeight) * 4);
+}
+.post > .content > .title:hover + .excerpt {
+    padding-top: calc(1em * var(--lineHeight));
+}
+
 /**
  * Post Content Excerpt
  */
 .post > .content > .excerpt {
-    --lineHeight: 1.6;
     --maxRows: 3;
 
     position: relative;
