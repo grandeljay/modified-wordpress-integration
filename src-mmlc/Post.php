@@ -209,6 +209,11 @@ class Post
         $featured_image = $this->getFeaturedImage()
                                ->toArray();
 
+        $date_published = $this->getDateFormatted(
+            $this->getDatePublished(),
+            $this->getLanguage()
+        );
+
         $categories = \array_map(
             function (Category $category) {
                 return $category->toArray();
@@ -230,7 +235,7 @@ class Post
             'content'        => $this->getContent(),
             'language'       => $this->getLanguage(),
             'featured_image' => $featured_image,
-            'date_published' => $this->getDatePublished(),
+            'date_published' => $date_published,
             'categories'     => $categories,
             'tags'           => $tags,
         ];
