@@ -58,9 +58,9 @@ if (isset($_GET['post'])) {
     ];
 
     $main_content = Blog::getPostsHtml($options);
-} elseif (isset($_GET['tags'])) {
+} elseif (isset($_GET['tag_id'])) {
     $options = [
-        'tags'     => $_GET['tags'],
+        'tags'     => $_GET['tag_id'],
         'lang'     => $options_language_code,
 
         'per_page' => 8,
