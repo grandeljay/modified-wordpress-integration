@@ -115,7 +115,12 @@ ul.post_listing > li {
 
 .post > .content > .meta > div {
     display: flex;
-    gap: 1ch;
+    gap: 0 1ch;
+    flex-wrap: wrap;
+}
+
+.post > .content > .meta > div > span:not(:first-of-type, :last-of-type)::after {
+    content: ',';
 }
 
 .post > .content > .meta > div > span:first-of-type {
