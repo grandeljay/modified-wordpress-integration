@@ -169,8 +169,8 @@ class Blog
             $smarty->assign('posts', $posts);
 
             /** Categories */
-            if (isset($_GET['categoy_id'])) {
-                $category = self::getCategory($_GET['categoy_id']);
+            if (isset($_GET['category_id'])) {
+                $category = self::getCategory($_GET['category_id']);
                 $smarty->assign('filter_category', $category->toArray());
 
                 $filter_reset_parameters = $_GET;

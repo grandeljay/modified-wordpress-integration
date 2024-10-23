@@ -38,11 +38,11 @@ if (isset($_GET['post'])) {
 
         $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog/post_template.html');
     }
-} elseif (isset($_GET['categoy_id'])) {
+} elseif (isset($_GET['category_id'])) {
     $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
 
     /** To do: Same for Tags */
-    $category_id              = $_GET['categoy_id'];
+    $category_id              = $_GET['category_id'];
     $category                 = Blog::getCategory($category_id);
     $category_translations    = $category->getTranslations();
     $category_id_for_language = $category_translations[$options_language_code];
