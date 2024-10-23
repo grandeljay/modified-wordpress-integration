@@ -163,11 +163,11 @@ class Post
         }
 
         $pattern = match ($language_code) {
-            'de'    => 'd.m.y',
-            'en'    => 'd/m/y',
-            'es'    => 'd/m/y',
-            'fr'    => 'd/m/y',
-            'it'    => 'd/m/y',
+            'de'    => 'd.m.o',
+            'en'    => 'd/m/o',
+            'es'    => 'd/m/o',
+            'fr'    => 'd/m/o',
+            'it'    => 'd/m/o',
             default => 'o-m-d',
         };
 
