@@ -41,6 +41,7 @@ if (isset($_GET['post'])) {
 } elseif (isset($_GET['categoy_id'])) {
     $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
 
+    /** To do: Same for Tags */
     $category_id              = $_GET['categoy_id'];
     $category                 = Blog::getCategory($category_id);
     $category_translations    = $category->getTranslations();
