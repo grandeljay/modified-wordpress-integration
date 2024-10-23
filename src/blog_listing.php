@@ -39,9 +39,16 @@ if (isset($_GET['post'])) {
         $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog/post_template.html');
     }
 } elseif (isset($_GET['categories'])) {
+    $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
+
+    $category_id              = $_GET['categories'];
+    $category                 = Blog::getCategory($category_id);
+    $category_translations    = $category->getTranslations();
+    $category_id_for_language = $category_translations[$options_language_code];
+
     $options = [
-        'categories' => $_GET['categories'],
-        'lang'       => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+        'categories' => $category_id_for_language,
+        'lang'       => $options_language_code,
 
         'per_page'   => 8,
         'page'       => $_GET['page'] ?? 1,
@@ -54,7 +61,7 @@ if (isset($_GET['post'])) {
 } elseif (isset($_GET['tags'])) {
     $options = [
         'tags'     => $_GET['tags'],
-        'lang'     => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+        'lang'     => $options_language_code,
 
         'per_page' => 8,
         'page'     => $_GET['page'] ?? 1,
@@ -66,7 +73,7 @@ if (isset($_GET['post'])) {
     $main_content = Blog::getPostsHtml($options);
 } else {
     $options = [
-        'lang'     => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+        'lang'     => $options_language_code,
 
         'per_page' => 8,
         'page'     => $_GET['page'] ?? 1,

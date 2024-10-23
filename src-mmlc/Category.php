@@ -7,12 +7,14 @@ class Category
     private int $id;
     private string $name;
     private string $link;
+    private array $translations;
 
     public function __construct(private array $response_data)
     {
         $this->setId();
         $this->setName();
         $this->setLink();
+        $this->setTranslations();
     }
 
     private function setId(): void
@@ -34,6 +36,11 @@ class Category
         $this->link = $link->toString();
     }
 
+    private function setTranslations(): void
+    {
+        $this->translations = $this->response_data['translations'];
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -49,12 +56,18 @@ class Category
         return $this->link;
     }
 
+    public function getTranslations(): array
+    {
+        return $this->translations;
+    }
+
     public function toArray(): array
     {
         return [
-            'id'   => $this->getId(),
-            'name' => $this->getName(),
-            'link' => $this->getLink(),
+            'id'           => $this->getId(),
+            'name'         => $this->getName(),
+            'link'         => $this->getLink(),
+            'translations' => $this->getTranslations(),
         ];
     }
 }

@@ -171,7 +171,7 @@ class Blog
             /** Categories */
             if (isset($_GET['categories'])) {
                 $category = self::getCategory($_GET['categories']);
-                $smarty->assign('filter_category', $category);
+                $smarty->assign('filter_category', $category->toArray());
 
                 $filter_reset_parameters = $_GET;
                 unset($filter_reset_parameters['categories']);
@@ -217,7 +217,7 @@ class Blog
         return $tags;
     }
 
-    public static function getCategory(int $id): array
+    public static function getCategory(int $id): Category|null
     {
         $endpoint = Constants::BLOG_URL_API_CATEGORIES . $id;
 
@@ -225,13 +225,13 @@ class Blog
         $url->makeRequest();
 
         if (!$url->isRequestSuccessful()) {
-            return [];
+            return null;
         }
 
         $category_wp = $url->getRequestBody();
         $category    = new Category($category_wp);
 
-        return $category->toArray();
+        return $category;
     }
 
     public static function getCategories(array $options): array
