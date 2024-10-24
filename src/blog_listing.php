@@ -60,6 +60,8 @@ if (isset($_GET['post'])) {
 
     $main_content = Blog::getPostsHtml($options);
 } elseif (isset($_GET['tag_id'])) {
+    $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
+
     $options = [
         'tags'     => $_GET['tag_id'],
         'lang'     => $options_language_code,
@@ -73,6 +75,8 @@ if (isset($_GET['post'])) {
 
     $main_content = Blog::getPostsHtml($options);
 } else {
+    $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
+
     $options = [
         'lang'     => $options_language_code,
 
