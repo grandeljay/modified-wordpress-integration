@@ -182,7 +182,14 @@ class Blog
 
                 /** Filter reset */
                 $filter_reset_parameters = $_GET;
-                unset($filter_reset_parameters['categories']);
+
+                if (isset($filter_reset_parameters['category_id'])) {
+                    unset($filter_reset_parameters['category_id']);
+                }
+
+                if (isset($filter_reset_parameters['tag_id'])) {
+                    unset($filter_reset_parameters['tag_id']);
+                }
 
                 $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
                 $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
