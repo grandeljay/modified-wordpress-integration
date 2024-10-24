@@ -137,16 +137,16 @@ class Blog
         $posts_pages       = $posts_with_meta['total'];
         $posts_pages_total = $posts_with_meta['total_pages'];
 
-        for ($i = 1; $i <= $posts_pages_total; $i++) {
+        for ($page = 1; $page <= $posts_pages_total; $page++) {
             $url = new Url(Constants::BLOG_URL_POSTS);
             $url->addParameters(
                 [
-                    'page'    => $i,
                     'lang' => $options['lang'],
+                    'page' => $page,
                 ]
             );
 
-            $posts_page_links[$i] = $url->toString();
+            $posts_page_links[$page] = $url->toString();
         }
 
         global $smarty, $breadcrumb;
