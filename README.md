@@ -8,10 +8,12 @@ If the boxes are not auto loaded in your template, add the following code:
 
 ```php
 /**
- * Blog Posts Recent
+ * WordPress Integration
  *
- * @author Jay Trees <j.trees@hybridsupply.de>
+ * @author  Jay Trees
+ * @link    https://github.com/grandeljay/modified-wordpress-integration
+ * @package GrandeljayWordpressIntegration
  */
-include_once DIR_FS_BOXES . 'blog_posts_recent.php';
+include_once DIR_FS_BOXES . 'grandeljay_wordpress_integration.php';
 /** */
 ```

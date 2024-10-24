@@ -147,7 +147,7 @@ class Blog
 
             $breadcrumb->add('404', '#');
 
-            $posts_html = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog_posts_not_found.html');
+            $posts_html = $smarty->fetch(CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/listing_empty.html');
         } else {
             /** Pagination */
             $per_page = \min($options['per_page'], $posts_with_meta['total']);
@@ -162,7 +162,7 @@ class Blog
             $smarty->assign('posts_page_links', $posts_page_links);
             $smarty->assign('posts_pages_total', $posts_pages_total);
 
-            $pagination = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog_post_pagination.html');
+            $pagination = $smarty->fetch(CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/pagination.html');
             $smarty->assign('pagination', $pagination);
 
             /** Posts */
@@ -197,7 +197,7 @@ class Blog
                 $smarty->assign('filter_reset_link', $filter_reset_link->toString());
             }
 
-            $posts_html = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog_post_listing.html');
+            $posts_html = $smarty->fetch(CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/listing.html');
         }
 
         return $posts_html;

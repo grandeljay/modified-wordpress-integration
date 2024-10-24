@@ -10,14 +10,6 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-if (!\class_exists(__NAMESPACE__ . '\\Constants')) {
-    return;
-}
-
-if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
-    return;
-}
-
 $allowed_pages = [
     Constants::BLOG_URL_HOME,
     Constants::BLOG_URL_POSTS,
@@ -62,6 +54,6 @@ $box_smarty->assign('posts_all_link', $posts_all_link->toString());
 $box_smarty->assign('posts_all_button', \xtc_image_button('button_continue.gif', $translations->get('BUTTON_POSTS_VIEW_ALL')));
 $box_smarty->assign('posts_recent', $posts_recent);
 
-$box_blog_posts_recent = $box_smarty->fetch(\CURRENT_TEMPLATE . '/boxes/box_blog_posts_recent.html');
+$box_blog_posts_recent = $box_smarty->fetch(\CURRENT_TEMPLATE . '/boxes/grandeljay_wordpress_integration_blog_posts_recent.html');
 
 $smarty->assign('box_blog_posts_recent', $box_blog_posts_recent);

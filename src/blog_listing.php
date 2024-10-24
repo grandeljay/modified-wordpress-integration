@@ -30,13 +30,13 @@ if (isset($_GET['post'])) {
     $post = Blog::getPost($_GET['post']);
 
     if (empty($post)) {
-        $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog_post_not_found.html');
+        $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/not_found.html');
     } else {
         $breadcrumb->add($post['title'], $post['link']);
 
         $smarty->assign('post', $post);
 
-        $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/blog/post_template.html');
+        $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
     }
 } elseif (isset($_GET['category_id'])) {
     $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;

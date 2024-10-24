@@ -28,7 +28,7 @@ $breadcrumb->add('Blog', Constants::BLOG_URL_HOME);
 require \DIR_WS_INCLUDES . 'header.php';
 require \DIR_FS_CATALOG . 'templates/' . \CURRENT_TEMPLATE . '/source/boxes.php';
 
-$main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/blog/home.html');
+$main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/home.html');
 
 $smarty->assign('main_content', $main_content);
 $smarty->display(\CURRENT_TEMPLATE . '/index.html');
