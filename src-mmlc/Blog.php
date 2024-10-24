@@ -141,8 +141,8 @@ class Blog
             $url = new Url(Constants::BLOG_URL_POSTS);
             $url->addParameters(
                 [
-                    'options' => $options['lang'],
                     'page'    => $i,
+                    'lang' => $options['lang'],
                 ]
             );
 
