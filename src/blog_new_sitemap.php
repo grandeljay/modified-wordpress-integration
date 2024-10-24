@@ -111,6 +111,6 @@ foreach ($posts as $post) {
 header('Content-Type: application/xml; charset=UTF-8');
 $xml = $sitemap->asXML();
 
-\file_put_contents(\DIR_FS_CATALOG . 'blog_sitemap_new.xml', $xml);
+\file_put_contents(\DIR_FS_CATALOG . 'blog_new_sitemap.xml', $xml);
 
 echo $xml;
