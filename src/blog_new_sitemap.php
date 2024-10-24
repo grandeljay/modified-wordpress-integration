@@ -21,13 +21,14 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
 }
 
 $options         = [
-    'lang'    => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
-    'page'    => 1,
+    'lang'     => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+    'per_page' => 100,
+    'page'     => 1,
 
-    'orderby' => 'date',
-    'order'   => 'desc',
+    'orderby'  => 'date',
+    'order'    => 'desc',
 ];
-$posts_with_meta = Blog::getPosts($options);
+$posts_with_meta = Blog::getPosts($options, true);
 $posts           = $posts_with_meta['posts'];
 
 /**

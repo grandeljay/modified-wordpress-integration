@@ -37,9 +37,18 @@ class Blog
         return $post->toArray();
     }
 
-    public static function getPosts(array $options): array
+    public static function getPosts(array $options, bool $get_all_posts = false): array
     {
         $endpoint = Constants::BLOG_URL_API_POSTS;
+
+        /**
+         * `per_page` defaults to 10.
+         *
+         * @link https://developer.wordpress.org/rest-api/reference/posts/
+         */
+        if (!isset($options['per_page'])) {
+            $options['per_page'] = 10;
+        }
 
         $url = new Url($endpoint);
         $url->addParameters($options);
@@ -79,7 +88,7 @@ class Blog
          *
          * @link https://developer.wordpress.org/rest-api/using-the-rest-api/pagination/
          */
-        if ($posts_total > 100) {
+        if (true === $get_all_posts && $posts_total > $options['per_page']) {
             for ($posts_page = 2; $posts_page <= $posts_total_pages; $posts_page++) {
                 $options['page'] = $posts_page;
 
