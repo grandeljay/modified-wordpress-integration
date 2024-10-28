@@ -41,7 +41,6 @@ if (isset($_GET['post'])) {
 } elseif (isset($_GET['category_id'])) {
     $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
 
-    /** To do: Same for Tags */
     $category_id              = $_GET['category_id'];
     $category                 = Blog::getCategory($category_id);
     $category_translations    = $category->getTranslations();
@@ -62,8 +61,13 @@ if (isset($_GET['post'])) {
 } elseif (isset($_GET['tag_id'])) {
     $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
 
+    $tag_id              = $_GET['tag_id'];
+    $tag                 = Blog::getTag($tag_id);
+    $tag_translations    = $tag->getTranslations();
+    $tag_id_for_language = $tag_translations[$options_language_code];
+
     $options = [
-        'tags'     => $_GET['tag_id'],
+        'tags'     => $tag_id_for_language,
         'lang'     => $options_language_code,
 
         'per_page' => 8,
