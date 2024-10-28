@@ -2,6 +2,8 @@
 
 namespace Grandeljay\WordpressIntegration;
 
+use Grandeljay\Translator\Translations;
+
 class Blog
 {
     /**
@@ -510,7 +512,7 @@ class Blog
         return $pagination_html;
     }
 
-    public static function getModuleTranslations(): \Grandeljay\Translator\Translations
+    public static function getModuleTranslations(): Translations
     {
         $module_language_filepath = \sprintf(
             '%s/modules/system/%s.php',
