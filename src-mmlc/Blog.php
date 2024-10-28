@@ -138,6 +138,19 @@ class Blog
         $posts_pages_total = $posts_with_meta['total_pages'];
 
         for ($page = 1; $page <= $posts_pages_total; $page++) {
+            $url_parameters = [
+                'lang' => $options['lang'],
+                'page' => $page,
+            ];
+
+            if (isset($options['categories'])) {
+                $url_parameters['category_id'] = $options['categories'];
+            }
+
+            if (isset($options['tags'])) {
+                $url_parameters['tag_id'] = $options['tags'];
+            }
+
             $url = new Url(Constants::BLOG_URL_POSTS);
             $url->addParameters(
                 [
