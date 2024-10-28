@@ -20,17 +20,17 @@ if (!\in_array($_SERVER['PHP_SELF'], $allowed_pages, true)) {
 }
 
 $filenames = [
-    'templates/' . \CURRENT_TEMPLATE . '/css/blog.css',
+    'templates/' . \CURRENT_TEMPLATE . '/css/grandeljay_wordpress_integration_blog.css',
 ];
 
 if (isset($_GET['post'])) {
     $filenames = [
-        'templates/' . \CURRENT_TEMPLATE . '/css/post.css',
+        'templates/' . \CURRENT_TEMPLATE . '/css/grandeljay_wordpress_integration_blog_post.css',
     ];
 }
 
 if (isset($_GET['search'])) {
-    $filenames[] = 'templates/' . \CURRENT_TEMPLATE . '/css/search_results.css';
+    $filenames[] = 'templates/' . \CURRENT_TEMPLATE . '/css/grandeljay_wordpress_integration_blog_search_results.css';
 }
 
 foreach ($filenames as $filename) {

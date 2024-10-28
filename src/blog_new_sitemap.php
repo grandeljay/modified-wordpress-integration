@@ -38,7 +38,7 @@ $posts           = $posts_with_meta['posts'];
  * @link https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap
  */
 $sitemap_server     = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
-$sitemap_stylesheet = $sitemap_server . '/templates/' . \CURRENT_TEMPLATE . '/css/blog_sitemap.css';
+$sitemap_stylesheet = $sitemap_server . '/templates/' . \CURRENT_TEMPLATE . '/css/grandeljay_wordpress_integration_blog_sitemap.css';
 $sitemap_xml        = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="{$sitemap_stylesheet}"?>
