@@ -20,11 +20,7 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
-require \sprintf(
-    '%s/modules/system/%s.php',
-    \DIR_WS_LANGUAGES . $_SESSION['language'],
-    \grandeljay_wordpress_integration::class
-);
+require Blog::getModuleLanguageFilePath();
 
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);

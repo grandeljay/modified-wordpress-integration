@@ -44,11 +44,7 @@ $posts_recent    = \array_map(
 $posts_all_link = new Url(Constants::BLOG_URL_POSTS);
 $posts_all_link->addDefaultParameters();
 
-require \sprintf(
-    '%s/modules/system/%s.php',
-    \DIR_WS_LANGUAGES . $_SESSION['language'],
-    \grandeljay_wordpress_integration::class
-);
+require Blog::getModuleLanguageFilePath();
 
 $box_smarty->assign('posts_all_link', $posts_all_link->toString());
 $box_smarty->assign('posts_all_button', $translations->get('BUTTON_POSTS_VIEW_ALL'));

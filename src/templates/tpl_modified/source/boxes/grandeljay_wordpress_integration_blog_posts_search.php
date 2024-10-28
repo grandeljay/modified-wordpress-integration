@@ -19,12 +19,7 @@ if (!\in_array($_SERVER['PHP_SELF'], $allowed_pages, true)) {
     return;
 }
 
-require \DIR_FS_BOXES_INC . 'smarty_default.php';
-require \sprintf(
-    '%s/modules/system/%s.php',
-    \DIR_WS_LANGUAGES . $_SESSION['language'],
-    \grandeljay_wordpress_integration::class
-);
+require Blog::getModuleLanguageFilePath();
 
 $form_action            = Constants::BLOG_URL_POSTS;
 $form_title             = $translations->get('POSTS_SEARCH_TITLE');

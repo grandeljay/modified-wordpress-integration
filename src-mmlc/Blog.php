@@ -345,11 +345,7 @@ class Blog
 
         global $smarty, $breadcrumb;
 
-        require \sprintf(
-            '%s/modules/system/%s.php',
-            \DIR_WS_LANGUAGES . $_SESSION['language'],
-            \grandeljay_wordpress_integration::class
-        );
+        require Blog::getModuleLanguageFilePath();
 
         $search_title       = $translations->get('FORM_SEARCH_TITLE');
         $search_description = \sprintf(
@@ -512,5 +508,16 @@ class Blog
         $pagination_html = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/pagination.html');
 
         return $pagination_html;
+    }
+
+    public static function getModuleLanguageFilePath(): string
+    {
+        $filepath = \sprintf(
+            '%s/modules/system/%s.php',
+            \DIR_WS_LANGUAGES . $_SESSION['language'],
+            \grandeljay_wordpress_integration::class
+        );
+
+        return $filepath;
     }
 }
