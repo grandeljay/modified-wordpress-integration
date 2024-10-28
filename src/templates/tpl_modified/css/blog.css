@@ -3,6 +3,39 @@
 }
 
 /**
+ * Sections
+ */
+section {
+    margin: 2rem 0 4rem 0;
+}
+section:last-of-type {
+    margin-bottom: 0;
+}
+
+/**
+ * Buttons
+ */
+a.button,
+form > input[type="submit"] {
+    display: inline-block;
+    padding: 12px 8px;
+    margin-top: 0.8em;
+
+    background-color: #f4f4f4;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+
+    text-align: center;
+    cursor: pointer;
+}
+a.button:hover,
+form > input[type="submit"]:hover {
+    color: #fff;
+    border-color: var(--colorPrimary);
+    background-color: var(--colorPrimary);
+}
+
+/**
  * Post Listing
  */
 ul.post_listing {
@@ -154,3 +187,17 @@ ul.post_listing > li {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
+/**
+ * Miscellaneous
+ */
+
+/** Posts Recent Show All */
+section#posts_recent .posts_show_all {
+    text-align: center;
+}
+
+section#posts_recent .posts_show_all a.button {
+    width: 50%;
+}
+/** */

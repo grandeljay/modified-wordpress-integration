@@ -14,7 +14,7 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
-if (Constants::BLOG_URL_POSTS !== $PHP_SELF) {
+if (Constants::BLOG_URL_POSTS !== $_SERVER['PHP_SELF']) {
     return;
 }
 

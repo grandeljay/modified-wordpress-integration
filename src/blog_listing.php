@@ -20,22 +20,28 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
+require \sprintf(
+    '%s/modules/system/%s.php',
+    \DIR_WS_LANGUAGES . $_SESSION['language'],
+    \grandeljay_wordpress_integration::class
+);
+
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
 
-$breadcrumb->add('BLOG', Constants::BLOG_URL_HOME);
+$breadcrumb->add($translations->get('BLOG'), Constants::BLOG_URL_HOME);
 
 if (isset($_GET['post'])) {
     $post = Blog::getPost($_GET['post']);
 
     if (empty($post)) {
-        $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/not_found.html');
+        $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/not_found.html');
     } else {
         $breadcrumb->add($post['title'], $post['link']);
 
         $smarty->assign('post', $post);
 
-        $main_content = $smarty->fetch(CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
+        $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
     }
 } elseif (isset($_GET['category_id'])) {
     $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
@@ -81,8 +87,31 @@ if (isset($_GET['post'])) {
     ];
 
     $main_content = Blog::getPostsHtml($options);
+} elseif (isset($_GET['search'])) {
+    $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
+
+    $breadcrumb_title = $_GET['search'];
+    $breadcrumb_url   = new Url(Constants::BLOG_URL_POSTS);
+    $breadcrumb_url->addParameters(['search' => $_GET['search']]);
+    $breadcrumb->add($_GET['search'], $breadcrumb_url->toString());
+
+    $options = [
+        'search'   => $_GET['search'],
+        'type'     => 'post',
+        'lang'     => $options_language_code,
+
+        'per_page' => 8,
+        'page'     => $_GET['page'] ?? 1,
+
+        'orderby'  => 'date',
+        'order'    => 'desc',
+    ];
+
+    $main_content = Blog::getPostsSearchHtml($options);
 } else {
     $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
+
+    $breadcrumb->add($translations->get('POSTS'), Constants::BLOG_URL_POSTS);
 
     $options = [
         'lang'     => $options_language_code,
@@ -97,10 +126,21 @@ if (isset($_GET['post'])) {
     $main_content = Blog::getPostsHtml($options);
 }
 
+/**
+ * Breadcrumbs must be set before this is called.
+ */
 require DIR_WS_INCLUDES . 'header.php';
-require DIR_FS_CATALOG . 'templates/' . CURRENT_TEMPLATE . '/source/boxes.php';
+
+/**
+ * Boxes need to be loaded before the
+ * `/templates/tpl_modified/module/grandeljay_wordpress_integration/blog/search_result/listing.html`
+ * template is fetched, as it is supposed to contain the search box.
+ *
+ * As a workaround, it is being called explicity in `Blog::getPostsSearchHtml`.
+ */
+require \DIR_FS_CATALOG . 'templates/' . \CURRENT_TEMPLATE . '/source/boxes.php';
 
 $smarty->assign('main_content', $main_content);
-$smarty->display(CURRENT_TEMPLATE . '/index.html');
+$smarty->display(\CURRENT_TEMPLATE . '/index.html');
 
 require 'includes/application_bottom.php';

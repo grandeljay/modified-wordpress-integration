@@ -15,16 +15,27 @@ $allowed_pages = [
     Constants::BLOG_URL_POSTS,
 ];
 
-if (!\in_array($PHP_SELF, $allowed_pages, true)) {
+if (!\in_array($_SERVER['PHP_SELF'], $allowed_pages, true)) {
     return;
 }
 
-$filename = 'templates/' . \CURRENT_TEMPLATE . '/css/blog.css';
+$filenames = [
+    'templates/' . \CURRENT_TEMPLATE . '/css/blog.css',
+];
 
 if (isset($_GET['post'])) {
-    $filename = 'templates/' . \CURRENT_TEMPLATE . '/css/post.css';
+    $filenames = [
+        'templates/' . \CURRENT_TEMPLATE . '/css/post.css',
+    ];
 }
 
-$version = hash_file('crc32c', rtrim(DIR_FS_CATALOG, '/') . '/' . $filename);
-?>
-<link rel="stylesheet" type="text/css" href="<?= $filename ?>?v=<?php echo $version ?>" />
+if (isset($_GET['search'])) {
+    $filenames[] = 'templates/' . \CURRENT_TEMPLATE . '/css/search_results.css';
+}
+
+foreach ($filenames as $filename) {
+    $version = hash_file('crc32c', rtrim(DIR_FS_CATALOG, '/') . '/' . $filename);
+    ?>
+    <link rel="stylesheet" type="text/css" href="<?= $filename ?>?v=<?php echo $version ?>" />
+    <?php
+}

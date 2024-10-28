@@ -1,19 +1,21 @@
-{config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_recent"}
+<section id="posts_recent">
+    {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_recent"}
 
-{if $posts_recent}
-    {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_template"}
+    {if $posts_recent}
+        {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_template"}
 
-    <h2>{#recent_posts#}</h2>
+        <h2>{#recent_posts#}</h2>
 
-    <ul class="post_listing">
-        {foreach $posts_recent as $post}
-            {include file="module/grandeljay_wordpress_integration/blog/listing_post_template.html"}
-        {/foreach}
-    </ul>
+        <ul class="post_listing">
+            {foreach $posts_recent as $post}
+                {include file="module/grandeljay_wordpress_integration/blog/listing_post_template.html"}
+            {/foreach}
+        </ul>
 
-    <p>
-        <a href="{$posts_all_link}">{$posts_all_button}</a>
-    </p>
-{else}
-    <p>{#posts_not_found#}</p>
-{/if}
+        <div class="posts_show_all">
+            <a class="button" href="{$posts_all_link}">{$posts_all_button}</a>
+        </div>
+    {else}
+        <p>{#posts_not_found#}</p>
+    {/if}
+</section>

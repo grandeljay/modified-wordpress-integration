@@ -15,7 +15,7 @@ $allowed_pages = [
     Constants::BLOG_URL_POSTS,
 ];
 
-if (!\in_array($PHP_SELF, $allowed_pages, true)) {
+if (!\in_array($_SERVER['PHP_SELF'], $allowed_pages, true)) {
     return;
 }
 
@@ -51,7 +51,7 @@ require \sprintf(
 );
 
 $box_smarty->assign('posts_all_link', $posts_all_link->toString());
-$box_smarty->assign('posts_all_button', \xtc_image_button('button_continue.gif', $translations->get('BUTTON_POSTS_VIEW_ALL')));
+$box_smarty->assign('posts_all_button', $translations->get('BUTTON_POSTS_VIEW_ALL'));
 $box_smarty->assign('posts_recent', $posts_recent);
 
 $box_blog_posts_recent = $box_smarty->fetch(\CURRENT_TEMPLATE . '/boxes/grandeljay_wordpress_integration_blog_posts_recent.html');
