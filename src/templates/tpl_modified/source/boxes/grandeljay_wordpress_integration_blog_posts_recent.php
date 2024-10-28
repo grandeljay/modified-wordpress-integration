@@ -44,7 +44,7 @@ $posts_recent    = \array_map(
 $posts_all_link = new Url(Constants::BLOG_URL_POSTS);
 $posts_all_link->addDefaultParameters();
 
-require Blog::getModuleLanguageFilePath();
+$translations = Blog::getModuleTranslations();
 
 $box_smarty->assign('posts_all_link', $posts_all_link->toString());
 $box_smarty->assign('posts_all_button', $translations->get('BUTTON_POSTS_VIEW_ALL'));

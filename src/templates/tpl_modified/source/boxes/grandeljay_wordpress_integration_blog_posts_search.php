@@ -19,7 +19,7 @@ if (!\in_array($_SERVER['PHP_SELF'], $allowed_pages, true)) {
     return;
 }
 
-require Blog::getModuleLanguageFilePath();
+$translations = Blog::getModuleTranslations();
 
 $form_action            = Constants::BLOG_URL_POSTS;
 $form_title             = $translations->get('POSTS_SEARCH_TITLE');

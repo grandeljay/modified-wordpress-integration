@@ -345,7 +345,7 @@ class Blog
 
         global $smarty, $breadcrumb;
 
-        require Blog::getModuleLanguageFilePath();
+        $translations = Blog::getModuleTranslations();
 
         $search_title       = $translations->get('FORM_SEARCH_TITLE');
         $search_description = \sprintf(
@@ -510,14 +510,16 @@ class Blog
         return $pagination_html;
     }
 
-    public static function getModuleLanguageFilePath(): string
+    public static function getModuleTranslations(): \Grandeljay\Translator\Translations
     {
-        $filepath = \sprintf(
+        $module_language_filepath = \sprintf(
             '%s/modules/system/%s.php',
             \DIR_WS_LANGUAGES . $_SESSION['language'],
             \grandeljay_wordpress_integration::class
         );
 
-        return $filepath;
+        require $module_language_filepath;
+
+        return $translations;
     }
 }

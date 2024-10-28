@@ -20,12 +20,15 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
-require Blog::getModuleLanguageFilePath();
+$translations = Blog::getModuleTranslations();
 
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
 
-$breadcrumb->add($translations->get('BLOG'), Constants::BLOG_URL_HOME);
+$breadcrumb->add(
+    $translations->get('BLOG'),
+    Constants::BLOG_URL_HOME
+);
 
 if (isset($_GET['post'])) {
     $post = Blog::getPost($_GET['post']);
