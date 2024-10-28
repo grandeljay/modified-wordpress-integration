@@ -183,7 +183,7 @@ class Url
             $url .= $this->path;
         }
 
-        if (isset($this->query)) {
+        if (!empty($this->query)) {
             $url .= '?' . $this->query;
         }
 
