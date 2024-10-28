@@ -31,7 +31,7 @@ class Category
     {
         $link = new Url(Constants::BLOG_URL_POSTS);
         $link->addDefaultParameters();
-        $link->addParameters(['categories' => $this->id]);
+        $link->addParameters(['category_id' => $this->id]);
 
         $this->link = $link->toString();
     }

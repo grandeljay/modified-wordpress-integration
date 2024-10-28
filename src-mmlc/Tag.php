@@ -29,7 +29,7 @@ class Tag
     {
         $link = new Url(Constants::BLOG_URL_POSTS);
         $link->addDefaultParameters();
-        $link->addParameters(['tags' => $this->id]);
+        $link->addParameters(['tag_id' => $this->id]);
 
         $this->link = $link->toString();
     }
