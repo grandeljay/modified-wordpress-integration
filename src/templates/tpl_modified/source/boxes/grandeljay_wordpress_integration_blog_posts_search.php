@@ -34,9 +34,8 @@ $form_button_submit     = $translations->get('POSTS_SEARCH_SUBMIT');
 /** Search reset */
 $search_reset_parameters = $_GET;
 
-if (isset($search_reset_parameters['search'])) {
-    unset($search_reset_parameters['search']);
-}
+unset($search_reset_parameters['page']);
+unset($search_reset_parameters['search']);
 
 $search_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
 $search_reset_link   = new Url($search_reset_server . Constants::BLOG_URL_POSTS);
