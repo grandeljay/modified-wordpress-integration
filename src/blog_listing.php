@@ -23,8 +23,7 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
 
-$breadcrumb->add('Blog', Constants::BLOG_URL_HOME);
-$breadcrumb->add('Beiträge', Constants::BLOG_URL_POSTS);
+$breadcrumb->add('BLOG', Constants::BLOG_URL_HOME);
 
 if (isset($_GET['post'])) {
     $post = Blog::getPost($_GET['post']);
@@ -46,6 +45,8 @@ if (isset($_GET['post'])) {
     $category_translations    = $category->getTranslations();
     $category_id_for_language = $category_translations[$options_language_code];
 
+    $breadcrumb->add($category->getName(), $category->getLink());
+
     $options = [
         'categories' => $category_id_for_language,
         'lang'       => $options_language_code,
@@ -65,6 +66,8 @@ if (isset($_GET['post'])) {
     $tag                 = Blog::getTag($tag_id);
     $tag_translations    = $tag->getTranslations();
     $tag_id_for_language = $tag_translations[$options_language_code];
+
+    $breadcrumb->add($tag->getName(), $tag->getLink());
 
     $options = [
         'tags'     => $tag_id_for_language,
