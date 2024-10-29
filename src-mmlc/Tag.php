@@ -2,24 +2,17 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-class Tag
+class Tag extends Entity
 {
-    private int $id;
     private string $name;
     private string $link;
-    private array $translations;
 
-    public function __construct(private array $response_data)
+    public function __construct(array $response_data)
     {
-        $this->setId();
+        parent::__construct($response_data);
+
         $this->setName();
         $this->setLink();
-        $this->setTranslations();
-    }
-
-    private function setId(): void
-    {
-        $this->id = $this->response_data['id'];
     }
 
     private function setName(): void
@@ -31,19 +24,9 @@ class Tag
     {
         $link = new Url(Constants::BLOG_URL_POSTS);
         $link->addDefaultParameters();
-        $link->addParameters(['tag_id' => $this->id]);
+        $link->addParameters(['tag_id' => $this->getId()]);
 
         $this->link = $link->toString();
-    }
-
-    private function setTranslations(): void
-    {
-        $this->translations = $this->response_data['translations'];
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     public function getName(): string
@@ -56,18 +39,17 @@ class Tag
         return $this->link;
     }
 
-    public function getTranslations(): array
-    {
-        return $this->translations;
-    }
-
     public function toArray(): array
     {
-        return [
-            'id'           => $this->getId(),
-            'name'         => $this->getName(),
-            'link'         => $this->getLink(),
-            'translations' => $this->getTranslations(),
-        ];
+        $array = parent::toArray();
+        $array = \array_merge(
+            $array,
+            [
+                'name' => $this->getName(),
+                'link' => $this->getLink(),
+            ]
+        );
+
+        return $array;
     }
 }
