@@ -128,6 +128,17 @@ class Url
 
         $this->request_headers = $response_headers;
         $this->request_body    = $this->_getRequestBody($curl_response, $curl_response_header_size);
+
+        if ($this->isRequestSuccessful()) {
+            return;
+        }
+
+        $rest_api_error = \json_decode($this->request_body, true);
+
+        $error_message = $rest_api_error['message'] ?? 'Unknown';
+        $error_code    = $rest_api_error['data']['status'] ?? 0;
+
+        throw new \Exception($error_message, $error_code);
     }
 
     public function getRequestHeaders(): array
