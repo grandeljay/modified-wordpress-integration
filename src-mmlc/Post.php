@@ -83,6 +83,10 @@ class Post
     {
         $endpoint = $this->response_data['_links']['wp:featuredmedia'][0]['href'] ?? '';
 
+        if (empty($endpoint)) {
+            return;
+        }
+
         $url = new Url($endpoint);
         $url->makeRequest();
 
@@ -141,8 +145,12 @@ class Post
         return $this->translations;
     }
 
-    public function getFeaturedImage(): Media
+    public function getFeaturedImage(): Media|null
     {
+        if (!isset($this->featured_image)) {
+            return null;
+        }
+
         return $this->featured_image;
     }
 
@@ -206,8 +214,11 @@ class Post
 
     public function toArray(): array
     {
-        $featured_image = $this->getFeaturedImage()
-                               ->toArray();
+        $featured_image = $this->getFeaturedImage();
+
+        if ($featured_image instanceof Media) {
+            $featured_image = $featured_image->toArray();
+        }
 
         $date_published = $this->getDateFormatted(
             $this->getDatePublished(),
