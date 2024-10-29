@@ -2,26 +2,19 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-class Category
+class Category extends Entity
 {
-    private int $id;
     private string $name;
     private string $link;
-    private array $translations;
     private Media $featured_image;
 
-    public function __construct(private array $response_data)
+    public function __construct(array $response_data)
     {
-        $this->setId();
+        parent::__construct($response_data);
+
         $this->setName();
         $this->setLink();
-        $this->setTranslations();
         $this->setFeaturedImage();
-    }
-
-    private function setId(): void
-    {
-        $this->id = $this->response_data['id'];
     }
 
     private function setName(): void
@@ -33,14 +26,9 @@ class Category
     {
         $link = new Url(Constants::BLOG_URL_POSTS);
         $link->addDefaultParameters();
-        $link->addParameters(['category_id' => $this->id]);
+        $link->addParameters(['category_id' => $this->getId()]);
 
         $this->link = $link->toString();
-    }
-
-    private function setTranslations(): void
-    {
-        $this->translations = $this->response_data['translations'];
     }
 
     private function setFeaturedImage(): void
@@ -64,11 +52,6 @@ class Category
         $this->featured_image = $media;
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
     public function getName(): string
     {
         return $this->name;
@@ -77,11 +60,6 @@ class Category
     public function getLink(): string
     {
         return $this->link;
-    }
-
-    public function getTranslations(): array
-    {
-        return $this->translations;
     }
 
     public function getFeaturedImage(): Media|null
@@ -95,18 +73,23 @@ class Category
 
     public function toArray(): array
     {
+        $array = parent::toArray();
+
         $featured_image = $this->getFeaturedImage();
 
         if ($featured_image instanceof Media) {
             $featured_image = $featured_image->toArray();
         }
 
-        return [
-            'id'             => $this->getId(),
-            'name'           => $this->getName(),
-            'link'           => $this->getLink(),
-            'translations'   => $this->getTranslations(),
-            'featured_image' => $featured_image,
-        ];
+        $array = \array_merge(
+            $array,
+            [
+                'name'           => $this->getName(),
+                'link'           => $this->getLink(),
+                'featured_image' => $featured_image,
+            ]
+        );
+
+        return $array;
     }
 }

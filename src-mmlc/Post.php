@@ -2,9 +2,8 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-class Post
+class Post extends Entity
 {
-    private int $id;
     private string $title;
     private string $excerpt;
     private string $link;
@@ -12,7 +11,6 @@ class Post
     private Media $featured_image;
 
     private string $language;
-    private array $translations;
 
     private int $date_published;
     private int $date_modified;
@@ -20,23 +18,18 @@ class Post
     private array $categories = [];
     private array $tags       = [];
 
-    public function __construct(private array $response_data)
+    public function __construct(array $response_data)
     {
-        $this->setId();
+        parent::__construct($response_data);
+
         $this->setTitle();
         $this->setExcerpt();
         $this->setLink();
         $this->setContent();
         $this->setLanguage();
-        $this->setTranslations();
         $this->setFeaturedImage();
         $this->setDatePublished();
         $this->setDateModified();
-    }
-
-    private function setId(): void
-    {
-        $this->id = $this->response_data['id'];
     }
 
     private function setTitle(): void
@@ -74,11 +67,6 @@ class Post
         $this->language = $this->response_data['lang'];
     }
 
-    private function setTranslations(): void
-    {
-        $this->translations = $this->response_data['translations'];
-    }
-
     private function setFeaturedImage(): void
     {
         $endpoint = $this->response_data['_links']['wp:featuredmedia'][0]['href'] ?? '';
@@ -110,11 +98,6 @@ class Post
         $this->date_modified = \strtotime($this->response_data['modified']);
     }
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
     public function getTitle(): string
     {
         return $this->title;
@@ -138,11 +121,6 @@ class Post
     public function getLanguage(): string
     {
         return $this->language;
-    }
-
-    public function getTranslations(): array
-    {
-        return $this->translations;
     }
 
     public function getFeaturedImage(): Media|null
@@ -214,6 +192,8 @@ class Post
 
     public function toArray(): array
     {
+        $array = parent::toArray();
+
         $featured_image = $this->getFeaturedImage();
 
         if ($featured_image instanceof Media) {
@@ -239,16 +219,21 @@ class Post
             $this->getTags()
         );
 
-        return [
-            'title'          => $this->getTitle(),
-            'excerpt'        => $this->getExcerpt(),
-            'link'           => $this->getLink(),
-            'content'        => $this->getContent(),
-            'language'       => $this->getLanguage(),
-            'featured_image' => $featured_image,
-            'date_published' => $date_published,
-            'categories'     => $categories,
-            'tags'           => $tags,
-        ];
+        $array = \array_merge(
+            $array,
+            [
+                'title'          => $this->getTitle(),
+                'excerpt'        => $this->getExcerpt(),
+                'link'           => $this->getLink(),
+                'content'        => $this->getContent(),
+                'language'       => $this->getLanguage(),
+                'featured_image' => $featured_image,
+                'date_published' => $date_published,
+                'categories'     => $categories,
+                'tags'           => $tags,
+            ]
+        );
+
+        return $array;
     }
 }
