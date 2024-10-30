@@ -13,54 +13,16 @@
                 <a href="{$post.link}">{$post.title}</a>
             </div>
 
+            <div class="date_published">
+                <span>{#meta_published#}</span>
+                <span>{$post.date_published}</span>
+            </div>
+
             {if $post.excerpt}
                 <div class="excerpt">
                     {$post.excerpt}
                 </div>
             {/if}
-
-            <div class="meta">
-                <div class="date_posted">
-                    <span>{#meta_published#}</span>
-                    <span>{$post.date_published}</span>
-                </div>
-
-                <div class="categories">
-                    <span>
-                        {if $post.categories|count === 1}
-                            {#meta_category#}
-                        {else}
-                            {#meta_categories#}
-                        {/if}
-                    </span>
-
-                    {if $post.categories}
-                        {foreach $post.categories as $category}
-                            <span><a href="{$category.link}">{$category.name}</a></span>
-                        {/foreach}
-                    {else}
-                        <span>{#meta_none#}</span>
-                    {/if}
-                </div>
-
-                <div class="tags">
-                    <span>
-                        {if $post.tags|count === 1}
-                            {#meta_tag#}
-                        {else}
-                            {#meta_tags#}
-                        {/if}
-                    </span>
-
-                    {if $post.tags}
-                        {foreach $post.tags as $tag}
-                            <span><a href="{$tag.link}">{$tag.name}</a></span>
-                        {/foreach}
-                    {else}
-                        <span>{#meta_none#}</span>
-                    {/if}
-                </div>
-            </div>
         </div>
     </div>
 </li>
