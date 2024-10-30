@@ -19,10 +19,8 @@ $stylesheets           = [
 
 switch ($PHP_SELF) {
     case Constants::BLOG_URL_HOME:
-        $stylesheets += [
-            'grandeljay_wordpress_integration_blog_home',
-            'grandeljay_wordpress_integration_blog_listing',
-        ];
+        $stylesheets[] = 'grandeljay_wordpress_integration_blog_home';
+        $stylesheets[] = 'grandeljay_wordpress_integration_blog_listing';
 
         break;
 
