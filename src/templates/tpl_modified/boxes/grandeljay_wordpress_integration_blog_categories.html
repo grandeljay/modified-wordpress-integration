@@ -1,0 +1,29 @@
+{if $categories}
+    {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="home_categories"}
+
+    <section id="categories">
+        <h2>{#home_categories_heading#}</h2>
+
+        <ul class="category_listing">
+            {foreach $categories as $category}
+                <li class="category">
+                    {if $category.featured_image}
+                        <div class="image">
+                            <a href="{$category.link}">
+                                <img src="{$category.featured_image.source_url}" alt="{$category.featured_image.alt_text}" title="{$category.featured_image.title}">
+                            </a>
+                        </div>
+                    {/if}
+
+                    {if $category.name && $category.link}
+                        <a href="{$category.link}">
+                            <div class="name">
+                                {$category.name}
+                            </div>
+                        </a>
+                    {/if}
+                </li>
+            {/foreach}
+        </ul>
+    </section>
+{/if}

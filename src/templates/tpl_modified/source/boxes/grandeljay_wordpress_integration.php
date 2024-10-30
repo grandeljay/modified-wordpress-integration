@@ -19,6 +19,7 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
 }
 
 $includes = [
+    'grandeljay_wordpress_integration_blog_categories.php',
     'grandeljay_wordpress_integration_blog_posts_recent.php',
     'grandeljay_wordpress_integration_blog_posts_search.php',
 ];
