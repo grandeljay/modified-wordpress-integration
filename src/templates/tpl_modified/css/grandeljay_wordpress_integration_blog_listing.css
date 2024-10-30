@@ -1,42 +1,5 @@
-:root {
-    --lineHeight: 1.6;
-}
-
 /**
- * Sections
- */
-section {
-    margin: 2rem 0 4rem 0;
-}
-section:last-of-type {
-    margin-bottom: 0;
-}
-
-/**
- * Buttons
- */
-a.button,
-form > input[type="submit"] {
-    display: inline-block;
-    padding: 12px 8px;
-    margin-top: 0.8em;
-
-    background-color: #f4f4f4;
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-
-    text-align: center;
-    cursor: pointer;
-}
-a.button:hover,
-form > input[type="submit"]:hover {
-    color: #fff;
-    border-color: var(--colorPrimary);
-    background-color: var(--colorPrimary);
-}
-
-/**
- * Post Listing
+ * Listing
  */
 ul.post_listing {
     --gap: 1rem;
@@ -82,9 +45,7 @@ ul.post_listing > li {
     }
 }
 
-/**
- * Post Image
- */
+/** Post Image */
 .post > .image > img,
 .post > .image > a > img {
     display: block;
@@ -98,16 +59,12 @@ ul.post_listing > li {
     border: none;
 }
 
-/**
- * Post Content
- */
+/** Post Content */
 .post > .content {
     padding: var(--gap);
 }
 
-/**
- * Post Content Title
- */
+/** Post Content Title */
 .post > .content > .title {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -128,9 +85,7 @@ ul.post_listing > li {
     padding-top: calc(1em * var(--lineHeight));
 }
 
-/**
- * Post Content Excerpt
- */
+/** Post Content Excerpt */
 .post > .content > .excerpt {
     --maxRows: 3;
 
@@ -158,9 +113,7 @@ ul.post_listing > li {
     opacity: 0;
 }
 
-/**
- * Post Content Meta
- */
+/** Post Content Meta */
 .post > .content > .meta {
     margin-top: var(--gap);
     padding-top: var(--gap);
@@ -187,17 +140,3 @@ ul.post_listing > li {
     text-overflow: ellipsis;
     overflow: hidden;
 }
-
-/**
- * Miscellaneous
- */
-
-/** Posts Recent Show All */
-section#posts_recent .posts_show_all {
-    text-align: center;
-}
-
-section#posts_recent .posts_show_all a.button {
-    width: 50%;
-}
-/** */

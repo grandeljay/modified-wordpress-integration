@@ -1,0 +1,36 @@
+:root {
+    --lineHeight: 1.6;
+}
+
+/**
+ * Sections
+ */
+section {
+    margin: 2rem 0 4rem 0;
+}
+section:last-of-type {
+    margin-bottom: 0;
+}
+
+/**
+ * Buttons
+ */
+a.button,
+form > input[type="submit"] {
+    display: inline-block;
+    padding: 12px 8px;
+    margin-top: 0.8em;
+
+    background-color: #f4f4f4;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+
+    text-align: center;
+    cursor: pointer;
+}
+a.button:hover,
+form > input[type="submit"]:hover {
+    color: #fff;
+    border-color: var(--colorPrimary);
+    background-color: var(--colorPrimary);
+}

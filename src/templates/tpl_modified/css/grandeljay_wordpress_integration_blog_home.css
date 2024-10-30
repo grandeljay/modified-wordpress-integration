@@ -1,0 +1,12 @@
+/**
+ * Miscellaneous
+ */
+
+/** Posts Recent Show All */
+section#posts_recent .posts_show_all {
+    text-align: center;
+}
+
+section#posts_recent .posts_show_all a.button {
+    width: 50%;
+}

@@ -10,32 +10,42 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
-$allowed_pages = [
-    Constants::BLOG_URL_HOME,
-    Constants::BLOG_URL_POSTS,
+$stylesheets_relative  = 'templates/' . \CURRENT_TEMPLATE . '/css';
+$stylesheets_directory = \DIR_FS_CATALOG . $stylesheets_relative;
+$stylesheets_url       = \DIR_WS_CATALOG . $stylesheets_relative;
+$stylesheets           = [
+    'grandeljay_wordpress_integration_blog_default',
 ];
 
-if (!\in_array($_SERVER['PHP_SELF'], $allowed_pages, true)) {
-    return;
+switch ($PHP_SELF) {
+    case Constants::BLOG_URL_HOME:
+        $stylesheets += [
+            'grandeljay_wordpress_integration_blog_home',
+            'grandeljay_wordpress_integration_blog_listing',
+        ];
+
+        break;
+
+    case Constants::BLOG_URL_POSTS:
+        $stylesheets[] = 'grandeljay_wordpress_integration_blog_listing';
+
+        if (isset($_GET['post'])) {
+            $stylesheets[] = 'grandeljay_wordpress_integration_blog_post';
+        }
+
+        if (isset($_GET['search'])) {
+            $stylesheets[] = 'grandeljay_wordpress_integration_blog_search_results';
+        }
+
+        break;
 }
 
-$filenames = [
-    'templates/' . \CURRENT_TEMPLATE . '/css/grandeljay_wordpress_integration_blog.css',
-];
-
-if (isset($_GET['post'])) {
-    $filenames = [
-        'templates/' . \CURRENT_TEMPLATE . '/css/grandeljay_wordpress_integration_blog_post.css',
-    ];
-}
-
-if (isset($_GET['search'])) {
-    $filenames[] = 'templates/' . \CURRENT_TEMPLATE . '/css/grandeljay_wordpress_integration_blog_search_results.css';
-}
-
-foreach ($filenames as $filename) {
-    $version = hash_file('crc32c', rtrim(DIR_FS_CATALOG, '/') . '/' . $filename);
+foreach ($stylesheets as $filename) {
+    $relative = '/' . $filename . '.css';
+    $filepath = $stylesheets_directory . $relative;
+    $url      = $stylesheets_url . $relative;
+    $version  = \hash_file('crc32c', $filepath);
     ?>
-    <link rel="stylesheet" type="text/css" href="<?= $filename ?>?v=<?php echo $version ?>" />
+    <link rel="stylesheet" type="text/css" href="<?= $url ?>?v=<?php echo $version ?>" />
     <?php
 }
