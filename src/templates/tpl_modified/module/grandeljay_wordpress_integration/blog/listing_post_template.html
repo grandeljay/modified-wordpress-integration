@@ -1,5 +1,9 @@
 <li>
-    <div class="post">
+    {if $compact}
+        <div class="post compact">
+    {else}
+        <div class="post">
+    {/if}
         <div class="image">
             {if $post.featured_image}
                 <a href="{$post.link}">
@@ -18,7 +22,7 @@
                 <span>{$post.date_published}</span>
             </div>
 
-            {if $post.excerpt}
+            {if !$compact && $post.excerpt}
                 <div class="excerpt">
                     {$post.excerpt}
                 </div>

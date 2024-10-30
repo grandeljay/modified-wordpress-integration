@@ -25,7 +25,7 @@ include \DIR_FS_BOXES_INC . 'smarty_default.php';
  * Get the two most recent blog posts for the current language.
  */
 $posts_options   = [
-    'per_page' => 2,
+    'per_page' => 5,
     'page'     => 1,
 
     'lang'     => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,

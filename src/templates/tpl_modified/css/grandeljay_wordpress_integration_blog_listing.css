@@ -101,6 +101,11 @@ ul.post_listing > li {
 
     background-color: var(--backgroundColor);
 }
+.post.compact {
+    display: flex;
+    gap: 1rem;
+    flex-flow: row nowrap;
+}
 
 /** Post Image */
 .post > .image {
@@ -110,30 +115,30 @@ ul.post_listing > li {
 
     background-color: #d9d9d9;
 }
+.post.compact > .image {
+    flex: 0 0 auto;
+    aspect-ratio: 16/9;
+    height: calc(2em * var(--lineHeight));
+    margin: 0;
+}
 
-.post > .image > img,
 .post > .image > a > img,
 .post > .image > a {
     display: block;
 }
+.post.compact > .image > a > img,
+.post.compact > .image > a {
+    height: 100%;
+}
 
-.post > .image > img,
 .post > .image > a > img {
     width: 100%;
+}
+.post.compact > .image > a > img {
+    object-fit: cover;
+    object-position: 50%;
 }
 
 .post_listing .post > .image > a:hover {
     border-bottom: none;
 }
-
-/** Post Content */
-.post > .content {}
-
-/** Post Title */
-.post > .content > .title {}
-
-/** Post Date */
-.post > .content > .date_published {}
-
-/** Post Excerpt */
-.post > .content > .excerpt {}
