@@ -96,15 +96,22 @@ ul.post_listing > li {
 .post {
     --backgroundColor: #f4f4f4;
 
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+
     padding: 1rem;
     overflow: hidden;
 
     background-color: var(--backgroundColor);
 }
+@media (min-width: 512px) {
+    .post {
+        display: block;
+    }
+}
 .post.compact {
-    display: flex;
-    gap: 1rem;
-    flex-flow: row nowrap;
+    flex-direction: row;
 }
 
 /** Post Image */
