@@ -9,12 +9,12 @@ $translations->add('TITLE', 'grandeljay - WordPress Integration');
 $translations->add('TEXT_TITLE', 'WordPress Integration');
 
 $translations->add('BLOG', 'Blog');
-$translations->add('POSTS', 'Beiträge');
+$translations->add('POSTS', 'Artikel');
 
-$translations->add('BUTTON_POSTS_VIEW_ALL', 'Alle Beiträge ansehen');
+$translations->add('BUTTON_POSTS_VIEW_ALL', 'Alle Artikel ansehen');
 
 $translations->add('POSTS_SEARCH_TITLE', 'Suche');
-$translations->add('POSTS_SEARCH', 'Suche nach Beiträge');
+$translations->add('POSTS_SEARCH', 'Suche nach Artikel');
 $translations->add('POSTS_SEARCH_SUBMIT', 'Ergebnisse suchen');
 
 $translations->add('FORM_SEARCH_TITLE', 'Suchergebnisse');
