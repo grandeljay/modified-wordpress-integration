@@ -8,7 +8,7 @@ $translations = new Translations(__FILE__, Constants::MODULE_NAME);
 $translations->add('TITLE', 'grandeljay - WordPress Integration');
 $translations->add('TEXT_TITLE', 'WordPress Integration');
 
-$translations->add('BLOG', 'Blog');
+$translations->add('BLOG', 'News');
 $translations->add('POSTS', 'Postes');
 
 $translations->add('BUTTON_POSTS_VIEW_ALL', 'Voir tous les messages');
