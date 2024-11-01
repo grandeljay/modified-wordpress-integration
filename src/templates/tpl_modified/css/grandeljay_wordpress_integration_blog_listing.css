@@ -118,7 +118,7 @@ ul.post_listing > li {
 .post.compact > .image {
     flex: 0 0 auto;
     aspect-ratio: 16/9;
-    height: calc(2em * var(--lineHeight));
+    height: calc(3em * var(--lineHeight));
     margin: 0;
 }
 
