@@ -284,12 +284,14 @@ class Blog
             /** Taxonomies */
             if (isset($_GET['category_id']) || isset($_GET['tag_id'])) {
                 if (isset($_GET['category_id'])) {
-                    $category = self::getCategory($_GET['category_id']);
+                    global $category;
+
                     $smarty->assign('filter_category', $category->toArray());
                 }
 
                 if (isset($_GET['tag_id'])) {
-                    $tag = self::getTag($_GET['tag_id']);
+                    global $tag;
+
                     $smarty->assign('filter_tag', $tag->toArray());
                 }
 
