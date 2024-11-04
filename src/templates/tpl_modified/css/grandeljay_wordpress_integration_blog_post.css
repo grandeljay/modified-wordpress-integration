@@ -92,3 +92,14 @@ figure.wp-block-table > figcaption.wp-element-caption {
     border: 1px solid #d9d9d9;
     border-top: none;
 }
+
+/**
+ * Grid
+ */
+.hybridsupply.grid > .wp-block-group__inner-container > .wp-block-columns {
+    margin-top: 1rem;
+}
+
+.hybridsupply.grid .first > .wp-block-column {
+    padding: 1rem;
+}
