@@ -50,7 +50,10 @@ if (isset($_GET['post'])) {
     $category_translations    = $category->getTranslations();
     $category_id_for_language = $category_translations[$options_language_code];
 
-    $breadcrumb->add($category->getName(), $category->getLink());
+    $breadcrumb->add(
+        $category->getName(),
+        $category->getLink()
+    );
 
     $options = [
         'categories' => $category_id_for_language,
