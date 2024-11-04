@@ -96,9 +96,6 @@ class Blog
         $post    = new Post($post_wp);
         $post->setCategories($categories);
         $post->setTags($tags);
-        if ($post->getLanguage() !== $_SESSION['language_code']) {
-            return [];
-        }
         $post->setFeaturedImage();
 
         return $post->toArray();
