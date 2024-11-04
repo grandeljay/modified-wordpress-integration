@@ -27,7 +27,6 @@ class Post extends Entity
         $this->setLink();
         $this->setContent();
         $this->setLanguage();
-        $this->setFeaturedImage();
         $this->setDatePublished();
         $this->setDateModified();
     }
@@ -67,7 +66,17 @@ class Post extends Entity
         $this->language = $this->response_data['lang'];
     }
 
-    private function setFeaturedImage(): void
+    private function setDatePublished(): void
+    {
+        $this->date_published = \strtotime($this->response_data['date']);
+    }
+
+    private function setDateModified(): void
+    {
+        $this->date_modified = \strtotime($this->response_data['modified']);
+    }
+
+    public function setFeaturedImage(): void
     {
         $endpoint = $this->response_data['_links']['wp:featuredmedia'][0]['href'] ?? '';
 
@@ -86,16 +95,6 @@ class Post extends Entity
         $media    = new Media($media_wp);
 
         $this->featured_image = $media;
-    }
-
-    private function setDatePublished(): void
-    {
-        $this->date_published = \strtotime($this->response_data['date']);
-    }
-
-    private function setDateModified(): void
-    {
-        $this->date_modified = \strtotime($this->response_data['modified']);
     }
 
     public function getTitle(): string
