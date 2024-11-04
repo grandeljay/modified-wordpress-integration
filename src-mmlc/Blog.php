@@ -250,12 +250,7 @@ class Blog
             }
 
             $url = new Url(Constants::BLOG_URL_POSTS);
-            $url->addParameters(
-                [
-                    'lang' => $options['lang'],
-                    'page' => $page,
-                ]
-            );
+            $url->addParameters($url_parameters);
 
             $posts_page_links[$page] = $url->toString();
         }
