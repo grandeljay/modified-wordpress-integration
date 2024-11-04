@@ -439,8 +439,12 @@ class Blog
         $categories    = [];
 
         foreach ($categories_wp as $category_wp) {
-            $category    = new Category($category_wp);
             $category_id = $category_wp['id'];
+            $category    = new Category($category_wp);
+
+            if ($category->isUncategorised()) {
+                continue;
+            }
 
             $categories[$category_id] = $category;
         }

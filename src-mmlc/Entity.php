@@ -5,7 +5,8 @@ namespace Grandeljay\WordpressIntegration;
 class Entity
 {
     private int $id;
-    private array $translations;
+
+    protected array $translations;
 
     public function __construct(protected array $response_data)
     {

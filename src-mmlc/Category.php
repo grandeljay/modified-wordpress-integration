@@ -71,6 +71,14 @@ class Category extends Entity
         return $this->featured_image;
     }
 
+    public function isUncategorised(): bool
+    {
+        $contains_id_1    = \in_array(1, $this->translations);
+        $is_uncategorised = $contains_id_1;
+
+        return $is_uncategorised;
+    }
+
     public function toArray(): array
     {
         $array = parent::toArray();
