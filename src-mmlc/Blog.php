@@ -270,20 +270,13 @@ class Blog
             $posts_html = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/listing_empty.html');
         } else {
             /** Pagination */
-            $per_page = \min($options['per_page'], $posts_with_meta['total']);
-            $offset   = $per_page * ($options['page'] - 1) + 1;
-            $page     = $options['page'];
+            $pagination_html = self::getPaginationHtml(
+                $options,
+                $posts_with_meta,
+                $posts_page_links
+            );
 
-            $smarty->assign('pagination_offset_start', $offset);
-            $smarty->assign('pagination_offset_end', \min($per_page * $page, $posts_with_meta['total']));
-            $smarty->assign('pagination_posts_total', $posts_pages);
-
-            $smarty->assign('posts_page', $posts_page);
-            $smarty->assign('posts_page_links', $posts_page_links);
-            $smarty->assign('posts_pages_total', $posts_pages_total);
-
-            $pagination = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/pagination.html');
-            $smarty->assign('pagination', $pagination);
+            $smarty->assign('pagination', $pagination_html);
 
             /** Posts */
             $smarty->assign('posts', $posts);
