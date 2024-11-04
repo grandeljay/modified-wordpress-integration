@@ -19,6 +19,18 @@ if (!\in_array($_SERVER['PHP_SELF'], $allowed_pages, true)) {
     return;
 }
 
+$unallowed_parameters = [
+    'category_id',
+    'tag_id',
+    'post',
+];
+
+foreach ($unallowed_parameters as $parameter) {
+    if (isset($_GET[$parameter])) {
+        return;
+    }
+}
+
 include \DIR_FS_BOXES_INC . 'smarty_default.php';
 
 /**
