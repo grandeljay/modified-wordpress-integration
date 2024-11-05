@@ -2,8 +2,18 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-class Tag extends Entity
+class Tag extends Taxonomy
 {
+    public static function getDefaultOptions(): array
+    {
+        $options_default = \array_merge(
+            parent::getDefaultOptions(),
+            []
+        );
+
+        return $options_default;
+    }
+
     private string $name;
     private string $link;
 

@@ -71,7 +71,7 @@ class Blog
         return $response;
     }
 
-    public static function getPost(int $id): array
+    public static function getPost(int $id): Post
     {
         $endpoint = Constants::BLOG_URL_API_POSTS . $id;
 
@@ -90,7 +90,7 @@ class Blog
         $post_wp = $url->getRequestBody();
         $post    = new Post($post_wp);
 
-        return $post->toArray();
+        return $post;
     }
 
     public static function getPosts(array $options, bool $get_all_posts = false): array
@@ -440,10 +440,6 @@ class Blog
             $category_id = $category_wp['id'];
             $category    = new Category($category_wp);
 
-            if ($category->isUncategorised()) {
-                continue;
-            }
-
             $categories[$category_id] = $category;
         }
 
@@ -467,9 +463,28 @@ class Blog
         return $tag;
     }
 
-    public static function getTags(array $options): array
+    /**
+     * Returns all post tags via the WordPress REST API.
+     *
+     * @param  array $options Query parameters for the WordPress REST API.
+     *
+     * @return array An array containing all `Tag` instances.
+     *
+     * @link https://developer.wordpress.org/rest-api/reference/tags/#arguments
+     */
+    public static function getTags(array $options = []): array
     {
         $endpoint = Constants::BLOG_URL_API_TAGS;
+
+        $options_default = Tag::getDefaultOptions();
+
+        /**
+         * If the input arrays have the same string keys, then the later value
+         * for that key will overwrite the previous one.
+         *
+         * @link https://www.php.net/manual/en/function.array-merge.php
+         */
+        $options = \array_merge($options_default, $options);
 
         $url = new Url($endpoint);
         $url->addParameters($options);
@@ -483,8 +498,8 @@ class Blog
         $tags    = [];
 
         foreach ($tags_wp as $tag_wp) {
-            $tag    = new Tag($tag_wp);
             $tag_id = $tag_wp['id'];
+            $tag    = new Tag($tag_wp);
 
             $tags[$tag_id] = $tag;
         }

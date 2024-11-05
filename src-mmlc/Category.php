@@ -2,15 +2,13 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-class Category extends Entity
+class Category extends Taxonomy
 {
     public static function getDefaultOptions(): array
     {
         $options_default = \array_merge(
             parent::getDefaultOptions(),
-            [
-                'hide_empty' => true,
-            ]
+            []
         );
 
         return $options_default;

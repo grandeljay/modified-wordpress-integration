@@ -32,20 +32,27 @@ $breadcrumb->add(
 );
 
 $categories = [];
+$tags       = [];
 
 if (!isset($_GET['post'])) {
     $categories = Blog::getCategories();
+    $tags       = Blog::getTags();
 }
 
+$breadcrumb_title = 'UNKNOWN_TITLE';
+$breadcrumb_link  = '#';
+
 if (isset($_GET['post'])) {
-    $post = Blog::getPost($_GET['post']);
+    $post       = Blog::getPost($_GET['post']);
+    $post_array = $post->toArray();
+
+    $breadcrumb_title = $post->getTitle();
+    $breadcrumb_link  = $post->getLink();
 
     if (empty($post)) {
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/not_found.html');
     } else {
-        $breadcrumb->add($post['title'], $post['link']);
-
-        $smarty->assign('post', $post);
+        $smarty->assign('post', $post_array);
 
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
     }
@@ -53,72 +60,54 @@ if (isset($_GET['post'])) {
     $category_id = $_GET['category_id'];
     $category    = $categories[$category_id];
 
-    $breadcrumb->add(
-        $category->getName(),
-        $category->getLink()
-    );
+    $breadcrumb_title = $category->getName();
+    $breadcrumb_link  = $category->getLink();
 
-    $posts_options   = [
+    $posts_options = [
         'categories' => $category->getIdForLanguage(),
         'per_page'   => 8,
         'page'       => $_GET['page'] ?? 1,
     ];
+} elseif (isset($_GET['tag_id'])) {
+    $tag_id = $_GET['tag_id'];
+    $tag    = $tags[$tag_id];
+
+    $breadcrumb_title = $tag->getName();
+    $breadcrumb_link  = $tag->getLink();
+
+    $posts_options = [
+        'tags'     => $tag->getIdForLanguage(),
+        'per_page' => 8,
+        'page'     => $_GET['page'] ?? 1,
+    ];
+} elseif (isset($_GET['search'])) {
+    $breadcrumb_url = new Url(Constants::BLOG_URL_POSTS);
+    $breadcrumb_url->addParameters(['search' => $_GET['search']]);
+
+    $breadcrumb_title = $_GET['search'];
+    $breadcrumb_link  = $breadcrumb_url->toString();
+
+    $posts_options = [
+        'search'   => $_GET['search'],
+        'per_page' => 8,
+        'page'     => $_GET['page'] ?? 1,
+    ];
+} else {
+    $breadcrumb_title = $translations->get('POSTS');
+    $breadcrumb_link  = Constants::BLOG_URL_POSTS;
+
+    $posts_options = [
+        'per_page' => 8,
+        'page'     => $_GET['page'] ?? 1,
+    ];
+}
+
+if (!isset($_GET['post'])) {
+    $breadcrumb->add($breadcrumb_title, $breadcrumb_link);
+
     $posts_with_meta = Blog::getPosts($posts_options);
 
     $main_content = Blog::getListingHtml($posts_with_meta, $posts_options);
-} elseif (isset($_GET['tag_id'])) {
-    $tag_id              = $_GET['tag_id'];
-    $tag                 = Blog::getTag($tag_id);
-    $tag_translations    = $tag->getTranslations();
-    $tag_id_for_language = $tag_translations[$language_code];
-
-    $breadcrumb->add($tag->getName(), $tag->getLink());
-
-    $options = [
-        'tags'     => $tag_id_for_language,
-        'lang'     => $language_code,
-
-        'per_page' => 8,
-        'page'     => $_GET['page'] ?? 1,
-
-        'orderby'  => 'date',
-        'order'    => 'desc',
-    ];
-
-    $main_content = Blog::getPostsHtml($options);
-} elseif (isset($_GET['search'])) {
-    $breadcrumb_title = $_GET['search'];
-    $breadcrumb_url   = new Url(Constants::BLOG_URL_POSTS);
-    $breadcrumb_url->addParameters(['search' => $_GET['search']]);
-    $breadcrumb->add($_GET['search'], $breadcrumb_url->toString());
-
-    $options = [
-        'search'   => $_GET['search'],
-        'type'     => 'post',
-        'lang'     => $language_code,
-
-        'per_page' => 8,
-        'page'     => $_GET['page'] ?? 1,
-
-        'orderby'  => 'date',
-        'order'    => 'desc',
-    ];
-
-    $main_content = Blog::getPostsSearchHtml($options);
-} else {
-    $breadcrumb->add($translations->get('POSTS'), Constants::BLOG_URL_POSTS);
-
-    $options = [
-        'lang'     => $language_code,
-
-        'per_page' => 8,
-        'page'     => $_GET['page'] ?? 1,
-
-        'orderby'  => 'date',
-        'order'    => 'desc',
-    ];
-
-    $main_content = Blog::getPostsHtml($options);
 }
 
 /**

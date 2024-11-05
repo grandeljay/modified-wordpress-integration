@@ -16,22 +16,23 @@ if (Constants::BLOG_URL_HOME !== $_SERVER['PHP_SELF']) {
 
 include \DIR_FS_BOXES_INC . 'smarty_default.php';
 
-$categories_options = [
+$categories_options     = [
     'per_page' => 9,
     'page'     => 1,
-
-    'lang'     => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
     '_embed'   => true,
-
-    'orderby'  => 'count',
-    'order'    => 'desc',
 ];
-$categories         = Blog::getCategories($categories_options);
-$categories_array   = \array_map(
+$categories_all         = Blog::getCategories($categories_options);
+$categories_categorised = \array_filter(
+    $categories_all,
+    function (Category $category) {
+        return !$category->isUncategorised();
+    }
+);
+$categories_array       = \array_map(
     function (Category $category) {
         return $category->toArray();
     },
-    $categories
+    $categories_categorised
 );
 
 $box_smarty->assign('categories', $categories_array);
