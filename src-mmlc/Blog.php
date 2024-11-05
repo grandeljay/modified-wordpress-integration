@@ -93,25 +93,19 @@ class Blog
         return $post;
     }
 
-    public static function getPosts(array $options, bool $get_all_posts = false): array
+    public static function getPosts(array $options = [], bool $get_all_posts = false): array
     {
         $endpoint = Constants::BLOG_URL_API_POSTS;
 
-        /**
-         * `per_page` defaults to 10.
-         *
-         * @link https://developer.wordpress.org/rest-api/reference/posts/
-         */
-        if (!isset($options['per_page'])) {
-            $options['per_page'] = 10;
-        }
+        $options_default = Post::getDefaultOptions();
 
         /**
-         * Also fetch featured image, etc.
+         * If the input arrays have the same string keys, then the later value
+         * for that key will overwrite the previous one.
          *
-         * @link https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_embed
+         * @link https://www.php.net/manual/en/function.array-merge.php
          */
-        $options['_embed'] = true;
+        $options = \array_merge($options_default, $options);
 
         $url = new Url($endpoint);
         $url->addParameters($options);
@@ -615,26 +609,30 @@ class Blog
 
     public static function getFilterHtml(array $posts): string
     {
+        global $smarty;
+
         $html_filter = '';
 
         if (isset($_GET['category_id']) || isset($_GET['tag_id'])) {
-            $smarty = new \smarty();
-            $smarty->assign('language', $_SESSION['language']);
-
             if (isset($_GET['category_id'])) {
-                global $category;
-
-                $smarty->assign('filter_category', $category->toArray());
-
-                /** Category Tags */
-                $category_tags_array = self::getCategoryTags($posts, true);
-                $smarty->assign('category_tags', $category_tags_array);
+                // global $categories;
+                //
+                // /** Category Tags */
+                // $category_tags_array = self::getCategoryTags($posts, true);
+                // $smarty->assign('category_tags', $category_tags_array);
             }
 
             if (isset($_GET['tag_id'])) {
-                global $tag;
+                global $tags;
 
-                $smarty->assign('filter_tag', $tag->toArray());
+                $filter_tags = \array_map(
+                    function (Tag $tag) {
+                        return $tag->toArray();
+                    },
+                    $tags
+                );
+
+                $smarty->assign('filter_tags', $filter_tags);
             }
 
             /** Filter reset */
@@ -670,8 +668,7 @@ class Blog
 
     public static function getListingHtml(array $posts_with_meta, $options): string
     {
-        $smarty = new \smarty();
-        $smarty->assign('language', $_SESSION['language']);
+        global $smarty;
 
         /** Pagination */
         $html_pagination = self::getPaginationHtml($options, $posts_with_meta);

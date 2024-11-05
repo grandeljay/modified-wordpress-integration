@@ -9,7 +9,9 @@ class Post extends Entity
         $options_default = \array_merge(
             parent::getDefaultOptions(),
             [
-                'hide_empty' => true,
+                'per_page' => 8,
+                'page'     => $_GET['page'] ?? 1,
+                '_embed' => true,
             ]
         );
 

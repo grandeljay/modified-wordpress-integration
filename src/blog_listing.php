@@ -65,8 +65,6 @@ if (isset($_GET['post'])) {
 
     $posts_options = [
         'categories' => $category->getIdForLanguage(),
-        'per_page'   => 8,
-        'page'       => $_GET['page'] ?? 1,
     ];
 } elseif (isset($_GET['tag_id'])) {
     $tag_id = $_GET['tag_id'];
@@ -76,9 +74,7 @@ if (isset($_GET['post'])) {
     $breadcrumb_link  = $tag->getLink();
 
     $posts_options = [
-        'tags'     => $tag->getIdForLanguage(),
-        'per_page' => 8,
-        'page'     => $_GET['page'] ?? 1,
+        'tags' => $_GET['tag_id'],
     ];
 } elseif (isset($_GET['search'])) {
     $breadcrumb_url = new Url(Constants::BLOG_URL_POSTS);
@@ -88,18 +84,13 @@ if (isset($_GET['post'])) {
     $breadcrumb_link  = $breadcrumb_url->toString();
 
     $posts_options = [
-        'search'   => $_GET['search'],
-        'per_page' => 8,
-        'page'     => $_GET['page'] ?? 1,
+        'search' => $_GET['search'],
     ];
 } else {
     $breadcrumb_title = $translations->get('POSTS');
     $breadcrumb_link  = Constants::BLOG_URL_POSTS;
 
-    $posts_options = [
-        'per_page' => 8,
-        'page'     => $_GET['page'] ?? 1,
-    ];
+    $posts_options = [];
 }
 
 if (!isset($_GET['post'])) {
