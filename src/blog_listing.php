@@ -45,7 +45,7 @@ if (isset($_GET['post'])) {
     }
 } elseif (isset($_GET['category_id'])) {
     $category_id              = $_GET['category_id'];
-    $category                 = Blog::getCategory($category_id);
+    $category                 = $categories[$category_id];
     $category_translations    = $category->getTranslations();
     $category_id_for_language = $category_translations[$language_code];
 
