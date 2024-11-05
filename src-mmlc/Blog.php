@@ -393,9 +393,28 @@ class Blog
         return $category;
     }
 
-    public static function getCategories(array $options): array
+    /**
+     * Returns all post categories via the WordPress REST API.
+     *
+     * @param  array $options Query parameters for the WordPress REST API.
+     *
+     * @return array An array containing all `Category` instances.
+     *
+     * @link https://developer.wordpress.org/rest-api/reference/categories/#arguments
+     */
+    public static function getCategories(array $options = []): array
     {
         $endpoint = Constants::BLOG_URL_API_CATEGORIES;
+
+        $options_default = Category::getDefaultOptions();
+
+        /**
+         * If the input arrays have the same string keys, then the later value
+         * for that key will overwrite the previous one.
+         *
+         * @link https://www.php.net/manual/en/function.array-merge.php
+         */
+        $options = \array_merge($options_default, $options);
 
         $url = new Url($endpoint);
         $url->addParameters($options);

@@ -34,15 +34,7 @@ $breadcrumb->add(
 $categories = [];
 
 if (!isset($_GET['post'])) {
-    /**
-     * For later use
-     */
-    $options = [
-        'lang'     => $language_code,
-        'per_page' => 100,
-    ];
-
-    $categories = Blog::getCategories($options);
+    $categories = Blog::getCategories();
 }
 
 if (isset($_GET['post'])) {
