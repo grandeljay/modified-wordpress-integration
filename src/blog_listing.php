@@ -31,6 +31,32 @@ $breadcrumb->add(
     Constants::BLOG_URL_HOME
 );
 
+$categories = [];
+
+if (!isset($_GET['post'])) {
+    /**
+     * For later use
+     */
+    $options = [
+        'lang'     => $language_code,
+        'per_page' => 100,
+    ];
+
+    $categories = Blog::getCategories($options);
+
+    /**
+     * Filter
+     */
+    $categories_array = \array_map(
+        function (Category $category) {
+            return $category->toArray();
+        },
+        $categories
+    );
+
+    $smarty->assign('categories', $categories_array);
+}
+
 if (isset($_GET['post'])) {
     $post = Blog::getPost($_GET['post']);
 

@@ -1,6 +1,15 @@
 /**
-* Listing
-*/
+ * Filter
+ */
+.filter {
+    padding: 1rem;
+
+    background-color: #f4f4f4;
+}
+
+/**
+ * Listing
+ */
 ul.category_listing,
 ul.post_listing {
     --gap: 1rem;

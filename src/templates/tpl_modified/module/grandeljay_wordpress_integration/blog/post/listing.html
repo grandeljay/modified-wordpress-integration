@@ -16,6 +16,14 @@
 
                 <a href="{$filter_reset_link}">{#filter_reset#}</a>
             </p>
+
+            {if $categories}
+                <select>
+                    {foreach $categories as $category}
+                        <option value="{$category.id}">{$category.name}</option>
+                    {/foreach}
+                </select>
+            {/if}
         </div>
     {/if}
 
