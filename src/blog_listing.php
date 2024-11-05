@@ -50,10 +50,8 @@ if (isset($_GET['post'])) {
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
     }
 } elseif (isset($_GET['category_id'])) {
-    $category_id              = $_GET['category_id'];
-    $category                 = $categories[$category_id];
-    $category_translations    = $category->getTranslations();
-    $category_id_for_language = $category_translations[$language_code];
+    $category_id = $_GET['category_id'];
+    $category    = $categories[$category_id];
 
     $breadcrumb->add(
         $category->getName(),
@@ -61,7 +59,7 @@ if (isset($_GET['post'])) {
     );
 
     $options = [
-        'categories' => $category_id_for_language,
+        'categories' => $category->getIdForLanguage(),
         'lang'       => $language_code,
 
         'per_page'   => 8,

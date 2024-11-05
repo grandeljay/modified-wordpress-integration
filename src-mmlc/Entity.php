@@ -29,6 +29,17 @@ class Entity
         return $this->id;
     }
 
+    public function getIdForLanguage(string $language_code = null): int
+    {
+        if (null === $language_code) {
+            $language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
+        }
+
+        $id_for_language = $this->translations[$language_code] ?? $this->id;
+
+        return $id_for_language;
+    }
+
     public function getTranslations(): array
     {
         return $this->translations;
