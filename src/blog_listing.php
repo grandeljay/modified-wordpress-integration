@@ -27,7 +27,7 @@ $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
 
 $breadcrumb->add(
-    $translations->get('BLOG'),
+    $translations->get('TITLE_BLOG'),
     Constants::BLOG_URL_HOME
 );
 
@@ -47,15 +47,17 @@ if (!isset($_GET['post'])) {
     $smarty->assign('tags', $tags_array);
 }
 
-$breadcrumb_title = 'UNKNOWN_TITLE';
-$breadcrumb_link  = '#';
+$breadcrumb_title = 'UNKNOWN';
+$breadcrumb_link  = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
 
 if (isset($_GET['post'])) {
     $post       = Blog::getPost($_GET['post']);
     $post_array = $post->toArray();
 
-    $breadcrumb_title = $post->getTitle();
-    $breadcrumb_link  = $post->getLink();
+    $breadcrumb->add(
+        $post->getTitle(),
+        $post->getLink()
+    );
 
     if (empty($post)) {
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/not_found.html');
@@ -104,7 +106,7 @@ if (isset($_GET['post'])) {
         'search' => $_GET['search'],
     ];
 } else {
-    $breadcrumb_title = $translations->get('POSTS');
+    $breadcrumb_title = $translations->get('TITLE_BLOG_LISTING');
     $breadcrumb_link  = Constants::BLOG_URL_POSTS;
 
     $posts_options = [];
