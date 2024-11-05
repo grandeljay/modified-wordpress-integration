@@ -594,59 +594,43 @@ class Blog
 
     public static function getFilterHtml(array $posts): string
     {
-        global $smarty;
+        global $smarty, $tags;
 
-        $html_filter = '';
+        $filter_tags = \array_map(
+            function (Tag $tag) {
+                return $tag->toArray();
+            },
+            $tags
+        );
 
-        if (isset($_GET['category_id']) || isset($_GET['tag_id'])) {
-            if (isset($_GET['category_id'])) {
-                // global $categories;
-                //
-                // /** Category Tags */
-                // $category_tags_array = self::getCategoryTags($posts, true);
-                // $smarty->assign('category_tags', $category_tags_array);
-            }
+        $smarty->assign('filter_tags', $filter_tags);
 
-            if (isset($_GET['tag_id'])) {
-                global $tags;
+        /** Filter reset */
+        $filter_reset_parameters = $_GET;
 
-                $filter_tags = \array_map(
-                    function (Tag $tag) {
-                        return $tag->toArray();
-                    },
-                    $tags
-                );
+        unset($filter_reset_parameters['page']);
+        unset($filter_reset_parameters['category_id']);
+        unset($filter_reset_parameters['tag_id']);
 
-                $smarty->assign('filter_tags', $filter_tags);
-            }
+        $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
+        $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
+        $filter_reset_link->addParameters($filter_reset_parameters);
+        $smarty->assign('filter_reset_link', $filter_reset_link->toString());
 
-            /** Filter reset */
-            $filter_reset_parameters = $_GET;
+        /** Filter categories */
+        global $categories;
 
-            unset($filter_reset_parameters['page']);
-            unset($filter_reset_parameters['category_id']);
-            unset($filter_reset_parameters['tag_id']);
+        $categories_array = \array_map(
+            function (Category $category) {
+                return $category->toArray();
+            },
+            $categories
+        );
 
-            $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
-            $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
-            $filter_reset_link->addParameters($filter_reset_parameters);
-            $smarty->assign('filter_reset_link', $filter_reset_link->toString());
+        $smarty->assign('categories', $categories_array);
 
-            /** Filter categories */
-            global $categories;
-
-            $categories_array = \array_map(
-                function (Category $category) {
-                    return $category->toArray();
-                },
-                $categories
-            );
-
-            $smarty->assign('categories', $categories_array);
-
-            /** Get HTML */
-            $html_filter = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/filter.html');
-        }
+        /** Get HTML */
+        $html_filter = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/filter.html');
 
         return $html_filter;
     }

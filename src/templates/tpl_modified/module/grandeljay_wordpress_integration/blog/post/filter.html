@@ -1,6 +1,8 @@
 {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_filter"}
 
 <div class="filter">
+    <h2>FILTER</h2>
+
     <form method="get">
         {if $filter_category.id}
             <input type="hidden" name="category_id" value="{$filter_category.id}">
