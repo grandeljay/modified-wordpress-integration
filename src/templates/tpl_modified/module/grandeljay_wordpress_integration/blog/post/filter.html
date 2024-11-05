@@ -14,21 +14,31 @@
             <a href="{$filter_reset_link}">{#filter_reset#}</a>
         </p>
 
-        {if $categories}
-            <select>
-                {foreach $categories as $category}
-                    <option value="{$category.id}">{$category.name}</option>
-                {/foreach}
-            </select>
-        {/if}
+        <form method="get">
+            <input type="hidden" name="category_id" value="{$filter_category.id}">
 
-        {if $category_tags}
-            {foreach $category_tags as $category_tag}
-                <label>
-                    <input type="checkbox" name="tag_id[]" value="{$category_tag.id}">
-                    {$category_tag.name}
-                </label>
-            {/foreach}
-        {/if}
+            {*if $categories}
+                <select name="category_id">
+                    {foreach $categories as $category}
+                        {if $category.id === (int) $smarty.get.category_id}
+                            <option value="{$category.id}" selected>{$category.name}</option>
+                        {else}
+                            <option value="{$category.id}">{$category.name}</option>
+                        {/if}
+                    {/foreach}
+                </select>
+            {/if*}
+
+            {if $category_tags}
+                {foreach $category_tags as $category_tag}
+                    <label>
+                        <input type="checkbox" name="tag_id" value="{$category_tag.id}">
+                        {$category_tag.name}
+                    </label>
+                {/foreach}
+            {/if}
+
+            <input type="submit" value="SUBMIT">
+        </form>
     </div>
 {/if}
