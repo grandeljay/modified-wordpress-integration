@@ -21,6 +21,7 @@ $categories_options = [
     'page'     => 1,
 
     'lang'     => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+    '_embed'   => true,
 
     'orderby'  => 'count',
     'order'    => 'desc',

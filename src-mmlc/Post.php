@@ -29,6 +29,9 @@ class Post extends Entity
         $this->setLanguage();
         $this->setDatePublished();
         $this->setDateModified();
+
+        $this->setFeaturedImage();
+        $this->setTerms();
     }
 
     private function setTitle(): void
@@ -76,25 +79,60 @@ class Post extends Entity
         $this->date_modified = \strtotime($this->response_data['modified']);
     }
 
-    public function setFeaturedImage(): void
+    private function setFeaturedImage(): void
     {
-        $endpoint = $this->response_data['_links']['wp:featuredmedia'][0]['href'] ?? '';
-
-        if (empty($endpoint)) {
+        if (empty($this->response_data['_embedded']['wp:featuredmedia'])) {
             return;
         }
 
-        $url = new Url($endpoint);
-        $url->makeRequest();
-
-        if (!$url->isRequestSuccessful()) {
-            return;
-        }
-
-        $media_wp = $url->getRequestBody();
+        $media_wp = $this->response_data['_embedded']['wp:featuredmedia'][0];
         $media    = new Media($media_wp);
 
         $this->featured_image = $media;
+    }
+
+    private function setTerms(): void
+    {
+        if (empty($this->response_data['_embedded']['wp:term'])) {
+            return;
+        }
+
+        $this->setTermCategories();
+        $this->setTermTags();
+    }
+
+    private function setTermCategories(): void
+    {
+        if (empty($this->response_data['_embedded']['wp:term'][0])) {
+            return;
+        }
+
+        $this->categories = [];
+
+        $categories_wp = $this->response_data['_embedded']['wp:term'][0];
+
+        foreach ($categories_wp as $category_wp) {
+            $category = new Category($category_wp);
+
+            $this->categories[] = $category;
+        }
+    }
+
+    private function setTermTags(): void
+    {
+        if (empty($this->response_data['_embedded']['wp:term'][1])) {
+            return;
+        }
+
+        $this->tags = [];
+
+        $tags_wp = $this->response_data['_embedded']['wp:term'][1];
+
+        foreach ($tags_wp as $tag_wp) {
+            $tag = new Tag($tag_wp);
+
+            $this->tags[] = $tag;
+        }
     }
 
     public function getTitle(): string

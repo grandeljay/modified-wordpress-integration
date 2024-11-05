@@ -14,6 +14,7 @@ class Category extends Entity
 
         $this->setName();
         $this->setLink();
+
         $this->setFeaturedImage();
     }
 
@@ -33,20 +34,11 @@ class Category extends Entity
 
     private function setFeaturedImage(): void
     {
-        if (!isset($this->response_data['featured_image']['id']) || 0 === $this->response_data['featured_image']['id']) {
+        if (empty($this->response_data['_embedded']['wp:featuredmedia'])) {
             return;
         }
 
-        $endpoint = Constants::BLOG_URL_API_MEDIA . $this->response_data['featured_image']['id'];
-
-        $url = new Url($endpoint);
-        $url->makeRequest();
-
-        if (!$url->isRequestSuccessful()) {
-            return;
-        }
-
-        $media_wp = $url->getRequestBody();
+        $media_wp = $this->response_data['_embedded']['wp:featuredmedia'][0];
         $media    = new Media($media_wp);
 
         $this->featured_image = $media;

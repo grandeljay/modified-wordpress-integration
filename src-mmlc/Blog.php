@@ -76,27 +76,19 @@ class Blog
         $endpoint = Constants::BLOG_URL_API_POSTS . $id;
 
         $url = new Url($endpoint);
+        $url->addParameters(
+            [
+                '_embed' => true,
+            ]
+        );
         $url->makeRequest();
 
         if (!$url->isRequestSuccessful()) {
             return [];
         }
 
-        $categories_options = [
-            'lang' => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
-        ];
-        $categories         = self::getCategories($categories_options);
-
-        $tags_options = [
-            'lang' => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
-        ];
-        $tags         = self::getTags($tags_options);
-
         $post_wp = $url->getRequestBody();
         $post    = new Post($post_wp);
-        $post->setCategories($categories);
-        $post->setTags($tags);
-        $post->setFeaturedImage();
 
         return $post->toArray();
     }
@@ -114,6 +106,13 @@ class Blog
             $options['per_page'] = 10;
         }
 
+        /**
+         * Also fetch featured image, etc.
+         *
+         * @link https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_embed
+         */
+        $options['_embed'] = true;
+
         $url = new Url($endpoint);
         $url->addParameters($options);
         $url->makeRequest();
@@ -126,22 +125,8 @@ class Blog
         $posts_wp   = $url->getRequestBody();
         $posts      = [];
 
-        $categories_options = [
-            'lang' => $options['lang'],
-        ];
-        $categories         = self::getCategories($categories_options);
-
-        $tags_options = [
-            'lang' => $options['lang'],
-        ];
-        $tags         = self::getTags($tags_options);
-
         foreach ($posts_wp as $post_wp) {
-            $post = new Post($post_wp);
-            $post->setCategories($categories);
-            $post->setTags($tags);
-            $post->setFeaturedImage();
-
+            $post    = new Post($post_wp);
             $posts[] = $post;
         }
 
@@ -167,11 +152,7 @@ class Blog
                 $posts_wp = $url->getRequestBody();
 
                 foreach ($posts_wp as $post_wp) {
-                    $post = new Post($post_wp);
-                    $post->setCategories($categories);
-                    $post->setTags($tags);
-                    $post->setFeaturedImage();
-
+                    $post    = new Post($post_wp);
                     $posts[] = $post;
                 }
             }
