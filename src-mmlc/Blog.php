@@ -260,32 +260,17 @@ class Blog
             /** Posts */
             $smarty->assign('posts', $posts);
 
-            /** Taxonomies */
-            if (isset($_GET['category_id']) || isset($_GET['tag_id'])) {
-                if (isset($_GET['category_id'])) {
-                    global $category;
+            /** Filter reset */
+            $filter_reset_parameters = $_GET;
 
-                    $smarty->assign('filter_category', $category->toArray());
-                }
+            unset($filter_reset_parameters['page']);
+            unset($filter_reset_parameters['category_id']);
+            unset($filter_reset_parameters['tag_id']);
 
-                if (isset($_GET['tag_id'])) {
-                    global $tag;
-
-                    $smarty->assign('filter_tag', $tag->toArray());
-                }
-
-                /** Filter reset */
-                $filter_reset_parameters = $_GET;
-
-                unset($filter_reset_parameters['page']);
-                unset($filter_reset_parameters['category_id']);
-                unset($filter_reset_parameters['tag_id']);
-
-                $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
-                $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
-                $filter_reset_link->addParameters($filter_reset_parameters);
-                $smarty->assign('filter_reset_link', $filter_reset_link->toString());
-            }
+            $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
+            $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
+            $filter_reset_link->addParameters($filter_reset_parameters);
+            $smarty->assign('filter_reset_link', $filter_reset_link->toString());
 
             $posts_html = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/listing.html');
         }

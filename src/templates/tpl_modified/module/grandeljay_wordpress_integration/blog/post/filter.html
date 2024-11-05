@@ -1,44 +1,36 @@
-{if $filter_category || $filter_tag}
-    {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_filter"}
+{config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_filter"}
 
-    <div class="filter">
-        <p>
-            {if $filter_category}
-                {#filter_by_category#|sprintf:"<strong>`$filter_category.name`</strong>"}
-            {/if}
-
-            {if $filter_tag}
-                {#filter_by_tag#|sprintf:"<strong>`$filter_tag.name`</strong>"}
-            {/if}
-
-            <a href="{$filter_reset_link}">{#filter_reset#}</a>
-        </p>
-
-        <form method="get">
+<div class="filter">
+    <form method="get">
+        {if $filter_category.id}
             <input type="hidden" name="category_id" value="{$filter_category.id}">
+        {/if}
 
-            {*if $categories}
-                <select name="category_id">
-                    {foreach $categories as $category}
-                        {if $category.id === (int) $smarty.get.category_id}
-                            <option value="{$category.id}" selected>{$category.name}</option>
-                        {else}
-                            <option value="{$category.id}">{$category.name}</option>
-                        {/if}
-                    {/foreach}
-                </select>
-            {/if*}
-
-            {if $category_tags}
-                {foreach $category_tags as $category_tag}
-                    <label>
-                        <input type="checkbox" name="tag_id" value="{$category_tag.id}">
-                        {$category_tag.name}
+        {if $filter_tags}
+            {foreach $filter_tags as $filter_tag}
+                <label>
+                    {if $filter_tag.is_active}
+                        <input type="radio" name="tag_id" value="{$filter_tag.id}" checked="checked">
+                        {$filter_tag.name}
+                    {else}
+                        <input type="radio" name="tag_id" value="{$filter_tag.id}">
+                        {$filter_tag.name}
+                    {/if}
                     </label>
-                {/foreach}
-            {/if}
+            {/foreach}
+        {/if}
 
-            <input type="submit" value="SUBMIT">
-        </form>
-    </div>
-{/if}
+        {if $category_tags}
+            {foreach $category_tags as $category_tag}
+                <label>
+                    <input type="checkbox" name="tag_id" value="{$category_tag.id}">
+                    {$category_tag.name}
+                </label>
+            {/foreach}
+        {/if}
+
+        <input type="submit" value="SUBMIT">
+    </form>
+
+    <a href="{$filter_reset_link}">{#filter_reset#}</a>
+</div>

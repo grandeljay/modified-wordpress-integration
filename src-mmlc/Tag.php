@@ -49,14 +49,37 @@ class Tag extends Taxonomy
         return $this->link;
     }
 
+    /**
+     * Returns whether the current tag was queried via the url.
+     *
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        if (!isset($_GET['tag_id'])) {
+            return false;
+        }
+
+        $passed_tag_ids = \explode(',', $_GET['tag_id']);
+
+        foreach ($passed_tag_ids as $passed_tag_id) {
+            if (\in_array($passed_tag_id, $this->translations)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function toArray(): array
     {
         $array = parent::toArray();
         $array = \array_merge(
             $array,
             [
-                'name' => $this->getName(),
-                'link' => $this->getLink(),
+                'name'      => $this->getName(),
+                'link'      => $this->getLink(),
+                'is_active' => $this->isActive(),
             ]
         );
 

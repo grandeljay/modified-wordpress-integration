@@ -37,6 +37,14 @@ $tags       = [];
 if (!isset($_GET['post'])) {
     $categories = Blog::getCategories();
     $tags       = Blog::getTags();
+    $tags_array = \array_map(
+        function (Tag $tag) {
+            return $tag->toArray();
+        },
+        $tags
+    );
+
+    $smarty->assign('tags', $tags_array);
 }
 
 $breadcrumb_title = 'UNKNOWN_TITLE';
@@ -67,11 +75,20 @@ if (isset($_GET['post'])) {
         'categories' => $category->getIdForLanguage(),
     ];
 } elseif (isset($_GET['tag_id'])) {
-    $tag_id = $_GET['tag_id'];
-    $tag    = $tags[$tag_id];
+    $tag_ids   = \explode(',', $_GET['tag_id']);
+    $tag_names = [];
 
-    $breadcrumb_title = $tag->getName();
-    $breadcrumb_link  = $tag->getLink();
+    foreach ($tag_ids as $tag_id) {
+        $tag                = $tags[$tag_id];
+        $tag_names[$tag_id] = $tag->getName();
+    }
+
+    $breadcrumb_url = new Url(Constants::BLOG_URL_POSTS);
+    $breadcrumb_url->addDefaultParameters();
+    $breadcrumb_url->addParameters($_GET);
+
+    $breadcrumb_title = \implode(', ', $tag_names);
+    $breadcrumb_link  = $breadcrumb_url->toString();
 
     $posts_options = [
         'tags' => $_GET['tag_id'],
