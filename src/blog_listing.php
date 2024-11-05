@@ -20,10 +20,11 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
-$translations = Blog::getModuleTranslations();
+$translations  = Blog::getModuleTranslations();
+$language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
 
 $smarty = new \Smarty();
-$smarty->assign('language', $_SESSION['language']);
+$smarty->assign('language', $language_code);
 
 $breadcrumb->add(
     $translations->get('BLOG'),
@@ -43,12 +44,10 @@ if (isset($_GET['post'])) {
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
     }
 } elseif (isset($_GET['category_id'])) {
-    $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
-
     $category_id              = $_GET['category_id'];
     $category                 = Blog::getCategory($category_id);
     $category_translations    = $category->getTranslations();
-    $category_id_for_language = $category_translations[$options_language_code];
+    $category_id_for_language = $category_translations[$language_code];
 
     $breadcrumb->add(
         $category->getName(),
@@ -57,7 +56,7 @@ if (isset($_GET['post'])) {
 
     $options = [
         'categories' => $category_id_for_language,
-        'lang'       => $options_language_code,
+        'lang'       => $language_code,
 
         'per_page'   => 8,
         'page'       => $_GET['page'] ?? 1,
@@ -68,18 +67,16 @@ if (isset($_GET['post'])) {
 
     $main_content = Blog::getPostsHtml($options);
 } elseif (isset($_GET['tag_id'])) {
-    $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
-
     $tag_id              = $_GET['tag_id'];
     $tag                 = Blog::getTag($tag_id);
     $tag_translations    = $tag->getTranslations();
-    $tag_id_for_language = $tag_translations[$options_language_code];
+    $tag_id_for_language = $tag_translations[$language_code];
 
     $breadcrumb->add($tag->getName(), $tag->getLink());
 
     $options = [
         'tags'     => $tag_id_for_language,
-        'lang'     => $options_language_code,
+        'lang'     => $language_code,
 
         'per_page' => 8,
         'page'     => $_GET['page'] ?? 1,
@@ -90,8 +87,6 @@ if (isset($_GET['post'])) {
 
     $main_content = Blog::getPostsHtml($options);
 } elseif (isset($_GET['search'])) {
-    $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
-
     $breadcrumb_title = $_GET['search'];
     $breadcrumb_url   = new Url(Constants::BLOG_URL_POSTS);
     $breadcrumb_url->addParameters(['search' => $_GET['search']]);
@@ -100,7 +95,7 @@ if (isset($_GET['post'])) {
     $options = [
         'search'   => $_GET['search'],
         'type'     => 'post',
-        'lang'     => $options_language_code,
+        'lang'     => $language_code,
 
         'per_page' => 8,
         'page'     => $_GET['page'] ?? 1,
@@ -111,12 +106,10 @@ if (isset($_GET['post'])) {
 
     $main_content = Blog::getPostsSearchHtml($options);
 } else {
-    $options_language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
-
     $breadcrumb->add($translations->get('POSTS'), Constants::BLOG_URL_POSTS);
 
     $options = [
-        'lang'     => $options_language_code,
+        'lang'     => $language_code,
 
         'per_page' => 8,
         'page'     => $_GET['page'] ?? 1,
