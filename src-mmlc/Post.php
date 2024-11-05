@@ -209,24 +209,6 @@ class Post extends Entity
         return $this->tags;
     }
 
-    public function setCategories(array $categories): void
-    {
-        foreach ($this->response_data['categories'] as $category_id) {
-            if (isset($categories[$category_id])) {
-                $this->categories[] = $categories[$category_id];
-            }
-        }
-    }
-
-    public function setTags(array $tags): void
-    {
-        foreach ($this->response_data['tags'] as $tag_id) {
-            if (isset($tags[$tag_id])) {
-                $this->tags[] = $tags[$tag_id];
-            }
-        }
-    }
-
     public function toArray(): array
     {
         $array = parent::toArray();
