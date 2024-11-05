@@ -464,7 +464,7 @@ class Blog
         return $tags;
     }
 
-    private static function getPaginationHtml(array $options, array $response_with_meta, array $links): string
+    public static function getPaginationHtml(array $options, array $response_with_meta, array $links): string
     {
         global $smarty;
 
@@ -497,5 +497,123 @@ class Blog
         require $module_language_filepath;
 
         return $translations;
+    }
+
+    public static function getPageLinks(array $posts, array $options, int $posts_pages_total): array
+    {
+        $posts_page_links = [];
+
+        for ($page = 1; $page <= $posts_pages_total; $page++) {
+            $url_parameters = [
+                'lang' => $options['lang'],
+                'page' => $page,
+            ];
+
+            if (isset($options['categories'])) {
+                $url_parameters['category_id'] = $options['categories'];
+            }
+
+            if (isset($options['tags'])) {
+                $url_parameters['tag_id'] = $options['tags'];
+            }
+
+            $url = new Url(Constants::BLOG_URL_POSTS);
+            $url->addParameters($url_parameters);
+
+            $posts_page_links[$page] = $url->toString();
+        }
+
+        return $posts_page_links;
+    }
+
+    public static function getCategoryTags(array $posts, bool $as_array = false): array
+    {
+        $category_tags = [];
+
+        foreach ($posts as $post) {
+            $post_tags = $post->getTags();
+
+            if (empty($post_tags)) {
+                continue;
+            }
+
+            foreach ($post_tags as $tag) {
+                $tag_id = $tag->getId();
+
+                if (isset($category_tags[$tag_id])) {
+                    continue;
+                }
+
+                $category_tags[$tag_id] = $tag;
+            }
+        }
+
+        if (!$as_array) {
+            return $category_tags;
+        }
+
+        $category_tags_array = \array_map(
+            function (Tag $tag) {
+                return $tag->toArray();
+            },
+            $category_tags
+        );
+
+        return $category_tags_array;
+    }
+
+    public static function getFilterHtml(array $posts): string
+    {
+        $html_filter = '';
+
+        if (isset($_GET['category_id']) || isset($_GET['tag_id'])) {
+            $smarty = new \smarty();
+            $smarty->assign('language', $_SESSION['language']);
+
+            if (isset($_GET['category_id'])) {
+                global $category;
+
+                $smarty->assign('filter_category', $category->toArray());
+
+                /** Category Tags */
+                $category_tags_array = self::getCategoryTags($posts, true);
+                $smarty->assign('category_tags', $category_tags_array);
+            }
+
+            if (isset($_GET['tag_id'])) {
+                global $tag;
+
+                $smarty->assign('filter_tag', $tag->toArray());
+            }
+
+            /** Filter reset */
+            $filter_reset_parameters = $_GET;
+
+            unset($filter_reset_parameters['page']);
+            unset($filter_reset_parameters['category_id']);
+            unset($filter_reset_parameters['tag_id']);
+
+            $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
+            $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
+            $filter_reset_link->addParameters($filter_reset_parameters);
+            $smarty->assign('filter_reset_link', $filter_reset_link->toString());
+
+            /** Filter categories */
+            global $categories;
+
+            $categories_array = \array_map(
+                function (Category $category) {
+                    return $category->toArray();
+                },
+                $categories
+            );
+
+            $smarty->assign('categories', $categories_array);
+
+            /** Get HTML */
+            $html_filter = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/filter.html');
+        }
+
+        return $html_filter;
     }
 }

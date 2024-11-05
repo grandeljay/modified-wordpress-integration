@@ -43,18 +43,6 @@ if (!isset($_GET['post'])) {
     ];
 
     $categories = Blog::getCategories($options);
-
-    /**
-     * Filter
-     */
-    $categories_array = \array_map(
-        function (Category $category) {
-            return $category->toArray();
-        },
-        $categories
-    );
-
-    $smarty->assign('categories', $categories_array);
 }
 
 if (isset($_GET['post'])) {
@@ -91,7 +79,43 @@ if (isset($_GET['post'])) {
         'order'      => 'desc',
     ];
 
-    $main_content = Blog::getPostsHtml($options);
+    /**
+     * Posts HTML
+     */
+    $posts_html = '';
+
+    $posts_with_meta   = Blog::getPosts($options);
+    $posts             = $posts_with_meta['posts'];
+    $posts_array       = \array_map(
+        function (Post $post) {
+            return $post->toArray();
+        },
+        $posts
+    );
+    $posts_page        = $posts_with_meta['page'];
+    $posts_pages       = $posts_with_meta['total'];
+    $posts_pages_total = $posts_with_meta['total_pages'];
+    $posts_page_links  = Blog::getPageLinks($posts, $options, $posts_pages_total);
+
+    global $smarty, $breadcrumb;
+
+    /** Pagination */
+    $pagination_html = Blog::getPaginationHtml(
+        $options,
+        $posts_with_meta,
+        $posts_page_links
+    );
+    $smarty->assign('pagination', $pagination_html);
+
+    /** Posts */
+    $smarty->assign('posts', $posts_array);
+
+    /** Filter */
+    $html_filter = Blog::getFilterHtml($posts);
+    $smarty->assign('filter', $html_filter);
+
+    /** HTML */
+    $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/listing.html');
 } elseif (isset($_GET['tag_id'])) {
     $tag_id              = $_GET['tag_id'];
     $tag                 = Blog::getTag($tag_id);

@@ -1,31 +1,7 @@
 <div class="blog">
     <h1>News</h1>
 
-    {if $filter_category || $filter_tag}
-        {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_filter"}
-
-        <div class="filter">
-            <p>
-                {if $filter_category}
-                    {#filter_by_category#|sprintf:"<strong>`$filter_category.name`</strong>"}
-                {/if}
-
-                {if $filter_tag}
-                    {#filter_by_tag#|sprintf:"<strong>`$filter_tag.name`</strong>"}
-                {/if}
-
-                <a href="{$filter_reset_link}">{#filter_reset#}</a>
-            </p>
-
-            {if $categories}
-                <select>
-                    {foreach $categories as $category}
-                        <option value="{$category.id}">{$category.name}</option>
-                    {/foreach}
-                </select>
-            {/if}
-        </div>
-    {/if}
+    {$filter}
 
     {if $posts}
         {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_template"}
