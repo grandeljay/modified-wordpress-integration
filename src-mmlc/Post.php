@@ -4,6 +4,18 @@ namespace Grandeljay\WordpressIntegration;
 
 class Post extends Entity
 {
+    public static function getDefaultOptions(): array
+    {
+        $options_default = \array_merge(
+            parent::getDefaultOptions(),
+            [
+                'hide_empty' => true,
+            ]
+        );
+
+        return $options_default;
+    }
+
     private string $title;
     private string $excerpt;
     private string $link;

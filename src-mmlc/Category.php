@@ -6,16 +6,12 @@ class Category extends Entity
 {
     public static function getDefaultOptions(): array
     {
-        $language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
-
-        $options_default = [
-            /** Polylang */
-            'lang'       => $language_code,
-
-            /** WordPress */
-            'per_page'   => 100,
-            'hide_empty' => true,
-        ];
+        $options_default = \array_merge(
+            parent::getDefaultOptions(),
+            [
+                'hide_empty' => true,
+            ]
+        );
 
         return $options_default;
     }

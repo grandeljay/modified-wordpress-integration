@@ -200,6 +200,15 @@ class Blog
         return $search_results_with_meta;
     }
 
+    /**
+     * getPostsHtml
+     *
+     * @deprecated
+     *
+     * @param  array  $options
+     *
+     * @return string
+     */
     public static function getPostsHtml(array $options): string
     {
         $posts_html = '';
@@ -483,10 +492,17 @@ class Blog
         return $tags;
     }
 
-    public static function getPaginationHtml(array $options, array $response_with_meta, array $links): string
+    public static function getPaginationHtml(array $options, array $response_with_meta): string
     {
-        global $smarty;
+        $smarty = new \smarty();
+        $smarty->assign('language', $_SESSION['language']);
 
+        /** Links */
+        $posts             = $response_with_meta['posts'];
+        $posts_pages_total = $response_with_meta['total_pages'];
+        $posts_page_links  = self::getPageLinks($posts, $options, $posts_pages_total);
+
+        /** Pagination */
         $per_page = \min($options['per_page'], $response_with_meta['total']);
 
         $offset_start = $per_page * ($options['page'] - 1) + 1;
@@ -497,9 +513,10 @@ class Blog
         $smarty->assign('pagination_posts_total', $response_with_meta['total']);
 
         $smarty->assign('posts_page', $response_with_meta['page']);
-        $smarty->assign('posts_page_links', $links);
-        $smarty->assign('posts_pages_total', $response_with_meta['total_pages']);
+        $smarty->assign('posts_page_links', $posts_page_links);
+        $smarty->assign('posts_pages_total', $posts_pages_total);
 
+        /** HTML */
         $pagination_html = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/pagination.html');
 
         return $pagination_html;
@@ -634,5 +651,34 @@ class Blog
         }
 
         return $html_filter;
+    }
+
+    public static function getListingHtml(array $posts_with_meta, $options): string
+    {
+        $smarty = new \smarty();
+        $smarty->assign('language', $_SESSION['language']);
+
+        /** Pagination */
+        $html_pagination = self::getPaginationHtml($options, $posts_with_meta);
+        $smarty->assign('pagination', $html_pagination);
+
+        /** Posts */
+        $posts       = $posts_with_meta['posts'];
+        $posts_array = \array_map(
+            function (Post $post) {
+                return $post->toArray();
+            },
+            $posts
+        );
+        $smarty->assign('posts', $posts_array);
+
+        /** Filter */
+        $html_filter = self::getFilterHtml($posts);
+        $smarty->assign('filter', $html_filter);
+
+        /** HTML */
+        $html_listing = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/listing.html');
+
+        return $html_listing;
     }
 }

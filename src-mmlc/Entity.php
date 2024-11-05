@@ -4,6 +4,21 @@ namespace Grandeljay\WordpressIntegration;
 
 class Entity
 {
+    public static function getDefaultOptions(): array
+    {
+        $language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
+
+        $options_default = [
+            /** Polylang */
+            'lang'     => $language_code,
+
+            /** WordPress */
+            'per_page' => 100,
+        ];
+
+        return $options_default;
+    }
+
     private int $id;
 
     protected array $translations;

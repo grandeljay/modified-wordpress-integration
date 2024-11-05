@@ -58,52 +58,14 @@ if (isset($_GET['post'])) {
         $category->getLink()
     );
 
-    $options = [
+    $posts_options   = [
         'categories' => $category->getIdForLanguage(),
-        'lang'       => $language_code,
-
         'per_page'   => 8,
         'page'       => $_GET['page'] ?? 1,
-
-        'orderby'    => 'date',
-        'order'      => 'desc',
     ];
+    $posts_with_meta = Blog::getPosts($posts_options);
 
-    /**
-     * Posts HTML
-     */
-    $posts_html = '';
-
-    $posts_with_meta   = Blog::getPosts($options);
-    $posts             = $posts_with_meta['posts'];
-    $posts_array       = \array_map(
-        function (Post $post) {
-            return $post->toArray();
-        },
-        $posts
-    );
-    $posts_page        = $posts_with_meta['page'];
-    $posts_pages       = $posts_with_meta['total'];
-    $posts_pages_total = $posts_with_meta['total_pages'];
-    $posts_page_links  = Blog::getPageLinks($posts, $options, $posts_pages_total);
-
-    /** Pagination */
-    $pagination_html = Blog::getPaginationHtml(
-        $options,
-        $posts_with_meta,
-        $posts_page_links
-    );
-    $smarty->assign('pagination', $pagination_html);
-
-    /** Posts */
-    $smarty->assign('posts', $posts_array);
-
-    /** Filter */
-    $html_filter = Blog::getFilterHtml($posts);
-    $smarty->assign('filter', $html_filter);
-
-    /** HTML */
-    $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/listing.html');
+    $main_content = Blog::getListingHtml($posts_with_meta, $posts_options);
 } elseif (isset($_GET['tag_id'])) {
     $tag_id              = $_GET['tag_id'];
     $tag                 = Blog::getTag($tag_id);
