@@ -7,6 +7,28 @@
     background-color: #f4f4f4;
 }
 
+.filter > h2 {
+    margin-top: 0;
+}
+
+.filter .tags {
+    display: flex;
+    gap: 1rem;
+    flex-flow: row wrap;
+}
+
+.filter .tags > label {
+    padding: 0.2em 0.4em;
+
+    border-radius: 4px;
+
+    background-color: #d9d9d9;
+}
+
+.filter .actions {
+    margin-top: 0.8rem;
+}
+
 /**
  * Listing
  */

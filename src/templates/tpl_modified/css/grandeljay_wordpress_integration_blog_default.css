@@ -16,10 +16,9 @@ section:last-of-type {
  * Buttons
  */
 a.button,
-form > input[type="submit"] {
+form input[type="submit"] {
     display: inline-block;
     padding: 12px 8px;
-    margin-top: 0.8em;
 
     background-color: #f4f4f4;
     border: 1px solid #d9d9d9;
@@ -29,7 +28,7 @@ form > input[type="submit"] {
     cursor: pointer;
 }
 a.button:hover,
-form > input[type="submit"]:hover {
+form input[type="submit"]:hover {
     color: #fff;
     border-color: var(--colorPrimary);
     background-color: var(--colorPrimary);

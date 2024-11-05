@@ -1,7 +1,7 @@
 {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_filter"}
 
 <div class="filter">
-    <h2>FILTER</h2>
+    <h2>{#filter_title#}</h2>
 
     <form method="get">
         {if $filter_category.id}
@@ -9,17 +9,19 @@
         {/if}
 
         {if $filter_tags}
-            {foreach $filter_tags as $filter_tag}
-                <label>
-                    {if $filter_tag.is_active}
-                        <input type="radio" name="tag_id" value="{$filter_tag.id}" checked="checked">
-                        {$filter_tag.name}
-                    {else}
-                        <input type="radio" name="tag_id" value="{$filter_tag.id}">
-                        {$filter_tag.name}
-                    {/if}
+            <div class="tags">
+                {foreach $filter_tags as $filter_tag}
+                    <label>
+                        {if $filter_tag.is_active}
+                            <input type="radio" name="tag_id" value="{$filter_tag.id}" checked="checked">
+                            {$filter_tag.name}
+                        {else}
+                            <input type="radio" name="tag_id" value="{$filter_tag.id}">
+                            {$filter_tag.name}
+                        {/if}
                     </label>
-            {/foreach}
+                {/foreach}
+            </div>
         {/if}
 
         {if $category_tags}
@@ -31,8 +33,9 @@
             {/foreach}
         {/if}
 
-        <input type="submit" value="SUBMIT">
+        <div class="actions">
+            <input type="submit" value="{#filter_submit#}">
+            <a href="{$filter_reset_link}">{#filter_reset#}</a>
+        </div>
     </form>
-
-    <a href="{$filter_reset_link}">{#filter_reset#}</a>
 </div>
