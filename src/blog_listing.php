@@ -24,7 +24,7 @@ $translations  = Blog::getModuleTranslations();
 $language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
 
 $smarty = new \Smarty();
-$smarty->assign('language', $language_code);
+$smarty->assign('language', $_SESSION['language']);
 
 $breadcrumb->add(
     $translations->get('BLOG'),
