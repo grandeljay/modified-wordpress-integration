@@ -491,6 +491,11 @@ class Blog
         $smarty = new \smarty();
         $smarty->assign('language', $_SESSION['language']);
 
+        $options = \array_merge(
+            Post::getDefaultOptions(),
+            $options
+        );
+
         /** Links */
         $posts             = $response_with_meta['posts'];
         $posts_pages_total = $response_with_meta['total_pages'];
