@@ -97,8 +97,6 @@ if (isset($_GET['post'])) {
     $posts_pages_total = $posts_with_meta['total_pages'];
     $posts_page_links  = Blog::getPageLinks($posts, $options, $posts_pages_total);
 
-    global $smarty, $breadcrumb;
-
     /** Pagination */
     $pagination_html = Blog::getPaginationHtml(
         $options,
