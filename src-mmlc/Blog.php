@@ -597,7 +597,7 @@ class Blog
         return $category_tags_array;
     }
 
-    public static function getFilterHtml(array $posts): string
+    public static function getFilterHtml(): string
     {
         global $smarty, $tags;
 
@@ -659,7 +659,7 @@ class Blog
         $smarty->assign('posts', $posts_array);
 
         /** Filter */
-        $html_filter = self::getFilterHtml($posts);
+        $html_filter = self::getFilterHtml();
         $smarty->assign('filter', $html_filter);
 
         /** HTML */
