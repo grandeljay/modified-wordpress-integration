@@ -11,6 +11,10 @@
     margin-top: 0;
 }
 
+.filter input[name="search"] {
+    margin-bottom: 0.8rem;
+}
+
 .filter .tags {
     display: flex;
     gap: 1rem;
