@@ -35,6 +35,7 @@
 ul.category_listing,
 ul.post_listing {
     --gap: 1rem;
+    --gapSmall: 0.4rem;
 
     display: grid;
     gap: var(--gap);
@@ -202,6 +203,11 @@ ul.post_listing > li {
     display: block;
 }
 
+/** Post Content Title */
+.post > .content > .title {
+    margin-bottom: var(--gapSmall);
+}
+
 /** Post Meta Tags */
 .post > .content > .meta > .tags {
     display: flex;
@@ -224,5 +230,5 @@ ul.post_listing > li {
 
 /** Post Excerpt */
 .post > .content > .excerpt {
-    margin-top: 0.4rem;
+    margin-top: var(--gapSmall);
 }
