@@ -78,6 +78,9 @@
 
     overflow: hidden;
 }
+.wp-block-columns.is-layout-flex > .wp-block-column > .wp-block-image.is-style-noborder {
+    border: none;
+}
 
 .wp-block-columns.is-layout-flex > .wp-block-column > .wp-block-image > img,
 .wp-block-columns.is-layout-flex > .wp-block-column > .wp-block-image > a > img {
