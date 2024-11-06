@@ -31,10 +31,6 @@ switch ($PHP_SELF) {
             $stylesheets[] = 'grandeljay_wordpress_integration_blog_post';
         }
 
-        if (isset($_GET['search'])) {
-            $stylesheets[] = 'grandeljay_wordpress_integration_blog_search_results';
-        }
-
         break;
 }
 
