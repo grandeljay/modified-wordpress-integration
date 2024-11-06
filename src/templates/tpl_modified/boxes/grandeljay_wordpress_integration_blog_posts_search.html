@@ -1,5 +1,13 @@
 <section>
-    <h2>{$form_posts_search_title}</h2>
+    <h2>{$form_title}</h2>
 
-    {$form_posts_search}
+    <form action="{$form_action}">
+        <input type="text" value="{$form_search_query}" name="search" placeholder="{$form_input_placeholder}">
+
+        <input type="submit" value="{$form_button_submit}">
+
+        {if $form_search_query !== ''}
+            <a href="{$form_link_reset_url}">{$form_link_reset_text}</a>
+        {/if}
+    </form>
 </section>

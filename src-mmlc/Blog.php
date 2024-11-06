@@ -441,6 +441,7 @@ class Blog
         $filter_reset_parameters = $_GET;
 
         unset($filter_reset_parameters['page']);
+        unset($filter_reset_parameters['search']);
         unset($filter_reset_parameters['category_id']);
         unset($filter_reset_parameters['tag_id']);
 

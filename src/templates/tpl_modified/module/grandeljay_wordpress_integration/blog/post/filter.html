@@ -8,6 +8,12 @@
             <input type="hidden" name="category_id" value="{$filter_category.id}">
         {/if}
 
+        {if $smarty.get.search}
+            <input type="text" name="search" value="{$smarty.get.search}">
+        {else}
+            <input type="text" name="search" value="">
+        {/if}
+
         {if $filter_tags}
             <div class="tags">
                 {foreach $filter_tags as $filter_tag}

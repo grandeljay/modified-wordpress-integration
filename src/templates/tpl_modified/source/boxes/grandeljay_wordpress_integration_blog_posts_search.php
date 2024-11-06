@@ -37,6 +37,7 @@ $form_action            = Constants::BLOG_URL_POSTS;
 $form_title             = $translations->get('POSTS_SEARCH_TITLE');
 $form_input_placeholder = $translations->get('POSTS_SEARCH');
 $form_button_submit     = $translations->get('POSTS_SEARCH_SUBMIT');
+$form_search_query      = $_GET['search'] ?? '';
 
 /** Search reset */
 $search_reset_parameters = $_GET;
@@ -52,18 +53,13 @@ $form_link_reset_text = $translations->get('FORM_SEARCH_RESET');
 $form_link_reset_url  = $search_reset_link->toString();
 /** */
 
-$form_search_query = $_GET['search'] ?? '';
-$form_posts_search = <<<HTML
-    <form action="{$form_action}">
-        <input type="text" value="{$form_search_query}" name="search" placeholder="{$form_input_placeholder}">
-
-        <input type="submit" value="{$form_button_submit}">
-        <a href="{$form_link_reset_url}">{$form_link_reset_text}</a>
-    </form>
-HTML;
-
-$box_smarty->assign('form_posts_search_title', $form_title);
-$box_smarty->assign('form_posts_search', $form_posts_search);
+$box_smarty->assign('form_title', $form_title);
+$box_smarty->assign('form_action', $form_action);
+$box_smarty->assign('form_search_query', $form_search_query);
+$box_smarty->assign('form_input_placeholder', $form_input_placeholder);
+$box_smarty->assign('form_button_submit', $form_button_submit);
+$box_smarty->assign('form_link_reset_url', $form_link_reset_url);
+$box_smarty->assign('form_link_reset_text', $form_link_reset_text);
 
 $box_blog_posts_search = $box_smarty->fetch(\CURRENT_TEMPLATE . '/boxes/grandeljay_wordpress_integration_blog_posts_search.html');
 
