@@ -14,6 +14,29 @@
 }
 
 /**
+ * Meta
+ */
+.meta {
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    background-color: #f4f4f4;
+}
+
+.meta > .taxonomy > .terms {
+    display: inline-flex;
+    gap: 1ch;
+    flex-flow: row wrap;
+}
+
+.meta > .taxonomy > .terms > span::after {
+    content: ',';
+}
+.meta > .taxonomy > .terms > span:last-of-type::after {
+    content: '';
+}
+
+/**
  * Featured Image
  */
 .wp-block-post-featured-image {
