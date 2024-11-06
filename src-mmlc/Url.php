@@ -95,6 +95,7 @@ class Url
 
                 if (false !== $colon_position) {
                     $key   = \substr($header, 0, $colon_position);
+                    $key   = \strtolower($key);
                     $value = \substr($header, $colon_position + 2);
 
                     $response_headers[$key] = \trim($value);
