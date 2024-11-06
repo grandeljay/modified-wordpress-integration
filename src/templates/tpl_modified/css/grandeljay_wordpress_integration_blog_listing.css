@@ -191,3 +191,38 @@ ul.post_listing > li {
 .post_listing .post > .image > a:hover {
     border-bottom: none;
 }
+
+/** Post Meta */
+.post > .content > .meta {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+}
+.post.compact > .content > .meta {
+    display: block;
+}
+
+/** Post Meta Tags */
+.post > .content > .meta > .tags {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1ch;
+}
+
+.post > .content > .meta > .tags > .tag {
+    padding: 0 0.4em;
+
+    font-weight: normal;
+    border-radius: 4px;
+    color: inherit;
+    background-color: #d9d9d9;
+}
+
+.post > .content > .meta > .tags > .tag:hover {
+    border: none;
+}
+
+/** Post Excerpt */
+.post > .content > .excerpt {
+    margin-top: 0.4rem;
+}

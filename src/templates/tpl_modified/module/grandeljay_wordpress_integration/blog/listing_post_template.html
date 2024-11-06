@@ -19,9 +19,38 @@
                 <a href="{$post.link}">{$post.title}</a>
             </div>
 
-            <div class="date_published">
-                <span>{#meta_published#}</span>
-                <span>{$post.date_published}</span>
+            <div class="meta">
+                <div class="date_published">
+                    <span><i class="far fa-calendar-alt"></i></span>
+                    <span>{$post.date_published}</span>
+                </div>
+
+                {*if $post.categories}
+                    <div class="categories">
+                        <span>
+                            {if $post.categories|count === 1}
+                                {#meta_category#}
+                            {else}
+                                {#meta_categories#}
+                            {/if}
+                        </span>
+
+                        {foreach $post.categories as $category}
+                            <span><a href="{$category.link}">{$category.name}</a></span>
+                        {/foreach}
+                    </div>
+                {/if*}
+
+                {if $post.tags}
+                    <div class="tags">
+                        {foreach $post.tags as $tag}
+                            <a class="tag" href="{$tag.link}">
+                                <i class="fas fa-tag"></i>
+                                {$tag.name}
+                            </a>
+                        {/foreach}
+                    </div>
+                {/if}
             </div>
 
             {if !$compact && $post.excerpt}
