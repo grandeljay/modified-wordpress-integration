@@ -66,17 +66,24 @@ if (isset($_GET['post'])) {
 
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
     }
-} elseif (isset($_GET['category_id'])) {
+} else {
+    $breadcrumb_title = $translations->get('TITLE_BLOG_LISTING');
+    $breadcrumb_link  = Constants::BLOG_URL_POSTS;
+}
+
+$posts_options = [];
+
+if (isset($_GET['category_id'])) {
     $category_id = $_GET['category_id'];
     $category    = $categories[$category_id];
 
     $breadcrumb_title = $category->getName();
     $breadcrumb_link  = $category->getLink();
 
-    $posts_options = [
-        'categories' => $category->getIdForLanguage(),
-    ];
-} elseif (isset($_GET['tag_id'])) {
+    $posts_options['categories'] = $category->getIdForLanguage();
+}
+
+if (isset($_GET['tag_id'])) {
     $tag_ids   = \explode(',', $_GET['tag_id']);
     $tag_names = [];
 
@@ -92,24 +99,18 @@ if (isset($_GET['post'])) {
     $breadcrumb_title = \implode(', ', $tag_names);
     $breadcrumb_link  = $breadcrumb_url->toString();
 
-    $posts_options = [
-        'tags' => $_GET['tag_id'],
-    ];
-} elseif (isset($_GET['search'])) {
+    $posts_options['tags'] = $_GET['tag_id'];
+}
+
+if (isset($_GET['search'])) {
     $breadcrumb_url = new Url(Constants::BLOG_URL_POSTS);
     $breadcrumb_url->addParameters(['search' => $_GET['search']]);
 
     $breadcrumb_title = $_GET['search'];
     $breadcrumb_link  = $breadcrumb_url->toString();
 
-    $posts_options = [
-        'search' => $_GET['search'],
-    ];
-} else {
-    $breadcrumb_title = $translations->get('TITLE_BLOG_LISTING');
-    $breadcrumb_link  = Constants::BLOG_URL_POSTS;
-
-    $posts_options = [];
+    $posts_options['search']         = $_GET['search'];
+    $posts_options['search_columns'] = 'post_title';
 }
 
 if (!isset($_GET['post'])) {
