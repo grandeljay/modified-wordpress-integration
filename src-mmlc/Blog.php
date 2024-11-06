@@ -162,38 +162,6 @@ class Blog
         return $posts_with_meta;
     }
 
-    public static function getPostsSearch(array $options, bool $get_all_posts = false): array
-    {
-        $endpoint = Constants::BLOG_URL_API_SEARCH;
-        $response = self::getApiResponse($endpoint, $options, $get_all_posts);
-
-        if (empty($response)) {
-            return [];
-        }
-
-        $search_results_meta = $response['headers'];
-        $search_results_wp   = $response['body'];
-        $search_results      = [];
-
-        foreach ($search_results_wp as $search_result_wp) {
-            $search_result = new SearchResult($search_result_wp);
-
-            $search_results[] = $search_result;
-        }
-
-        $search_results_total       = $search_results_meta['x-wp-total'];
-        $search_results_total_pages = $search_results_meta['x-wp-totalpages'];
-
-        $search_results_with_meta = [
-            'total'          => $search_results_total,
-            'total_pages'    => $search_results_total_pages,
-            'search_results' => $search_results,
-            'page'           => $options['page'],
-        ];
-
-        return $search_results_with_meta;
-    }
-
     /**
      * getPostsHtml
      *
@@ -276,63 +244,6 @@ class Blog
         }
 
         return $posts_html;
-    }
-
-    public static function getPostsSearchHtml(array $options): string
-    {
-        $search_results_with_meta   = self::getPostsSearch($options);
-        $search_results             = \array_map(
-            function (SearchResult $search_results) {
-                return $search_results->toArray();
-            },
-            $search_results_with_meta['search_results']
-        );
-        $search_results_pages_total = $search_results_with_meta['total_pages'];
-        $search_results_page_links  = [];
-
-        for ($page = 1; $page <= $search_results_pages_total; $page++) {
-            $url = new Url(Constants::BLOG_URL_POSTS);
-            $url->addParameters(
-                [
-                    'lang'   => $options['lang'],
-                    'page'   => $page,
-                    'search' => $options['search'],
-                ]
-            );
-
-            $search_results_page_links[$page] = $url->toString();
-        }
-
-        global $smarty, $breadcrumb;
-
-        $translations = Blog::getModuleTranslations();
-
-        $search_title       = $translations->get('FORM_SEARCH_TITLE');
-        $search_description = \sprintf(
-            $translations->get('FORM_SEARCH_DESCRIPTION'),
-            \sprintf('<strong>%s</strong>', $options['search'])
-        );
-
-        $smarty->assign('search_title', $search_title);
-        $smarty->assign('search_description', $search_description);
-
-        /** Pagination */
-        $pagination_html = self::getPaginationHtml(
-            $options,
-            $search_results_with_meta,
-            $search_results_page_links
-        );
-
-        $smarty->assign('pagination', $pagination_html);
-
-        /** Search Results */
-        require \DIR_FS_CATALOG . 'templates/' . \CURRENT_TEMPLATE . '/source/boxes/grandeljay_wordpress_integration_blog_posts_search.php';
-
-        $smarty->assign('search_results', $search_results);
-
-        $search_results_html = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/search_result/listing.html');
-
-        return $search_results_html;
     }
 
     /**
