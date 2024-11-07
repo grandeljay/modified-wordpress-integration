@@ -168,7 +168,7 @@ ul.post_listing > li {
 .post.compact > .image {
     flex: 0 0 auto;
     aspect-ratio: 16/9;
-    height: calc(3em * var(--lineHeight));
+    height: calc(3em * var(--lineHeight) + var(--gapSmall));
 }
 @media (min-width: 512px) {
     .post.compact > .image {
