@@ -451,7 +451,7 @@ class Blog
         $smarty->assign('filter_reset_link', $filter_reset_link->toString());
 
         /** Filter categories */
-        global $categories;
+        global $categories, $category;
 
         $categories_array = \array_map(
             function (Category $category) {
@@ -462,7 +462,15 @@ class Blog
 
         $smarty->assign('categories', $categories_array);
 
+        if (!empty($_GET['category_id'])) {
+            $smarty->assign('category', $category->toArray());
+        }
+
         /** Get HTML */
+        $translations           = Blog::getModuleTranslations();
+        $form_input_placeholder = $translations->get('POSTS_SEARCH');
+        $smarty->assign('form_input_placeholder', $form_input_placeholder);
+
         $html_filter = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/filter.html');
 
         return $html_filter;

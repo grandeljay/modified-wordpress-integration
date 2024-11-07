@@ -11,13 +11,53 @@
     margin-top: 0;
 }
 
-.filter input[name="search"] {
+.filter .category_and_search {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+
     margin-bottom: 0.8rem;
+}
+@media (min-width: 768px) {
+    .filter .category_and_search {
+        flex-direction: row;
+    }
+}
+
+.filter .category_and_search > .category {
+    flex: 1 1 auto;
+}
+@media (min-width: 768px) {
+    .filter .category_and_search > .category {
+        flex: 0 1 256px;
+    }
+}
+
+.filter .category_and_search > .category > .sumo_category_id,
+.filter .category_and_search > .category > .sumo_category_id > p.SelectBox {
+    height: 100%;
+}
+
+.filter .category_and_search > .category > .sumo_category_id {
+    width: 100%;
+}
+
+.filter .category_and_search > .category > .sumo_category_id > p.SelectBox {
+    display: flex;
+    align-items: center;
+}
+
+.filter .category_and_search > .category > .sumo_category_id > .optWrapper {
+    top: 100%;
+}
+
+.filter .category_and_search > .search {
+    flex: 1 1 auto;
 }
 
 .filter .tags {
     display: flex;
-    gap: 1rem;
+    gap: 1ch;
     flex-flow: row wrap;
 }
 

@@ -4,15 +4,35 @@
     <h2>{#filter_title#}</h2>
 
     <form method="get">
-        {if $filter_category.id}
-            <input type="hidden" name="category_id" value="{$filter_category.id}">
-        {/if}
+        <div class="category_and_search">
+            {if $categories}
+                <div class="category">
+                    <select name="category_id">
+                        {if $category}
+                            <option value="">- {#filter_category#} -</option>
+                        {else}
+                            <option value="" selected="selected">- {#filter_category#} -</option>
+                        {/if}
 
-        {if $smarty.get.search}
-            <input type="text" name="search" value="{$smarty.get.search}">
-        {else}
-            <input type="text" name="search" value="">
-        {/if}
+                        {foreach $categories as $category_item}
+                            {if $category && $category.id === $category_item.id}
+                                <option value="{$category_item.id}" selected>{$category_item.name}</option>
+                            {else}
+                                <option value="{$category_item.id}">{$category_item.name}</option>
+                            {/if}
+                        {/foreach}
+                    </select>
+                </div>
+            {/if}
+
+            <div class="search">
+                {if $smarty.get.search}
+                    <input type="text" name="search" placeholder="{$form_input_placeholder}" value="{$smarty.get.search}">
+                {else}
+                    <input type="text" name="search" placeholder="{$form_input_placeholder}">
+                {/if}
+            </div>
+        </div>
 
         {if $filter_tags}
             <div class="tags">
