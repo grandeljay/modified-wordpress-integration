@@ -18,8 +18,8 @@ if (Constants::BLOG_URL_POSTS !== $_SERVER['PHP_SELF']) {
     return;
 }
 
-if (!isset($post['excerpt'])) {
+if (!isset($post) || !($post instanceof Post)) {
     return;
 }
 
-$metadata_array['description'] = $post['excerpt'];
+$metadata_array['description'] = $post->getExcerpt();
