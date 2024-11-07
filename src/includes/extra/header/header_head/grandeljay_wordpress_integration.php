@@ -27,7 +27,7 @@ switch ($PHP_SELF) {
     case Constants::BLOG_URL_POSTS:
         $stylesheets[] = 'grandeljay_wordpress_integration_blog_listing';
 
-        if (isset($_GET['post'])) {
+        if (!empty($_GET['post'])) {
             $stylesheets[] = 'grandeljay_wordpress_integration_blog_post';
         }
 

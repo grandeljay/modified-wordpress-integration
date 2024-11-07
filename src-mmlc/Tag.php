@@ -56,7 +56,7 @@ class Tag extends Taxonomy
      */
     public function isActive(): bool
     {
-        if (!isset($_GET['tag_id'])) {
+        if (empty($_GET['tag_id'])) {
             return false;
         }
 

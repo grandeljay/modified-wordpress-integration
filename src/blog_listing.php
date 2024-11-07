@@ -34,7 +34,7 @@ $breadcrumb->add(
 $categories = [];
 $tags       = [];
 
-if (!isset($_GET['post'])) {
+if (empty($_GET['post'])) {
     $categories = Blog::getCategories();
     $tags       = Blog::getTags();
     $tags_array = \array_map(
@@ -50,7 +50,7 @@ if (!isset($_GET['post'])) {
 $breadcrumb_title = 'UNKNOWN';
 $breadcrumb_link  = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
 
-if (isset($_GET['post'])) {
+if (!empty($_GET['post'])) {
     $post       = Blog::getPost($_GET['post']);
     $post_array = $post->toArray();
 
@@ -73,7 +73,7 @@ if (isset($_GET['post'])) {
 
 $posts_options = [];
 
-if (isset($_GET['category_id'])) {
+if (!empty($_GET['category_id'])) {
     $category_id = $_GET['category_id'];
     $category    = $categories[$category_id];
 
@@ -83,7 +83,7 @@ if (isset($_GET['category_id'])) {
     $posts_options['categories'] = $category->getIdForLanguage();
 }
 
-if (isset($_GET['tag_id'])) {
+if (!empty($_GET['tag_id'])) {
     $tag_ids   = \explode(',', $_GET['tag_id']);
     $tag_names = [];
 
@@ -102,7 +102,7 @@ if (isset($_GET['tag_id'])) {
     $posts_options['tags'] = $_GET['tag_id'];
 }
 
-if (isset($_GET['search'])) {
+if (!empty($_GET['search'])) {
     $breadcrumb_url = new Url(Constants::BLOG_URL_POSTS);
     $breadcrumb_url->addParameters(['search' => $_GET['search']]);
 
@@ -113,7 +113,7 @@ if (isset($_GET['search'])) {
     $posts_options['search_columns'] = 'post_title';
 }
 
-if (!isset($_GET['post'])) {
+if (empty($_GET['post'])) {
     $breadcrumb->add($breadcrumb_title, $breadcrumb_link);
 
     $posts_with_meta = Blog::getPosts($posts_options);
