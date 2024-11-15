@@ -10,6 +10,16 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
+$current_page  = $PHP_SELF;
+$allowed_pages = [
+    Constants::BLOG_URL_HOME,
+    Constants::BLOG_URL_API_POSTS,
+];
+
+if (!\in_array($current_page, $allowed_pages)) {
+    return;
+}
+
 $stylesheets_relative  = 'templates/' . \CURRENT_TEMPLATE . '/css';
 $stylesheets_directory = \DIR_FS_CATALOG . $stylesheets_relative;
 $stylesheets_url       = \DIR_WS_CATALOG . $stylesheets_relative;
