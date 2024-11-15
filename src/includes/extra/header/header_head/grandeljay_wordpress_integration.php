@@ -10,6 +10,10 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
+if (!isset($PHP_SELF)) {
+    return;
+}
+
 $current_page  = $PHP_SELF;
 $allowed_pages = [
     Constants::BLOG_URL_HOME,
@@ -27,7 +31,7 @@ $stylesheets           = [
     'grandeljay_wordpress_integration_blog_default',
 ];
 
-switch ($PHP_SELF) {
+switch ($current_page) {
     case Constants::BLOG_URL_HOME:
         $stylesheets[] = 'grandeljay_wordpress_integration_blog_home';
         $stylesheets[] = 'grandeljay_wordpress_integration_blog_listing';
