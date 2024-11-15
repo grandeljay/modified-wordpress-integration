@@ -10,12 +10,16 @@
 
 namespace Grandeljay\WordpressIntegration;
 
+if (!isset($PHP_SELF)) {
+    return;
+}
+
 $allowed_pages = [
     Constants::BLOG_URL_HOME,
     Constants::BLOG_URL_POSTS,
 ];
 
-if (!\in_array($_SERVER['PHP_SELF'], $allowed_pages, true)) {
+if (!\in_array($PHP_SELF, $allowed_pages, true)) {
     return;
 }
 

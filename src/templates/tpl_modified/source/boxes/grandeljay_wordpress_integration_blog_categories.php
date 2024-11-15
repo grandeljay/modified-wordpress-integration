@@ -10,7 +10,11 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-if (Constants::BLOG_URL_HOME !== $_SERVER['PHP_SELF']) {
+if (!isset($PHP_SELF)) {
+    return;
+}
+
+if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
     return;
 }
 
