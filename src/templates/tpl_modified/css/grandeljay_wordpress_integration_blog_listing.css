@@ -79,6 +79,7 @@
 ul.post_listing {
     --gap: 1rem;
     --gapSmall: 0.4rem;
+    --gapCompact: 0.2rem;
 
     display: grid;
     gap: var(--gap);
@@ -137,7 +138,7 @@ ul.post_listing > li {
 .post.compact > .image {
     flex: 0 0 auto;
     aspect-ratio: 16/9;
-    height: calc(3em * var(--lineHeight) + var(--gapSmall));
+    height: calc(((1.2rem + 0.8rem + 0.8rem) * var(--lineHeight)) + var(--gapCompact) + var(--gapCompact));
 }
 @media (min-width: 512px) {
     .post.compact > .image {
@@ -171,14 +172,22 @@ ul.post_listing > li {
     display: flex;
     flex-flow: row wrap;
     gap: 1rem;
+
+    font-size: 0.8rem;
 }
 .post.compact > .content > .meta {
-    display: block;
+    flex-flow: column nowrap;
+    gap: var(--gapCompact);
 }
 
 /** Post Content Title */
 .post > .content > .title {
     margin-bottom: var(--gapSmall);
+
+    font-size: 1.2rem;
+}
+.post.compact > .content > .title {
+    margin-bottom: var(--gapCompact);
 }
 
 /** Post Meta Tags */
