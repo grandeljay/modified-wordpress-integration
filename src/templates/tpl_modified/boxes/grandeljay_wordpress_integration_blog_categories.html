@@ -6,22 +6,18 @@
 
         <ul class="category_listing">
             {foreach $categories as $category}
-                <li class="category">
-                    {if $category.featured_image}
-                        <div class="image">
-                            <a href="{$category.link}">
-                                <img src="{$category.featured_image.source_url}" alt="{$category.featured_image.alt_text}" title="{$category.featured_image.title}">
-                            </a>
+            <li class="category {if !$category.featured_image}no_image{/if}">
+                    <a href="{$category.link}">
+                        <div class="name">
+                            {$category.name}
                         </div>
-                    {/if}
 
-                    {if $category.name && $category.link}
-                        <a href="{$category.link}">
-                            <div class="name">
-                                {$category.name}
-                            </div>
-                        </a>
-                    {/if}
+                        <div class="image">
+                            {if $category.featured_image}
+                                <img src="{$category.featured_image.source_url}" alt="{$category.featured_image.alt_text}" title="{$category.featured_image.title}">
+                            {/if}
+                        </div>
+                    </a>
                 </li>
             {/foreach}
         </ul>
