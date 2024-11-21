@@ -67,6 +67,7 @@
     gap: 0.2rem;
 
     user-select: none;
+    cursor: pointer;
 }
 
 .filter .tags > label > input[type="checkbox"] {
@@ -79,6 +80,7 @@
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
 }
+.filter .tags > label:hover > input[type="checkbox"] + div.tag,
 .filter .tags > label > input[type="checkbox"]:checked + div.tag {
     color: var(--colorPrimary);
 }
