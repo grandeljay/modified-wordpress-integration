@@ -17,7 +17,7 @@ if (!isset($PHP_SELF)) {
 $current_page  = $PHP_SELF;
 $allowed_pages = [
     Constants::BLOG_URL_HOME,
-    Constants::BLOG_URL_API_POSTS,
+    Constants::BLOG_URL_POSTS,
 ];
 
 if (!\in_array($current_page, $allowed_pages)) {
