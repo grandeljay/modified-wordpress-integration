@@ -34,7 +34,7 @@ class Tag extends Taxonomy
     {
         $link = new Url(Constants::BLOG_URL_POSTS);
         $link->addDefaultParameters();
-        $link->addParameters(['tag_id' => $this->getId()]);
+        $link->addParameters(['tag_id' => [$this->getId()]]);
 
         $this->link = $link->toString();
     }
@@ -60,7 +60,7 @@ class Tag extends Taxonomy
             return false;
         }
 
-        $passed_tag_ids = \explode(',', $_GET['tag_id']);
+        $passed_tag_ids = $_GET['tag_id'];
 
         foreach ($passed_tag_ids as $passed_tag_id) {
             if (\in_array($passed_tag_id, $this->translations)) {

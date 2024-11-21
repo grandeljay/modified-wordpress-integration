@@ -84,7 +84,7 @@ if (!empty($_GET['category_id'])) {
 }
 
 if (!empty($_GET['tag_id'])) {
-    $tag_ids   = \explode(',', $_GET['tag_id']);
+    $tag_ids   = $_GET['tag_id'];
     $tag_names = [];
 
     foreach ($tag_ids as $tag_id) {
@@ -99,7 +99,7 @@ if (!empty($_GET['tag_id'])) {
     $breadcrumb_title = \implode(', ', $tag_names);
     $breadcrumb_link  = $breadcrumb_url->toString();
 
-    $posts_options['tags'] = $_GET['tag_id'];
+    $posts_options['tags'] = \implode(',', $_GET['tag_id']);
 }
 
 if (!empty($_GET['search'])) {

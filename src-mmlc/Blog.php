@@ -376,7 +376,7 @@ class Blog
             }
 
             if (isset($options['tags'])) {
-                $url_parameters['tag_id'] = $options['tags'];
+                $url_parameters['tag_id'] = \explode(',', $options['tags']);
             }
 
             $url = new Url(Constants::BLOG_URL_POSTS);

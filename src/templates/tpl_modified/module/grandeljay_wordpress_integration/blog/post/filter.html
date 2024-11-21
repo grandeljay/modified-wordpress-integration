@@ -39,9 +39,9 @@
                 {foreach $filter_tags as $filter_tag}
                     <label>
                         {if $filter_tag.is_active}
-                            <input type="radio" name="tag_id" value="{$filter_tag.id}" checked="checked">
+                            <input type="checkbox" name="tag_id[]" value="{$filter_tag.id}" checked="checked">
                         {else}
-                            <input type="radio" name="tag_id" value="{$filter_tag.id}">
+                            <input type="checkbox" name="tag_id[]" value="{$filter_tag.id}">
                         {/if}
 
                         <div class="tag">

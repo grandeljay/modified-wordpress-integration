@@ -69,17 +69,17 @@
     user-select: none;
 }
 
-.filter .tags > label > input[type="radio"] {
+.filter .tags > label > input[type="checkbox"] {
     display: none;
 }
 
-.filter .tags > label > input[type="radio"] + div.tag::before {
+.filter .tags > label > input[type="checkbox"] + div.tag::before {
     content: "\f02b";
 
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
 }
-.filter .tags > label > input[type="radio"]:checked + div.tag {
+.filter .tags > label > input[type="checkbox"]:checked + div.tag {
     color: var(--colorPrimary);
 }
 
