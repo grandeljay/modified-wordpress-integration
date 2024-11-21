@@ -113,7 +113,8 @@ ul.post_listing > li {
     padding: 1rem;
     overflow: hidden;
 
-    background-color: var(--backgroundColor);
+    border: 1px solid var(--backgroundColor);
+    border-radius: 4px;
 }
 @media (min-width: 512px) {
     .post {
