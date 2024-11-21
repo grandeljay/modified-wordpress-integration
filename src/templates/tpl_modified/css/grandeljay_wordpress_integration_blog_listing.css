@@ -170,13 +170,12 @@ ul.post_listing > li {
 /** Post Meta */
 .post > .content > .meta {
     display: flex;
-    flex-flow: row wrap;
-    gap: 1rem;
+    flex-flow: column nowrap;
+    gap: var(--gapSmall);
 
     font-size: 0.8rem;
 }
 .post.compact > .content > .meta {
-    flex-flow: column nowrap;
     gap: var(--gapCompact);
 }
 
@@ -194,7 +193,7 @@ ul.post_listing > li {
 .post > .content > .meta > .tags {
     display: flex;
     flex-flow: row wrap;
-    gap: 1ch;
+    gap: var(--gapSmall);
 }
 
 .post > .content > .meta > .tags > .tag {

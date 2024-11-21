@@ -20,11 +20,6 @@
             </div>
 
             <div class="meta">
-                <div class="date_published">
-                    <span><i class="far fa-calendar-alt"></i></span>
-                    <span>{$post.date_published}</span>
-                </div>
-
                 {*if $post.categories}
                     <div class="categories">
                         <span>
@@ -51,6 +46,11 @@
                         {/foreach}
                     </div>
                 {/if}
+
+                <div class="date_published">
+                    <span><i class="far fa-calendar-alt"></i></span>
+                    <span>{$post.date_published}</span>
+                </div>
             </div>
 
             {if !$compact && $post.excerpt}
