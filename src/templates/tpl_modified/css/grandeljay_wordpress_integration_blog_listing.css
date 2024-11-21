@@ -91,6 +91,10 @@
     color: var(--colorPrimary);
 }
 
+.filter .tags > label:hover > input[type="checkbox"]:active + div.tag {
+    color: inherit;
+}
+
 .filter .actions {
     margin-top: 0.8rem;
 }
