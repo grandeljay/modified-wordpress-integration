@@ -62,11 +62,25 @@
 }
 
 .filter .tags > label {
-    padding: 0.2em 0.4em;
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 0.2rem;
 
-    border-radius: 4px;
+    user-select: none;
+}
 
-    background-color: #d9d9d9;
+.filter .tags > label > input[type="radio"] {
+    display: none;
+}
+
+.filter .tags > label > input[type="radio"] + div.tag::before {
+    content: "\f02b";
+
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+.filter .tags > label > input[type="radio"]:checked + div.tag {
+    color: var(--colorPrimary);
 }
 
 .filter .actions {

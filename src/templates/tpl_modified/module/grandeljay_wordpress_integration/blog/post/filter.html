@@ -40,11 +40,13 @@
                     <label>
                         {if $filter_tag.is_active}
                             <input type="radio" name="tag_id" value="{$filter_tag.id}" checked="checked">
-                            {$filter_tag.name}
                         {else}
                             <input type="radio" name="tag_id" value="{$filter_tag.id}">
-                            {$filter_tag.name}
                         {/if}
+
+                        <div class="tag">
+                            {$filter_tag.name}
+                        </div>
                     </label>
                 {/foreach}
             </div>
