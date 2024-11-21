@@ -34,23 +34,7 @@
             </div>
         </div>
 
-        {if $filter_tags}
-            <div class="tags">
-                {foreach $filter_tags as $filter_tag}
-                    <label>
-                        {if $filter_tag.is_active}
-                            <input type="checkbox" name="tag_id[]" value="{$filter_tag.id}" checked="checked">
-                        {else}
-                            <input type="checkbox" name="tag_id[]" value="{$filter_tag.id}">
-                        {/if}
-
-                        <div class="tag">
-                            {$filter_tag.name}
-                        </div>
-                    </label>
-                {/foreach}
-            </div>
-        {/if}
+        {include file="module/grandeljay_wordpress_integration/blog/post/filter_tags.html"}
 
         {if $category_tags}
             {foreach $category_tags as $category_tag}
@@ -63,7 +47,10 @@
 
         <div class="actions">
             <input type="submit" value="{#filter_submit#}">
-            <a href="{$filter_reset_link}">{#filter_reset#}</a>
+
+            {if $filter_reset_link}
+                <a href="{$filter_reset_link}">{#filter_reset#}</a>
+            {/if}
         </div>
     </form>
 </div>

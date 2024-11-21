@@ -424,10 +424,8 @@ class Blog
         return $category_tags_array;
     }
 
-    public static function getFilterHtml(): string
+    public static function getFilterHtml(\Smarty &$smarty, array $tags): string
     {
-        global $smarty, $tags;
-
         $filter_tags = \array_map(
             function (Tag $tag) {
                 return $tag->toArray();
@@ -445,22 +443,28 @@ class Blog
         unset($filter_reset_parameters['category_id']);
         unset($filter_reset_parameters['tag_id']);
 
-        $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
-        $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
-        $filter_reset_link->addParameters($filter_reset_parameters);
-        $smarty->assign('filter_reset_link', $filter_reset_link->toString());
+        global $PHP_SELF;
+
+        if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
+            $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
+            $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
+            $filter_reset_link->addParameters($filter_reset_parameters);
+            $smarty->assign('filter_reset_link', $filter_reset_link->toString());
+        }
 
         /** Filter categories */
         global $categories, $category;
 
-        $categories_array = \array_map(
-            function (Category $category) {
-                return $category->toArray();
-            },
-            $categories
-        );
+        if (isset($categories)) {
+            $categories_array = \array_map(
+                function (Category $category) {
+                    return $category->toArray();
+                },
+                $categories
+            );
 
-        $smarty->assign('categories', $categories_array);
+            $smarty->assign('categories', $categories_array);
+        }
 
         if (!empty($_GET['category_id'])) {
             $smarty->assign('category', $category->toArray());
@@ -478,7 +482,7 @@ class Blog
 
     public static function getListingHtml(array $posts_with_meta, $options): string
     {
-        global $smarty;
+        global $smarty, $tags;
 
         /** Pagination */
         $html_pagination = self::getPaginationHtml($options, $posts_with_meta);
@@ -495,7 +499,7 @@ class Blog
         $smarty->assign('posts', $posts_array);
 
         /** Filter */
-        $html_filter = self::getFilterHtml();
+        $html_filter = self::getFilterHtml($smarty, $tags);
         $smarty->assign('filter', $html_filter);
 
         /** HTML */

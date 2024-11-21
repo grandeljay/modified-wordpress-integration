@@ -6,6 +6,11 @@
 
     background-color: #f4f4f4;
 }
+#search > .filter {
+    padding: 0;
+
+    background-color: transparent;
+}
 
 .filter > h2 {
     margin-top: 0;

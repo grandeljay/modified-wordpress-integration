@@ -14,28 +14,17 @@ if (!isset($PHP_SELF)) {
     return;
 }
 
-$allowed_pages = [
-    Constants::BLOG_URL_HOME,
-    Constants::BLOG_URL_POSTS,
-];
-
-if (!\in_array($PHP_SELF, $allowed_pages, true)) {
+if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
     return;
 }
 
-$unallowed_parameters = [
-    'category_id',
-    'tag_id',
-    'post',
-];
-
-foreach ($unallowed_parameters as $parameter) {
-    if (isset($_GET[$parameter])) {
-        return;
-    }
-}
-
 $translations = Blog::getModuleTranslations();
+
+/** Filter */
+$tags        = Blog::getTags();
+$html_filter = Blog::getFilterHtml($box_smarty, $tags);
+$box_smarty->assign('filter', $html_filter);
+/** */
 
 $form_action            = Constants::BLOG_URL_POSTS;
 $form_title             = $translations->get('POSTS_SEARCH_TITLE');
