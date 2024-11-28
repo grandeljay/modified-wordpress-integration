@@ -4,15 +4,13 @@
     {else}
         <div class="post">
     {/if}
-        {if $compact || $post.featured_image}
-            <div class="image">
+        <div class="image">
+            <a href="{$post.link}">
                 {if $post.featured_image}
-                    <a href="{$post.link}">
-                        <img src="{$post.featured_image.source_url}" alt="{$post.featured_image.alt_text}" title="{$post.featured_image.title}">
-                    </a>
+                    <img src="{$post.featured_image.source_url}" alt="{$post.featured_image.alt_text}" title="{$post.featured_image.title}">
                 {/if}
-            </div>
-        {/if}
+            </a>
+        </div>
 
         <div class="content">
             <div class="title">
