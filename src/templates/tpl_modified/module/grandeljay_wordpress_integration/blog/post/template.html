@@ -1,6 +1,14 @@
 {config_load file="$language/modules/blog/grandeljay_wordpress_integration.conf" section="posts_template"}
 
-<h1>{$post.title}</h1>
+<h1>
+    {$post.title}
+
+    {if $post_edit_link}
+        <a class="post_edit_link" href="{$post_edit_link}" title="Artikel bearbeiten">
+            <i class="fas fa-edit"></i>
+        </a>
+    {/if}
+</h1>
 
 <div class="meta">
     <div class="published">

@@ -62,6 +62,17 @@ if (!empty($_GET['post'])) {
     if (empty($post)) {
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/not_found.html');
     } else {
+        $user_is_administrator = '0' === $_SESSION['customers_status']['customers_status_id'];
+
+        if ($user_is_administrator) {
+            $post_edit_link = \sprintf(
+                'https://blog.hybrid.supply/wp-admin/post.php?post=%d&action=edit',
+                $post->getId()
+            );
+
+            $smarty->assign('post_edit_link', $post_edit_link);
+        }
+
         $smarty->assign('post', $post_array);
 
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
