@@ -108,6 +108,11 @@ h1 > a.post_edit_link:hover {
 /**
  * Table
  */
+figure.wp-block-table,
+figure.wp-block-table > table {
+    width: 100%;
+}
+
 figure.wp-block-table {
     display: inline-block;
 }
