@@ -25,6 +25,10 @@ h1 > a.post_edit_link:hover {
     background-color: #fff;
 }
 
+h3.wp-block-heading {
+    margin: 20px 0 8px 0;
+}
+
 /**
  * Meta
  */
