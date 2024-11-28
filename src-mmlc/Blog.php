@@ -472,7 +472,10 @@ class Blog
 
         /** Get HTML */
         $translations           = Blog::getModuleTranslations();
+        $form_action = \xtc_href_link(\basename(Constants::BLOG_URL_POSTS));
         $form_input_placeholder = $translations->get('POSTS_SEARCH');
+
+        $smarty->assign('form_action', $form_action);
         $smarty->assign('form_input_placeholder', $form_input_placeholder);
 
         $html_filter = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/filter.html');
