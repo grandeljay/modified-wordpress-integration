@@ -146,3 +146,12 @@ figure.wp-block-table > figcaption.wp-element-caption {
 .hybridsupply.grid .first > .wp-block-column {
     padding: 1rem;
 }
+
+/**
+ * Lists
+ */
+ol,
+ul {
+    margin: revert;
+    padding: revert;
+}
