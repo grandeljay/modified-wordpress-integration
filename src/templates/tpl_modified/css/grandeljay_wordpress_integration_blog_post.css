@@ -56,7 +56,7 @@ h3.wp-block-heading {
     margin-bottom: 1rem;
 
     border-radius: 4px;
-    background-color: #f4f4f4;
+    background-color: var(--backgroundColor);
 }
 
 .meta > .taxonomy > .terms {
@@ -86,7 +86,7 @@ h3.wp-block-heading {
 
     overflow: hidden;
 
-    background-color: #f4f4f4;
+    background-color: var(--backgroundColor);
 }
 
 .wp-block-post-featured-image > img {
@@ -160,7 +160,7 @@ figure.wp-block-table > figcaption.wp-element-caption {
 
     font-size: smaller;
 
-    background-color: #f4f4f4;
+    background-color: var(--backgroundColor);
     border: 1px solid #d9d9d9;
     border-top: none;
 }

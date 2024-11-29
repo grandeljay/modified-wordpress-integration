@@ -4,7 +4,7 @@
 .filter {
     padding: 1rem;
 
-    background-color: #f4f4f4;
+    background-color: var(--backgroundColor);
     border-radius: 4px;
 }
 #search > .filter {
@@ -131,8 +131,6 @@ ul.post_listing > li {
 }
 
 .post {
-    --backgroundColor: #f4f4f4;
-
     flex-flow: column nowrap;
     gap: 1rem;
 
