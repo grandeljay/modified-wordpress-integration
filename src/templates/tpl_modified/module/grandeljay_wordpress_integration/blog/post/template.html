@@ -10,6 +10,14 @@
     {/if}
 </h1>
 
+<div class="featured-image">
+    {if $post.featured_image}
+        <figure class="wp-block-post-featured-image">
+            <img loading="lazy" decoding="async" src="{$post.featured_image.source_url}" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="{$post.featured_image.alt_text}" title="{$post.featured_image.title}">
+        </figure>
+    {/if}
+</div>
+
 <div class="meta">
     <div class="published">
         <span>

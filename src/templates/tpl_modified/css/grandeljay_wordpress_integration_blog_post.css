@@ -81,6 +81,7 @@ h3.wp-block-heading {
 }
 
 .wp-block-post-featured-image {
+    width: 100%;
     margin: 1rem 0;
 
     overflow: hidden;
