@@ -75,21 +75,24 @@ h3.wp-block-heading {
 /**
  * Featured Image
  */
+.wp-block-post-featured-image,
+.wp-block-post-featured-image > img {
+    border-radius: 4px;
+}
+
 .wp-block-post-featured-image {
-    margin: 2rem 0;
+    margin: 1rem 0;
 
     overflow: hidden;
 
-    border-radius: 4px;
+    background-color: #f4f4f4;
 }
 
 .wp-block-post-featured-image > img {
     display: block;
-    width: 100%;
+    width: auto;
     height: 40vh;
-
-    object-fit: cover;
-    object-position: 50%;
+    margin: auto;
 }
 
 /**
