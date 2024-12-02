@@ -179,8 +179,8 @@ figure.wp-block-table > figcaption.wp-element-caption {
 /**
  * Lists
  */
-ol,
-ul {
+ol.wp-block-list,
+ul.wp-block-list {
     margin: revert;
     padding: revert;
 }
