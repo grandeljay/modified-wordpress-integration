@@ -22,6 +22,10 @@
 /**
  * Heading
  */
+h1 {
+    margin: 0 0 1rem 0;
+}
+
 h1 > a.post_edit_link {
     padding: 0 0.08em;
     border-radius: 4px;
@@ -75,6 +79,10 @@ h3.wp-block-heading {
 /**
  * Featured Image
  */
+.featured-image {
+    margin-bottom: 1rem;
+}
+
 .wp-block-post-featured-image,
 .wp-block-post-featured-image > img {
     border-radius: 4px;
@@ -82,7 +90,6 @@ h3.wp-block-heading {
 
 .wp-block-post-featured-image {
     width: 100%;
-    margin: 1rem 0;
 
     overflow: hidden;
 
