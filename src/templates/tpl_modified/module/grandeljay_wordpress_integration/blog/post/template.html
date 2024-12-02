@@ -20,44 +20,43 @@
 
 <div class="meta">
     <div class="published">
-        <span>
-            <i class="far fa-calendar-alt"></i>
-            {#meta_published#}
-        </span>
-        <span>{$post.date_published}</span>
+        <div><i class="far fa-calendar-alt"></i><span>{#meta_published#}</span></div>
+        <div>
+            <ul>
+                <li>{$post.date_published}</li>
+            </ul>
+        </div>
     </div>
 
     <div class="taxonomy categories">
-        <span>
-            <i class="fas fa-folder"></i>
-            {#meta_categories#}
-        </span>
+        <div><i class="fas fa-folder"></i><span>{#meta_categories#}</span></div>
 
         {if $post.categories}
             <div class="terms">
-                {foreach $post.categories as $category}
-                    <span><a href="{$category.link}">{$category.name}</a></span>
-                {/foreach}
+                <ul>
+                    {foreach $post.categories as $category}
+                        <li><a href="{$category.link}">{$category.name}</a></li>
+                    {/foreach}
+                </ul>
             </div>
         {else}
-            <span>{#meta_none#}</span>
+            <div>{#meta_none#}</div>
         {/if}
     </div>
 
     <div class="taxonomy tags">
-        <span>
-            <i class="fas fa-tags"></i>
-            {#meta_tags#}
-        </span>
+        <div><i class="fas fa-tags"></i><span>{#meta_tags#}</span></div>
 
         {if $post.tags}
             <div class="terms">
-                {foreach $post.tags as $tag}
-                    <span><a href="{$tag.link}">{$tag.name}</a></span>
-                {/foreach}
+                <ul>
+                    {foreach $post.tags as $tag}
+                        <li><a href="{$tag.link}">{$tag.name}</a></li>
+                    {/foreach}
+                </ul>
             </div>
         {else}
-            <span>{#meta_none#}</span>
+            <div>{#meta_none#}</div>
         {/if}
     </div>
 </div>

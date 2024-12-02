@@ -56,24 +56,118 @@ h3.wp-block-heading {
  * Meta
  */
 .meta {
-    padding: 1rem;
-    margin-bottom: 1rem;
+    --margin: 1rem;
 
-    border-radius: 4px;
-    background-color: var(--backgroundColor);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    margin-bottom: calc(var(--margin) / 2);
+    padding-bottom: calc(var(--margin) / 2);
+    border-bottom: 1px solid #ccc;
+
+    hyphens: auto;
+    font-size: smaller;
+}
+@media (min-width: 500px) {
+    .meta {
+        position: relative;
+        float: right;
+        gap: 1ch;
+
+        padding: 1rem;
+        margin-bottom: 0;
+        margin-left: var(--margin);
+
+        font-size: revert;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: var(--backgroundColor);
+    }
+}
+.meta::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    right: calc(100% + 1px);
+    bottom: 0;
+
+    width: var(--margin);
+
+    background-color: #fff;
 }
 
-.meta > .taxonomy > .terms {
-    display: inline-flex;
-    gap: 1ch;
+.meta ul {
+    display: flex;
     flex-flow: row wrap;
+    gap: 0 1ch;
+
+    margin: 0;
+
+    list-style: none;
+}
+@media (min-width: 500px) {
+    .meta ul {
+        display: revert;
+
+        padding-left: calc(14px + 1ch);
+    }
 }
 
-.meta > .taxonomy > .terms > span::after {
-    content: ',';
+.meta ul > li::after {
+    content: ",";
 }
-.meta > .taxonomy > .terms > span:last-of-type::after {
-    content: '';
+.meta ul > li:last-of-type::after {
+    content: "";
+}
+
+/**
+ * Meta Type
+ *
+ * Could be:
+ *  - published date
+ *  - categories
+ *  - tags
+ */
+.meta > div {
+    display: flex;
+    flex-flow: row nowrap;
+}
+@media (min-width: 500px) {
+    .meta > div {
+        display: block;
+    }
+}
+
+.meta > div > div {
+    display: inline-block;
+}
+@media (min-width: 500px) {
+    .meta > div > div {
+        display: block;
+    }
+    .meta > div > div:first-of-type {
+        border-bottom: 1px dotted #ccc
+    }
+}
+
+.meta > div > div > i {
+    width: 22px;
+}
+
+.meta > div > div > span {
+    display: none;
+}
+@media (min-width: 500px) {
+    .meta > div > div > span {
+        display: revert;
+    }
+}
+
+/** Tags */
+.meta > div > div > i.fas.fa-tags {
+    font-size: smaller;
 }
 
 /**
@@ -92,8 +186,6 @@ h3.wp-block-heading {
     width: 100%;
 
     overflow: hidden;
-
-    background-color: var(--backgroundColor);
 }
 
 .wp-block-post-featured-image > img {
