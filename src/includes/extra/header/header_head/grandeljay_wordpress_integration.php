@@ -54,6 +54,6 @@ foreach ($stylesheets as $filename) {
     $url      = $stylesheets_url . $relative;
     $version  = \hash_file('crc32c', $filepath);
     ?>
-    <link rel="stylesheet" type="text/css" href="<?= $url ?>?v=<?php echo $version ?>" />
+    <link rel="stylesheet" type="text/css" href="<?= $url ?>?v=<?= $version ?>" />
     <?php
 }

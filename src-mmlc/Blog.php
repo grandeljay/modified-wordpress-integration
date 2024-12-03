@@ -472,7 +472,7 @@ class Blog
 
         /** Get HTML */
         $translations           = Blog::getModuleTranslations();
-        $form_action = \xtc_href_link(\basename(Constants::BLOG_URL_POSTS));
+        $form_action            = \xtc_href_link(\basename(Constants::BLOG_URL_POSTS));
         $form_input_placeholder = $translations->get('POSTS_SEARCH');
 
         $smarty->assign('form_action', $form_action);
