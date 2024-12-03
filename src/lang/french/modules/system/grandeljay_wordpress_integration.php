@@ -11,6 +11,9 @@ $translations->add('TEXT_TITLE', 'WordPress Integration');
 $translations->add('TITLE_BLOG', 'News');
 $translations->add('TITLE_BLOG_LISTING', 'Tous');
 
+$translations->add('INTRODUCTION_LINK_READ_MORE', 'Afficher plus');
+$translations->add('INTRODUCTION_LINK_READ_LESS', 'Montrer moins');
+
 $translations->add('POSTS', 'Postes');
 
 $translations->add('BUTTON_POSTS_VIEW_ALL', 'Voir tous les messages');

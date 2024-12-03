@@ -445,4 +445,61 @@ class Blog
 
         return $html_listing;
     }
+
+    public static function getIntroductionHtml(): string
+    {
+        /**
+         * It would be better to use the `/wp/v2/settings` endpoint to determine
+         * which page is used as the home page (`page_on_front`).
+         */
+        $endpoint = Constants::BLOG_URL_API_PAGES . '952';
+
+        $url = new Url($endpoint);
+        $url->addDefaultParameters();
+        $url->makeRequest();
+
+        if (!$url->isRequestSuccessful()) {
+            return '';
+        }
+
+        $page_wp      = $url->getRequestBody();
+        $page         = new Page($page_wp);
+        $page_title   = $page->getTitle();
+        $page_excerpt = $page->getExcerpt();
+        $page_content = $page->getContent();
+
+        $translations   = Blog::getModuleTranslations();
+        $text_read_more = $translations->get('INTRODUCTION_LINK_READ_MORE');
+        $text_read_less = $translations->get('INTRODUCTION_LINK_READ_LESS');
+
+        \ob_start();
+        ?>
+        <h2><?= $page_title ?></h2>
+
+        <div class="excerpt">
+            <?= $page_excerpt ?>
+        </div>
+
+        <?php if ($page_content) { ?>
+            <div id="read_more_content" class="content">
+                <?= $page_content ?>
+            </div>
+
+            <a id="read_more_link" class="hide">
+                <i class="fas fa-angle-double-down"></i>
+                <?= $text_read_more ?>
+                <i class="fas fa-angle-double-down"></i>
+            </a>
+
+            <a id="read_less_link" class="hide">
+                <i class="fas fa-angle-double-up"></i>
+                <?= $text_read_less ?>
+                <i class="fas fa-angle-double-up"></i>
+            </a>
+        <?php } ?>
+        <?php
+        $introduction = \ob_get_clean();
+
+        return $introduction;
+    }
 }

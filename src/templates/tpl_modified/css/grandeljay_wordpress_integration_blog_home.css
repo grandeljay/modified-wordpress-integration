@@ -1,4 +1,54 @@
 /**
+ * Introduction
+ */
+#read_more_link,
+#read_less_link {
+    display: block;
+    margin-top: 1rem;
+
+    text-align: center;
+    user-select: none;
+}
+@media (min-width: 600px) {
+    #read_more_link,
+    #read_less_link {
+        display: none;
+    }
+}
+
+#read_more_content > p:first-of-type {
+    margin-top: revert;
+}
+
+#read_more_content {
+    display: none;
+}
+
+#read_more_content.show,
+#read_more_link.show,
+#read_less_link.show {
+    display: block;
+}
+@media (min-width: 600px) {
+    #read_more_link.show,
+    #read_less_link.show {
+        display: none;
+    }
+}
+
+#read_more_content.hide,
+#read_more_link.hide,
+#read_less_link.hide {
+    display: none;
+}
+@media (min-width: 600px) {
+    #read_more_content,
+    #read_more_content.hide {
+        display: block;
+    }
+}
+
+/**
  * Category Listing
  */
 ul.category_listing {

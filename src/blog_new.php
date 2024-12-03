@@ -22,6 +22,7 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
 
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
+$smarty->assign('introduction', Blog::getIntroductionHtml());
 
 $breadcrumb->add('Blog', Constants::BLOG_URL_HOME);
 
