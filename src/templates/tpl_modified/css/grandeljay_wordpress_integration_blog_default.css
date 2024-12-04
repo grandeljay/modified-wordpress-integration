@@ -14,6 +14,14 @@ section:last-of-type {
 }
 
 /**
+ * Headings
+ */
+section .layout_content_inner.cf > h1,
+section .layout_content_inner.cf > .blog > h1 {
+    font-size: 2em;
+}
+
+/**
  * Buttons
  */
 a.button,
