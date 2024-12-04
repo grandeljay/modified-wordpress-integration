@@ -20,11 +20,14 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
+$translations    = Blog::getModuleTranslations();
+$text_title_blog = $translations->get('TITLE_BLOG');
+
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
 $smarty->assign('introduction', Blog::getIntroductionHtml());
 
-$breadcrumb->add('Blog', Constants::BLOG_URL_HOME);
+$breadcrumb->add($text_title_blog, Constants::BLOG_URL_HOME);
 
 require \DIR_WS_INCLUDES . 'header.php';
 require \DIR_FS_CATALOG . 'templates/' . \CURRENT_TEMPLATE . '/source/boxes.php';
