@@ -18,22 +18,6 @@
             </div>
 
             <div class="meta">
-                {*if $post.categories}
-                    <div class="categories">
-                        <span>
-                            {if $post.categories|count === 1}
-                                {#meta_category#}
-                            {else}
-                                {#meta_categories#}
-                            {/if}
-                        </span>
-
-                        {foreach $post.categories as $category}
-                            <span><a href="{$category.link}">{$category.name}</a></span>
-                        {/foreach}
-                    </div>
-                {/if*}
-
                 {if $post.tags}
                     <div class="tags">
                         {foreach $post.tags as $tag}
