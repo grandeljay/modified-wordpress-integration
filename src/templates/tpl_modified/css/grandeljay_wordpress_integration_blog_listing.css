@@ -134,15 +134,18 @@ ul.post_listing > li {
     flex-flow: column nowrap;
     gap: 1rem;
 
-    padding: 1rem;
+    padding-bottom: 1rem;
     overflow: hidden;
 
-    border: 1px solid var(--backgroundColor);
-    border-radius: 4px;
+    border-bottom: 1px solid var(--backgroundColor);
 }
 @media (min-width: 512px) {
     .post {
         display: block;
+        padding: 1rem;
+
+        border: 1px solid var(--backgroundColor);
+        border-radius: 4px;
     }
 }
 .post.compact {
@@ -196,10 +199,17 @@ ul.post_listing > li {
 /** Post Meta */
 .post > .content > .meta {
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: row-reverse wrap;
     gap: var(--gapSmall);
+    justify-content: flex-end;
 
     font-size: 0.8rem;
+}
+@media (min-width: 512px) {
+    .post > .content > .meta {
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+    }
 }
 .post.compact > .content > .meta {
     gap: var(--gapCompact);
@@ -233,5 +243,12 @@ ul.post_listing > li {
 
 /** Post Excerpt */
 .post > .content > .excerpt {
+    max-height: calc(2em * var(--lineHeight));
     margin-top: var(--gapSmall);
+    overflow: hidden;
+}
+@media (min-width: 512px) {
+    .post > .content > .excerpt {
+        max-height: 100%;
+    }
 }
