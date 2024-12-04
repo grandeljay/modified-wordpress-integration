@@ -192,8 +192,13 @@ h3.wp-block-heading {
     display: block;
     width: 100%;
     max-height: 40vh;
-    object-fit: contain;
+    object-fit: cover;
     object-position: 50%;
+}
+@media (min-width: 768px) {
+    .wp-block-post-featured-image > img {
+        object-fit: contain;
+    }
 }
 
 /**
