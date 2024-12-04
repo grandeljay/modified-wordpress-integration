@@ -39,22 +39,17 @@
     }
 }
 
-.filter .category_and_search > .category > .sumo_category_id,
-.filter .category_and_search > .category > .sumo_category_id > p.SelectBox {
-    height: 100%;
-}
-
-.filter .category_and_search > .category > .sumo_category_id {
+.filter .category_and_search > .category > .SumoSelect {
     width: 100%;
 }
 
-.filter .category_and_search > .category > .sumo_category_id > p.SelectBox {
+.filter .category_and_search > .category > .SumoSelect > p.SelectBox {
     display: flex;
     align-items: center;
-}
+    padding: 12px 8px;
+    line-height: normal;
 
-.filter .category_and_search > .category > .sumo_category_id > .optWrapper {
-    top: 100%;
+    border-color: #d9d9d9;
 }
 
 .filter .category_and_search > .search {
