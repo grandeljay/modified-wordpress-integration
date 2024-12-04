@@ -125,5 +125,12 @@ section#posts_recent .posts_show_all {
 }
 
 section#posts_recent .posts_show_all a.button {
-    width: 50%;
+    width: 100%;
+
+    box-sizing: border-box;
+}
+@media (min-width: 768px) {
+    section#posts_recent .posts_show_all a.button {
+        width: 50%;
+    }
 }

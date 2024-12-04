@@ -91,7 +91,19 @@
 }
 
 .filter .actions {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1ch;
+
     margin-top: 0.8rem;
+
+    text-align: center;
+}
+@media (min-width: 768px) {
+    .filter .actions {
+        flex-flow: row wrap;
+        align-items: center;
+    }
 }
 
 /**
