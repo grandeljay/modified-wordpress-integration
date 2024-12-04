@@ -126,6 +126,8 @@ ul.post_listing > li {
 }
 
 .post {
+    --fontSizePostTitleCompact: 0.8rem;
+
     flex-flow: column nowrap;
     gap: 1rem;
 
@@ -133,6 +135,11 @@ ul.post_listing > li {
     overflow: hidden;
 
     border-bottom: 1px solid var(--backgroundColor);
+}
+@media (min-width: 400px) {
+    .post {
+        --fontSizePostTitleCompact: 1rem;
+    }
 }
 @media (min-width: 512px) {
     .post {
@@ -160,12 +167,16 @@ ul.post_listing > li {
     }
 }
 .post.compact > .image {
+    --metaHeight: 0.8rem;
+
     flex: 0 0 auto;
     width: auto;
-    height: calc(((1.2rem + 0.8rem + 0.8rem) * var(--lineHeight)) + var(--gapCompact) + var(--gapCompact));
+    height: calc(((var(--fontSizePostTitleCompact) + var(--metaHeight)) * var(--lineHeight)) + var(--gapCompact));
 }
 @media (min-width: 512px) {
     .post.compact > .image {
+        --metaHeight: calc(2 * 0.8rem);
+
         margin: 0;
     }
 }
@@ -218,6 +229,8 @@ ul.post_listing > li {
 }
 .post.compact > .content > .title {
     margin-bottom: var(--gapCompact);
+
+    font-size: var(--fontSizePostTitleCompact);
 }
 
 /** Post Meta Tags */
