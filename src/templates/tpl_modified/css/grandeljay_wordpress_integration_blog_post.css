@@ -288,3 +288,17 @@ ul.wp-block-list {
     margin: revert;
     padding: revert;
 }
+
+/**
+ * Images
+ */
+.wp-block-image > figure > img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+@media (min-width: 768px) {
+    .wp-block-image > figure > img {
+        width: revert;
+    }
+}
