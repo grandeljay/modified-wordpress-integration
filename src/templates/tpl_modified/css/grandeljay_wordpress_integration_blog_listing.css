@@ -2,6 +2,7 @@
  * Filter
  */
 .filter {
+    --gap: 1rem;
     padding: 1rem;
 
     background-color: var(--backgroundColor);
@@ -20,9 +21,9 @@
 .filter .category_and_search {
     display: flex;
     flex-flow: column nowrap;
-    gap: 1rem;
+    gap: var(--gap);
 
-    margin-bottom: 0.8rem;
+    margin-bottom: var(--gap);
 }
 @media (min-width: 768px) {
     .filter .category_and_search {
@@ -95,7 +96,7 @@
     flex-flow: column nowrap;
     gap: 1ch;
 
-    margin-top: 0.8rem;
+    margin-top: var(--gap);
 
     text-align: center;
 }
