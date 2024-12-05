@@ -370,23 +370,6 @@ class Blog
 
         $smarty->assign('filter_tags', $filter_tags);
 
-        /** Filter reset */
-        $filter_reset_parameters = $_GET;
-
-        unset($filter_reset_parameters['page']);
-        unset($filter_reset_parameters['search']);
-        unset($filter_reset_parameters['category_id']);
-        unset($filter_reset_parameters['tag_id']);
-
-        global $PHP_SELF;
-
-        if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
-            $filter_reset_server = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
-            $filter_reset_link   = new Url($filter_reset_server . Constants::BLOG_URL_POSTS);
-            $filter_reset_link->addParameters($filter_reset_parameters);
-            $smarty->assign('filter_reset_link', $filter_reset_link->toString());
-        }
-
         /** Filter categories */
         global $categories, $category;
 

@@ -22,8 +22,4 @@ $translations->add('POSTS_SEARCH_TITLE', 'Search');
 $translations->add('POSTS_SEARCH', 'Search for posts');
 $translations->add('POSTS_SEARCH_SUBMIT', 'Get results');
 
-$translations->add('FORM_SEARCH_TITLE', 'Search results');
-$translations->add('FORM_SEARCH_DESCRIPTION', 'Your query for %s has returned the following results:');
-$translations->add('FORM_SEARCH_RESET', 'Reset search');
-
 $translations->define();

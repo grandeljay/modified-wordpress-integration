@@ -22,8 +22,4 @@ $translations->add('POSTS_SEARCH_TITLE', 'Ricerca');
 $translations->add('POSTS_SEARCH', 'Ricerca dei messaggi');
 $translations->add('POSTS_SEARCH_SUBMIT', 'Ottenere risultati');
 
-$translations->add('FORM_SEARCH_TITLE', 'Risultati della ricerca');
-$translations->add('FORM_SEARCH_DESCRIPTION', 'La vostra ricerca di %s ha prodotto i seguenti risultati:');
-$translations->add('FORM_SEARCH_RESET', 'Azzeramento della ricerca');
-
 $translations->define();

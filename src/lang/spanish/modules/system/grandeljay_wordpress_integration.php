@@ -22,8 +22,4 @@ $translations->add('POSTS_SEARCH_TITLE', 'Buscar en');
 $translations->add('POSTS_SEARCH', 'Búsqueda de puestos');
 $translations->add('POSTS_SEARCH_SUBMIT', 'Obtener resultados');
 
-$translations->add('FORM_SEARCH_TITLE', 'Resultados de la búsqueda');
-$translations->add('FORM_SEARCH_DESCRIPTION', 'Su búsqueda de %s ha dado los siguientes resultados');
-$translations->add('FORM_SEARCH_RESET', 'Restablecer búsqueda');
-
 $translations->define();
