@@ -31,17 +31,10 @@ $stylesheets           = [
     'grandeljay_wordpress_integration_blog_default',
 ];
 
-$scripts_relative  = 'templates/' . \CURRENT_TEMPLATE . '/js';
-$scripts_directory = \DIR_FS_CATALOG . $scripts_relative;
-$scripts_url       = \DIR_WS_CATALOG . $scripts_relative;
-$scripts           = [];
-
 switch ($current_page) {
     case Constants::BLOG_URL_HOME:
         $stylesheets[] = 'grandeljay_wordpress_integration_blog_home';
         $stylesheets[] = 'grandeljay_wordpress_integration_blog_listing';
-
-        $scripts[] = 'grandeljay_wordpress_integration_blog_home';
 
         break;
 
@@ -62,15 +55,5 @@ foreach ($stylesheets as $filename) {
     $version  = \hash_file('crc32c', $filepath);
     ?>
     <link rel="stylesheet" type="text/css" href="<?= $url ?>?v=<?= $version ?>" />
-    <?php
-}
-
-foreach ($scripts as $filename) {
-    $relative = '/' . $filename . '.js';
-    $filepath = $scripts_directory . $relative;
-    $url      = $scripts_url . $relative;
-    $version  = \hash_file('crc32c', $filepath);
-    ?>
-    <script src="<?= $url ?>?v=<?= $version ?>"></script>
     <?php
 }

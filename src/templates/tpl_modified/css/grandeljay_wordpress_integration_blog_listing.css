@@ -62,31 +62,33 @@
     flex-flow: row wrap;
 }
 
-.filter .tags > label {
+.filter .tags label {
     display: flex;
     flex-flow: row nowrap;
     gap: 0.2rem;
+
+    margin-right: 8px;
 
     user-select: none;
     cursor: pointer;
 }
 
-.filter .tags > label > input[type="checkbox"] {
+.filter .tags label > input[type="checkbox"] {
     display: none;
 }
 
-.filter .tags > label > input[type="checkbox"] + div.tag::before {
+.filter .tags label > input[type="checkbox"] + div.name::before {
     content: "\f02b";
 
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
 }
-.filter .tags > label:hover > input[type="checkbox"] + div.tag,
-.filter .tags > label > input[type="checkbox"]:checked + div.tag {
+.filter .tags label:hover > input[type="checkbox"] + div.name,
+.filter .tags label > input[type="checkbox"]:checked + div.name {
     color: var(--colorPrimary);
 }
 
-.filter .tags > label:hover > input[type="checkbox"]:active + div.tag {
+.filter .tags label:hover > input[type="checkbox"]:active + div.name {
     color: inherit;
 }
 
@@ -104,6 +106,14 @@
         flex-flow: row wrap;
         align-items: center;
     }
+}
+
+/** Slick */
+.filter .slick-slide .tag > label {
+    margin-right: 8px;
+}
+.filter .slick-slide:last-of-type .tag > label {
+    margin-right: 0;
 }
 
 /**
@@ -252,12 +262,12 @@ ul.post_listing > li {
     gap: var(--gapSmall);
 }
 
-.post > .content > .meta > .tags > .tag {
+.post > .content > .meta > .tags > .name {
     font-weight: normal;
     color: inherit;
 }
 
-.post > .content > .meta > .tags > .tag:hover {
+.post > .content > .meta > .tags > .name:hover {
     border: none;
 }
 

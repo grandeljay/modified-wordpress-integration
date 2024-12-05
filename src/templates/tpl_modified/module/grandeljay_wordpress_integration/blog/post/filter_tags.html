@@ -1,17 +1,19 @@
 {if $filter_tags}
     <div class="tags">
         {foreach $filter_tags as $filter_tag}
-            <label>
-                {if $filter_tag.is_active}
-                    <input type="checkbox" name="tag_id[]" value="{$filter_tag.id}" checked="checked">
-                {else}
-                    <input type="checkbox" name="tag_id[]" value="{$filter_tag.id}">
-                {/if}
+            <div class="tag">
+                <label>
+                    {if $filter_tag.is_active}
+                        <input type="checkbox" name="tag_id[]" value="{$filter_tag.id}" checked="checked">
+                    {else}
+                        <input type="checkbox" name="tag_id[]" value="{$filter_tag.id}">
+                    {/if}
 
-                <div class="tag">
-                    {$filter_tag.name}
-                </div>
-            </label>
+                    <div class="name">
+                        {$filter_tag.name}
+                    </div>
+                </label>
+            </div>
         {/foreach}
     </div>
 {/if}
