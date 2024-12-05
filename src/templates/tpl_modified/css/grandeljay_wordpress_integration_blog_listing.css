@@ -122,6 +122,8 @@
 }
 
 .filter .actions input[type="submit"] {
+    width: var(--dropdownCategoriesWidth);
+
     font-weight: inherit;
     color: inherit;
 }
