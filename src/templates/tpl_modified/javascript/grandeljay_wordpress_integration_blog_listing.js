@@ -1,5 +1,5 @@
 jQuery(function($){
-    $('.tags').slick({
+    $('.filter .tags').slick({
         infinite: false,
         slidesToShow: 1,
         slidesToScroll: 1,
