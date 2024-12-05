@@ -73,6 +73,8 @@
     display: flex;
     gap: 1ch;
     flex-flow: row wrap;
+
+    padding: 12px 0;
 }
 
 .filter .tags label {
