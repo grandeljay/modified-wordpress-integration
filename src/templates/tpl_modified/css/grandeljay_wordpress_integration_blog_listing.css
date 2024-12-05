@@ -251,7 +251,7 @@ ul.post_listing > li {
     }
 }
 .post.compact > .content > .meta {
-    gap: var(--gapCompact);
+    gap: 0 var(--gapSmall);
 }
 
 /** Post Content Title */
@@ -270,7 +270,7 @@ ul.post_listing > li {
 .post > .content > .meta > .tags {
     display: flex;
     flex-flow: row wrap;
-    gap: var(--gapSmall);
+    gap: 0 var(--gapSmall);
 }
 
 .post > .content > .meta > .tags > .name,
