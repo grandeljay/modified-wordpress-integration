@@ -2,7 +2,7 @@
  * Filter
  */
 .filter {
-    --gap: 1rem;
+    --gap: 0.4rem;
     --dropdownCategoriesWidth: 100%;
 
     padding: 1rem;
