@@ -5,6 +5,13 @@ jQuery(function($){
         slidesToScroll: 1,
         swipeToSlide: true,
         arrows: false,
-        variableWidth: true
+        variableWidth: true,
+        mobileFirst: true,
+        responsive: [
+           {
+              breakpoint: 768,
+              settings: "unslick"
+           }
+        ]
     });
 });
