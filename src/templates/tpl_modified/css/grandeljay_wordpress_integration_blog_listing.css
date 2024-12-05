@@ -3,11 +3,19 @@
  */
 .filter {
     --gap: 1rem;
+    --dropdownCategoriesWidth: 100%;
+
     padding: 1rem;
 
     background-color: var(--backgroundColor);
     border-radius: 4px;
 }
+@media (min-width: 768px) {
+    .filter {
+        --dropdownCategoriesWidth: 256px;
+    }
+}
+
 #search > .filter {
     padding: 0;
 
@@ -32,12 +40,10 @@
 }
 
 .filter .category_and_search > .category {
-    flex: 1 1 auto;
+    flex: 0 0 var(--dropdownCategoriesWidth);
 }
 @media (min-width: 768px) {
-    .filter .category_and_search > .category {
-        flex: 0 1 256px;
-    }
+    .filter .category_and_search > .category {}
 }
 
 .filter .category_and_search > .category > .SumoSelect {
@@ -45,6 +51,8 @@
 }
 
 .filter .category_and_search > .category > .SumoSelect > p.SelectBox {
+    width: var(--dropdownCategoriesWidth);
+
     display: flex;
     align-items: center;
     padding: 12px 8px;
