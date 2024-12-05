@@ -262,12 +262,14 @@ ul.post_listing > li {
     gap: var(--gapSmall);
 }
 
-.post > .content > .meta > .tags > .name {
+.post > .content > .meta > .tags > .name,
+.post > .content > .meta > .tags > a.tag {
     font-weight: normal;
     color: inherit;
 }
 
-.post > .content > .meta > .tags > .name:hover {
+.post > .content > .meta > .tags > .name:hover,
+.post > .content > .meta > .tags > a.tag:hover {
     border: none;
 }
 
