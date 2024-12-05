@@ -67,8 +67,6 @@
     flex-flow: row nowrap;
     gap: 0.2rem;
 
-    margin-right: 8px;
-
     user-select: none;
     cursor: pointer;
 }
