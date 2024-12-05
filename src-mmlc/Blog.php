@@ -374,6 +374,12 @@ class Blog
         global $categories, $category;
 
         if (isset($categories)) {
+            $categories       = \array_filter(
+                $categories,
+                function (Category $category) {
+                    return !$category->isUncategorised();
+                }
+            );
             $categories_array = \array_map(
                 function (Category $category) {
                     return $category->toArray();
