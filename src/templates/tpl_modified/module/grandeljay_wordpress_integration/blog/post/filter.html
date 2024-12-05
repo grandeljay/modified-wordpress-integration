@@ -9,7 +9,7 @@
                 <div class="category">
                     <select name="category_id">
                         {if $category}
-                            <option value="">- {#filter_category#} -</option>
+                            <option value="">--- {#filter_category#} ---</option>
                         {else}
                             <option value="" selected="selected">- {#filter_category#} -</option>
                         {/if}
@@ -27,9 +27,9 @@
 
             <div class="search">
                 {if $smarty.get.search}
-                    <input type="text" name="search" placeholder="{$form_input_placeholder}" value="{$smarty.get.search}">
+                    <input type="text" name="search" placeholder="{#filter_search_placeholder#}" value="{$form_search_query}">
                 {else}
-                    <input type="text" name="search" placeholder="{$form_input_placeholder}">
+                    <input type="text" name="search" placeholder="{#filter_search_placeholder#}">
                 {/if}
             </div>
         </div>
@@ -46,7 +46,7 @@
         {/if}
 
         <div class="actions">
-            <input type="submit" value="{#filter_submit#}">
+            <input type="submit" value="Suchen">
         </div>
     </form>
 </div>

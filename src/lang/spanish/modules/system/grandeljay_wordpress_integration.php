@@ -18,8 +18,4 @@ $translations->add('POSTS', 'Puestos');
 
 $translations->add('BUTTON_POSTS_VIEW_ALL', 'Ver todas las entradas');
 
-$translations->add('POSTS_SEARCH_TITLE', 'Buscar en');
-$translations->add('POSTS_SEARCH', 'Búsqueda de puestos');
-$translations->add('POSTS_SEARCH_SUBMIT', 'Obtener resultados');
-
 $translations->define();

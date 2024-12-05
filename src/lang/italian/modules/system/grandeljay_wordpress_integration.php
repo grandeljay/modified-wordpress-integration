@@ -18,8 +18,4 @@ $translations->add('POSTS', 'Messaggi');
 
 $translations->add('BUTTON_POSTS_VIEW_ALL', 'Visualizza tutti i messaggi');
 
-$translations->add('POSTS_SEARCH_TITLE', 'Ricerca');
-$translations->add('POSTS_SEARCH', 'Ricerca dei messaggi');
-$translations->add('POSTS_SEARCH_SUBMIT', 'Ottenere risultati');
-
 $translations->define();

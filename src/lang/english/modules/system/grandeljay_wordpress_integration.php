@@ -18,8 +18,4 @@ $translations->add('POSTS', 'Posts');
 
 $translations->add('BUTTON_POSTS_VIEW_ALL', 'View all posts');
 
-$translations->add('POSTS_SEARCH_TITLE', 'Search');
-$translations->add('POSTS_SEARCH', 'Search for posts');
-$translations->add('POSTS_SEARCH_SUBMIT', 'Get results');
-
 $translations->define();
