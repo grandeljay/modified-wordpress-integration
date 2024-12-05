@@ -50,6 +50,10 @@
     width: 100%;
 }
 
+.filter .category_and_search > .category > .SumoSelect > select {
+    font-size: inherit;
+}
+
 .filter .category_and_search > .category > .SumoSelect > p.SelectBox {
     width: var(--dropdownCategoriesWidth);
 
