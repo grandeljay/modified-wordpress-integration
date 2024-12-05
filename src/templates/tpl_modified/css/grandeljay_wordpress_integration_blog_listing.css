@@ -119,6 +119,11 @@
     }
 }
 
+.filter .actions input[type="submit"] {
+    font-weight: inherit;
+    color: inherit;
+}
+
 /** Slick */
 .filter .slick-slide .tag > label {
     margin-right: 8px;
