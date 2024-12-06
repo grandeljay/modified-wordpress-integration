@@ -42,9 +42,6 @@
 .filter .category_and_search > .category {
     flex: 0 0 var(--dropdownCategoriesWidth);
 }
-@media (min-width: 768px) {
-    .filter .category_and_search > .category {}
-}
 
 .filter .category_and_search > .category > .SumoSelect {
     width: 100%;
