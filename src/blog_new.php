@@ -20,15 +20,16 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
-$translations    = Blog::getModuleTranslations();
-$text_title_blog = $translations->get('TITLE_BLOG');
-
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
-$smarty->assign('introduction', Blog::getIntroductionHtml());
 
-$breadcrumb->add($text_title_blog, Constants::BLOG_URL_HOME);
+$wp_page_front       = Blog::getFrontPage();
+$wp_page_front_title = $wp_page_front->getTitle();
 
+$breadcrumb->add($wp_page_front_title, Constants::BLOG_URL_HOME);
+
+$smarty->assign('blog_title', $wp_page_front_title);
+$smarty->assign('blog_introduction', Blog::getIntroductionHtml($wp_page_front));
 require \DIR_WS_INCLUDES . 'header.php';
 require \DIR_FS_CATALOG . 'templates/' . \CURRENT_TEMPLATE . '/source/boxes.php';
 

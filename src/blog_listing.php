@@ -26,8 +26,11 @@ $language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
 
+$wp_page_front       = Blog::getFrontPage();
+$wp_page_front_title = $wp_page_front->getTitle();
+
 $breadcrumb->add(
-    $translations->get('TITLE_BLOG'),
+    $wp_page_front_title,
     Constants::BLOG_URL_HOME
 );
 
@@ -126,6 +129,8 @@ if (!empty($_GET['search'])) {
 
 if (empty($_GET['post'])) {
     $breadcrumb->add($breadcrumb_title, $breadcrumb_link);
+
+    $smarty->assign('title', $breadcrumb_title);
 
     $posts_with_meta = Blog::getPosts($posts_options);
 

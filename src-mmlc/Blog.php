@@ -6,6 +6,28 @@ use Grandeljay\Translator\Translations;
 
 class Blog
 {
+    public static function getPage(int $id): Page
+    {
+        $endpoint = Constants::BLOG_URL_API_PAGES . $id;
+
+        $url = new Url($endpoint);
+        $url->addParameters(
+            [
+                '_embed' => true,
+            ]
+        );
+        $url->makeRequest();
+
+        if (!$url->isRequestSuccessful()) {
+            return [];
+        }
+
+        $page_wp = $url->getRequestBody();
+        $page    = new Page($page_wp);
+
+        return $page;
+    }
+
     public static function getPost(int $id): Post
     {
         $endpoint = Constants::BLOG_URL_API_POSTS . $id;
@@ -398,9 +420,11 @@ class Blog
         $translations           = Blog::getModuleTranslations();
         $form_action            = \xtc_href_link(\basename(Constants::BLOG_URL_POSTS));
         $form_input_placeholder = $translations->get('POSTS_SEARCH');
+        $form_input_value       = $_GET['search'] ?? '';
 
         $smarty->assign('form_action', $form_action);
         $smarty->assign('form_input_placeholder', $form_input_placeholder);
+        $smarty->assign('form_input_value', $form_input_value);
 
         $html_filter = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/filter.html');
 
@@ -435,25 +459,28 @@ class Blog
         return $html_listing;
     }
 
-    public static function getIntroductionHtml(): string
+    public static function getFrontPage(): Page
     {
+        if (isset($_SESSION['grandeljay']['wordpress_integration']['front_page'])) {
+            return $_SESSION['grandeljay']['wordpress_integration']['front_page'];
+        }
+
         /**
+         * Get the front page from WordPress
+         *
          * It would be better to use the `/wp/v2/settings` endpoint to determine
          * which page is used as the home page (`page_on_front`).
          */
-        $endpoint = Constants::BLOG_URL_API_PAGES . '952';
+        $wp_page_front = Blog::getPage(952);
 
-        $url = new Url($endpoint);
-        $url->addDefaultParameters();
-        $url->makeRequest();
+        $_SESSION['grandeljay']['wordpress_integration']['front_page'] = $wp_page_front;
 
-        if (!$url->isRequestSuccessful()) {
-            return '';
-        }
+        return $wp_page_front;
+    }
 
-        $page_wp      = $url->getRequestBody();
-        $page         = new Page($page_wp);
-        $page_title   = $page->getTitle();
+    public static function getIntroductionHtml(): string
+    {
+        $page         = self::getFrontPage();
         $page_excerpt = $page->getExcerpt();
         $page_content = $page->getContent();
 
@@ -463,8 +490,6 @@ class Blog
 
         \ob_start();
         ?>
-        <h2><?= $page_title ?></h2>
-
         <div class="excerpt">
             <?= $page_excerpt ?>
         </div>

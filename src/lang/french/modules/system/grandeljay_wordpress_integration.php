@@ -8,7 +8,6 @@ $translations = new Translations(__FILE__, Constants::MODULE_NAME);
 $translations->add('TITLE', 'grandeljay - WordPress Integration');
 $translations->add('TEXT_TITLE', 'WordPress Integration');
 
-$translations->add('TITLE_BLOG', 'News');
 $translations->add('TITLE_BLOG_LISTING', 'Tous');
 
 $translations->add('INTRODUCTION_LINK_READ_MORE', 'Afficher plus');
