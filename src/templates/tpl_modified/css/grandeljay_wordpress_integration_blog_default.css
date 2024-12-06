@@ -21,8 +21,6 @@ section:last-of-type {
  */
 section .layout_content_inner.cf > h1,
 section .layout_content_inner.cf > .blog > h1 {
-    margin-top: 0;
-
     font-size: 2em;
 }
 
