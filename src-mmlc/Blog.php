@@ -34,6 +34,17 @@ class Blog
         $page_wp = $url->getRequestBody();
         $page    = new Page($page_wp);
 
+        /** Get page in current language */
+        $language_code_current = Blog::getLanguageCode();
+
+        if ($language_code_current !== $page->getLanguage()) {
+            $translations = $page->getTranslations();
+
+            if (isset($translations[$language_code_current])) {
+                return self::getPage($translations[$language_code_current]);
+            }
+        }
+
         return $page;
     }
 
@@ -481,8 +492,10 @@ class Blog
 
     public static function getFrontPage(): Page
     {
-        if (isset($_SESSION['grandeljay']['wordpress_integration']['front_page'])) {
-            return $_SESSION['grandeljay']['wordpress_integration']['front_page'];
+        $language_code = Blog::getLanguageCode();
+
+        if (isset($_SESSION['grandeljay']['wordpress_integration']['front_page'][$language_code])) {
+            return $_SESSION['grandeljay']['wordpress_integration']['front_page'][$language_code];
         }
 
         /**
@@ -493,7 +506,7 @@ class Blog
          */
         $wp_page_front = Blog::getPage(952);
 
-        $_SESSION['grandeljay']['wordpress_integration']['front_page'] = $wp_page_front;
+        $_SESSION['grandeljay']['wordpress_integration']['front_page'][$language_code] = $wp_page_front;
 
         return $wp_page_front;
     }
