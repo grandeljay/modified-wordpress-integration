@@ -4,34 +4,32 @@ namespace Grandeljay\WordpressIntegration;
 
 class Entity
 {
+    public static function getDefaultFields(): array
+    {
+        $fields_defaults = [
+            /** WordPress */
+            'id',
+
+            /** Polylang */
+            'lang',
+            'translations',
+        ];
+
+        return $fields_defaults;
+    }
+
     public static function getDefaultOptions(): array
     {
         $options_default = [
+            /** WordPress */
+            '_fields'  => \implode(',', self::getDefaultFields()),
+            'per_page' => 100,
+
             /** Polylang */
             'lang'     => Blog::getLanguageCode(),
-
-            /** WordPress */
-            'per_page' => 100,
         ];
 
         return $options_default;
-    }
-
-    public static function getTranslation(array $entities, int $entity_id): self
-    {
-        foreach ($entities as $category) {
-            $translations_ids = $category->getTranslations();
-
-            foreach ($translations_ids as $language_code => $id) {
-                if ($id === $entity_id) {
-                    return $category;
-                }
-            }
-        }
-
-        throw new \Exception(
-            \sprintf('%s not found with the ID %d.', self::class, $entity_id)
-        );
     }
 
     private int $id;

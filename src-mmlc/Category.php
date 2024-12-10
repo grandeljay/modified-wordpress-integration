@@ -4,6 +4,16 @@ namespace Grandeljay\WordpressIntegration;
 
 class Category extends Taxonomy
 {
+    public static function getDefaultFields(): array
+    {
+        $fields_defaults = \array_merge(
+            parent::getDefaultFields(),
+            []
+        );
+
+        return $fields_defaults;
+    }
+
     public static function getDefaultOptions(): array
     {
         $options_default = \array_merge(

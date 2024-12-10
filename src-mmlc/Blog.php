@@ -34,17 +34,6 @@ class Blog
         $page_wp = $url->getRequestBody();
         $page    = new Page($page_wp);
 
-        /** Get page in current language */
-        $language_code_current = Blog::getLanguageCode();
-
-        if ($language_code_current !== $page->getLanguage()) {
-            $translations = $page->getTranslations();
-
-            if (isset($translations[$language_code_current])) {
-                return self::getPage($translations[$language_code_current]);
-            }
-        }
-
         return $page;
     }
 
@@ -66,17 +55,6 @@ class Blog
 
         $post_wp = $url->getRequestBody();
         $post    = new Post($post_wp);
-
-        /** Get post in current language */
-        $language_code_current = Blog::getLanguageCode();
-
-        if ($language_code_current !== $post->getLanguage()) {
-            $translations = $post->getTranslations();
-
-            if (isset($translations[$language_code_current])) {
-                return self::getPost($translations[$language_code_current]);
-            }
-        }
 
         return $post;
     }

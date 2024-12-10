@@ -4,14 +4,34 @@ namespace Grandeljay\WordpressIntegration;
 
 class Post extends Entity
 {
+    public static function getDefaultFields(): array
+    {
+        $fields_defaults = \array_merge(
+            parent::getDefaultFields(),
+            [
+                'title',
+                'excerpt',
+                'content',
+                'date',
+                'modified',
+                '_links',
+                '_embedded',
+            ]
+        );
+
+        return $fields_defaults;
+    }
+
     public static function getDefaultOptions(): array
     {
         $options_default = \array_merge(
             parent::getDefaultOptions(),
             [
+                /** WordPress */
+                '_fields'  => \implode(',', self::getDefaultFields()),
                 'per_page' => 8,
                 'page'     => $_GET['page'] ?? 1,
-                '_embed' => true,
+                '_embed'   => '',
             ]
         );
 

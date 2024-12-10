@@ -88,7 +88,7 @@ $posts_options = [];
 
 if (!empty($_GET['category_id'])) {
     $category_id = $_GET['category_id'];
-    $category    = Category::getTranslation($categories, $category_id);
+    $category    = Blog::getCategory($category_id);
 
     $breadcrumb_title = $category->getName();
     $breadcrumb_link  = $category->getLink();
@@ -102,7 +102,7 @@ if (!empty($_GET['tag_id'])) {
     $tag_names        = [];
 
     foreach ($tag_ids_request as $tag_id) {
-        $tag                = Tag::getTranslation($tags, $tag_id);
+        $tag                = Blog::getTag($tag_id);
         $tag_ids_response[] = $tag->getId();
         $tag_names[$tag_id] = $tag->getName();
     }
