@@ -88,20 +88,22 @@ $posts_options = [];
 
 if (!empty($_GET['category_id'])) {
     $category_id = $_GET['category_id'];
-    $category    = $categories[$category_id];
+    $category    = Category::getTranslation($categories, $category_id);
 
     $breadcrumb_title = $category->getName();
     $breadcrumb_link  = $category->getLink();
 
-    $posts_options['categories'] = $category->getIdForLanguage();
+    $posts_options['categories'] = $category->getId();
 }
 
 if (!empty($_GET['tag_id'])) {
-    $tag_ids   = $_GET['tag_id'];
-    $tag_names = [];
+    $tag_ids_request  = $_GET['tag_id'];
+    $tag_ids_response = [];
+    $tag_names        = [];
 
-    foreach ($tag_ids as $tag_id) {
-        $tag                = $tags[$tag_id];
+    foreach ($tag_ids_request as $tag_id) {
+        $tag                = Tag::getTranslation($tags, $tag_id);
+        $tag_ids_response[] = $tag->getId();
         $tag_names[$tag_id] = $tag->getName();
     }
 
@@ -112,7 +114,7 @@ if (!empty($_GET['tag_id'])) {
     $breadcrumb_title = \implode(', ', $tag_names);
     $breadcrumb_link  = $breadcrumb_url->toString();
 
-    $posts_options['tags'] = \implode(',', $_GET['tag_id']);
+    $posts_options['tags'] = \implode(',', $tag_ids_response);
 }
 
 if (!empty($_GET['search'])) {

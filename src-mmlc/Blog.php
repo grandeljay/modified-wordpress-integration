@@ -56,6 +56,17 @@ class Blog
         $post_wp = $url->getRequestBody();
         $post    = new Post($post_wp);
 
+        /** Get post in current language */
+        $language_code_current = Blog::getLanguageCode();
+
+        if ($language_code_current !== $post->getLanguage()) {
+            $translations = $post->getTranslations();
+
+            if (isset($translations[$language_code_current])) {
+                return self::getPost($translations[$language_code_current]);
+            }
+        }
+
         return $post;
     }
 

@@ -17,6 +17,23 @@ class Entity
         return $options_default;
     }
 
+    public static function getTranslation(array $entities, int $entity_id): self
+    {
+        foreach ($entities as $category) {
+            $translations_ids = $category->getTranslations();
+
+            foreach ($translations_ids as $language_code => $id) {
+                if ($id === $entity_id) {
+                    return $category;
+                }
+            }
+        }
+
+        throw new \Exception(
+            \sprintf('%s not found with the ID %d.', self::class, $entity_id)
+        );
+    }
+
     private int $id;
 
     protected array $translations;
@@ -40,17 +57,6 @@ class Entity
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getIdForLanguage(string $language_code = null): int
-    {
-        if (null === $language_code) {
-            $language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
-        }
-
-        $id_for_language = $this->translations[$language_code] ?? $this->id;
-
-        return $id_for_language;
     }
 
     public function getTranslations(): array
