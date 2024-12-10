@@ -32,17 +32,8 @@ class Page extends Entity
 
     private string $title;
     private string $excerpt;
-    private string $link;
     private string $content;
-    private Media $featured_image;
-
     private string $language;
-
-    private int $date_published;
-    private int $date_modified;
-
-    private array $categories = [];
-    private array $tags       = [];
 
     public function __construct(array $response_data)
     {

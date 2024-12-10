@@ -29,9 +29,9 @@ class Post extends Entity
             [
                 /** WordPress */
                 '_fields'  => \implode(',', self::getDefaultFields()),
+                '_embed'   => true,
                 'per_page' => 8,
                 'page'     => $_GET['page'] ?? 1,
-                '_embed'   => '',
             ]
         );
 

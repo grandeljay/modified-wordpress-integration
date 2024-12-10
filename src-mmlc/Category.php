@@ -8,7 +8,10 @@ class Category extends Taxonomy
     {
         $fields_defaults = \array_merge(
             parent::getDefaultFields(),
-            []
+            [
+                '_links',
+                '_embedded',
+            ]
         );
 
         return $fields_defaults;
@@ -18,8 +21,18 @@ class Category extends Taxonomy
     {
         $options_default = \array_merge(
             parent::getDefaultOptions(),
-            []
+            [
+                '_fields' => \implode(',', self::getDefaultFields()),
+                '_embed'  => true,
+                'page'    => 1,
+            ]
         );
+
+        /**
+         * Categories must not use `_fields` until the custom featured
+         * image is compatible with it.
+         */
+        unset($options_default['_fields']);
 
         return $options_default;
     }

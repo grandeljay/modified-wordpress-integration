@@ -20,11 +20,12 @@ if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
 
 include \DIR_FS_BOXES_INC . 'smarty_default.php';
 
-$categories_options     = [
-    'per_page' => 9,
-    'page'     => 1,
-    '_embed'   => true,
-];
+$categories_options     = \array_merge(
+    Category::getDefaultOptions(),
+    [
+        'per_page' => 9,
+    ]
+);
 $categories_all         = Blog::getCategories($categories_options);
 $categories_categorised = \array_filter(
     $categories_all,

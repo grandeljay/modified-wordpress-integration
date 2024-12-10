@@ -22,7 +22,7 @@ class Taxonomy extends Entity
             parent::getDefaultOptions(),
             [
                 /** WordPress */
-                '_fields'  => \implode(',', self::getDefaultFields()),
+                '_fields'    => \implode(',', self::getDefaultFields()),
                 'hide_empty' => true,
             ]
         );

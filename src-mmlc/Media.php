@@ -2,8 +2,37 @@
 
 namespace Grandeljay\WordpressIntegration;
 
-class Media
+class Media extends Entity
 {
+    public static function getDefaultFields(): array
+    {
+        $fields_defaults = \array_merge(
+            parent::getDefaultFields(),
+            [
+                'title',
+                'alt_text',
+                'source_url',
+                'media_details',
+            ]
+        );
+
+        return $fields_defaults;
+    }
+
+    public static function getDefaultOptions(): array
+    {
+        $options_default = \array_merge(
+            parent::getDefaultOptions(),
+            [
+                'per_page' => 8,
+                'page'     => $_GET['page'] ?? 1,
+                '_embed'   => true,
+            ]
+        );
+
+        return $options_default;
+    }
+
     private string $title;
     private string $alt_text;
     private string $source_url;
@@ -11,6 +40,8 @@ class Media
 
     public function __construct(array $media)
     {
+        parent::__construct($media);
+
         $this->title         = $media['title']['rendered'];
         $this->alt_text      = $media['alt_text'];
         $this->source_url    = $media['source_url'];
