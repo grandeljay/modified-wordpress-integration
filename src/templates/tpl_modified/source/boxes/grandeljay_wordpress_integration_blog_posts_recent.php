@@ -44,7 +44,7 @@ $posts_options   = [
     'per_page' => 5,
     'page'     => 1,
 
-    'lang'     => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+    'lang'     => Blog::getLanguageCode(),
 
     'orderby'  => 'date',
     'order'    => 'desc',

@@ -6,11 +6,9 @@ class Entity
 {
     public static function getDefaultOptions(): array
     {
-        $language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
-
         $options_default = [
             /** Polylang */
-            'lang'     => $language_code,
+            'lang'     => Blog::getLanguageCode(),
 
             /** WordPress */
             'per_page' => 100,

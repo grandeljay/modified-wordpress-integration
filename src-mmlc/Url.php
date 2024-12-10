@@ -68,7 +68,7 @@ class Url
     public function addDefaultParameters(): void
     {
         $parameters_to_add = [
-            'language' => $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE,
+            'language' => Blog::getLanguageCode(),
         ];
 
         $this->addParameters($parameters_to_add);

@@ -21,7 +21,6 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
 }
 
 $translations  = Blog::getModuleTranslations();
-$language_code = $_SESSION['language_code'] ?? \DEFAULT_LANGUAGE;
 
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);

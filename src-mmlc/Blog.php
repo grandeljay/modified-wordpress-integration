@@ -6,6 +6,15 @@ use Grandeljay\Translator\Translations;
 
 class Blog
 {
+    public static function getLanguageCode(): string
+    {
+        $language_code = $_GET['language']
+                       ?? $_SESSION['language_code']
+                       ?? \DEFAULT_LANGUAGE;
+
+        return $language_code;
+    }
+
     public static function getPage(int $id): Page
     {
         $endpoint = Constants::BLOG_URL_API_PAGES . $id;
