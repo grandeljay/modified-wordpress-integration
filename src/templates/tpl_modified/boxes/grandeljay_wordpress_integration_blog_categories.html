@@ -12,11 +12,7 @@
                             {$category.name}
                         </div>
 
-                        <div class="image">
-                            {if $category.featured_image}
-                                <img src="{$category.featured_image.source_url}" alt="{$category.featured_image.alt_text}" title="{$category.featured_image.title}">
-                            {/if}
-                        </div>
+                        <div class="image" {if $category.featured_image}style="background-image: url('{$category.featured_image.source_url}');"{/if}></div>
                     </a>
                 </li>
             {/foreach}
