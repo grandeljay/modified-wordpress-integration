@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Sets the meta description for blog posts.
+ * Performs search engine optimisations.
+ *
+ * @see /includes/modules/metatags.php
  */
 
 namespace Grandeljay\WordpressIntegration;
@@ -26,4 +28,10 @@ if (!isset($post) || !($post instanceof Post)) {
     return;
 }
 
+/** Set meta */
 $metadata_array['description'] = $post->getExcerpt();
+
+/** Set alternate tag */
+$post_translations = $post->getTranslations();
+
+/** To do: add pagination */

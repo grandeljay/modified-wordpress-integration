@@ -18,10 +18,26 @@ include_once DIR_FS_BOXES . 'grandeljay_wordpress_integration.php';
 /** */
 ```
 
-In `/includes/modules/metatags.php` add the blog parameters to the list of
-allowed (and expected) url parameters:
+### SEO
+
+In `/includes/modules/metatags.php` add the following snippets.
+
+For the alternate default language insert:
 
 ```php
+$_GET['post'] = $post_translations[$x_default_lng];
+
+$x_default_link = xtc_href_link(
+      basename($PHP_SELF),
+      [...]
+```
+
+And to add the blog parameters to the list of allowed (and expected) url
+parameters:
+
+```php
+$_GET['post'] = $post_translations[$key];
+
 $x_default_link = xtc_href_link(
     basename($PHP_SELF),
     xtc_get_all_get_params_include(
