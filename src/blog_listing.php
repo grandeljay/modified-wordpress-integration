@@ -20,7 +20,7 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
-$translations  = Blog::getModuleTranslations();
+$translations = Blog::getModuleTranslations();
 
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
