@@ -17,3 +17,24 @@ If the boxes are not auto loaded in your template, add the following code:
 include_once DIR_FS_BOXES . 'grandeljay_wordpress_integration.php';
 /** */
 ```
+
+In `/includes/modules/metatags.php` add the blog parameters to the list of
+allowed (and expected) url parameters:
+
+```php
+$x_default_link = xtc_href_link(
+    basename($PHP_SELF),
+    xtc_get_all_get_params_include(
+        array(
+            [...]
+
+            'post',
+            'tag_id',
+            'category_id',
+        )
+    )
+    .'language='.$x_default_lng.$page_param,
+    'NONSSL',
+    false
+);
+```
