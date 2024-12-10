@@ -16,6 +16,9 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
+/** Set indexing */
+$meta_robots = \META_ROBOTS;
+
 if (!isset($PHP_SELF)) {
     return;
 }
