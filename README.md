@@ -25,7 +25,9 @@ In `/includes/modules/metatags.php` add the following snippets.
 For the alternate default language insert:
 
 ```php
-$_GET['post'] = $post_translations[$x_default_lng] ?? $post->getId();
+if (isset($post)) {
+  $_GET['post'] = $post_translations[$x_default_lng] ?? $post->getId();
+}
 
 $x_default_link = xtc_href_link(
       basename($PHP_SELF),
@@ -36,7 +38,9 @@ And to add the blog parameters to the list of allowed (and expected) url
 parameters:
 
 ```php
-$_GET['post'] = $post_translations[$key] ?? $post->getId();
+if (isset($post)) {
+    $_GET['post'] = $post_translations[$key] ?? $post->getId();
+}
 
 $x_default_link = xtc_href_link(
     basename($PHP_SELF),
