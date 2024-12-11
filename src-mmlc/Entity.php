@@ -72,6 +72,27 @@ class Entity
     {
         return $this->language_code;
     }
+
+    public function isInCurrentLanguage(): bool
+    {
+        $language_code_current = Blog::getLanguageCode();
+        $language_code_entity  = $this->getLanguageCode();
+
+        $entity_is_current_language = $language_code_current === $language_code_entity;
+
+        return $entity_is_current_language;
+    }
+
+    public function existsInCurrentLanguage(): bool
+    {
+        $language_code_current = Blog::getLanguageCode();
+        $translations          = $this->getTranslations();
+
+        $exists_in_current_language = isset($translations[$language_code_current]);
+
+        return $exists_in_current_language;
+    }
+
     public function toArray(): array
     {
         return [

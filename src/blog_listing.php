@@ -90,6 +90,26 @@ if (!empty($_GET['category_id'])) {
     $category_id = $_GET['category_id'];
     $category    = Blog::getCategory($category_id);
 
+    if (!$category->isInCurrentLanguage() && $category->existsInCurrentLanguage()) {
+        $redirect_language_code = Blog::getLanguageCode();
+        $category_translations  = $category->getTranslations();
+        $category_id_target     = $category_translations[$redirect_language_code];
+
+        $redirect_url = new Url(Constants::BLOG_URL_POSTS);
+        $redirect_url->addParameters(
+            [
+                'category_id' => $category_id_target,
+            ]
+        );
+
+        \header(
+            \sprintf(
+                'Location: %s',
+                $redirect_url->toString()
+            )
+        );
+    }
+
     $breadcrumb_title = $category->getName();
     $breadcrumb_link  = $category->getLink();
 
