@@ -9,3 +9,4 @@
  */
 
 define('DEFAULT_LANGUAGE', 'de');
+define('META_ROBOTS', 'index,follow');

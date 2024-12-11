@@ -16,25 +16,26 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
-/** Set indexing */
-$meta_robots = \META_ROBOTS;
-
 if (!isset($PHP_SELF)) {
     return;
 }
 
-if (Constants::BLOG_URL_POSTS !== $PHP_SELF) {
+$current_page  = $PHP_SELF;
+$allowed_pages = [
+    Constants::BLOG_URL_HOME,
+    Constants::BLOG_URL_POSTS,
+];
+
+if (!\in_array($current_page, $allowed_pages)) {
     return;
 }
 
-if (!isset($post) || !($post instanceof Post)) {
-    return;
-}
+/** Set indexing */
+$meta_robots = \META_ROBOTS;
 
 /** Set meta */
-$metadata_array['description'] = $post->getExcerpt();
-
-/** Set alternate tag */
-$post_translations = $post->getTranslations();
+if (isset($post) && $post instanceof Post) {
+    $metadata_array['description'] = $post->getExcerpt();
+}
 
 /** To do: add pagination */
