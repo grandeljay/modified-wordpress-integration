@@ -146,7 +146,7 @@ section#posts_recent .posts_show_all a.button {
 
     box-sizing: border-box;
 }
-@media (min-width: 768px) {
+@media (min-width: 985px) {
     section#posts_recent .posts_show_all a.button {
         width: 50%;
     }

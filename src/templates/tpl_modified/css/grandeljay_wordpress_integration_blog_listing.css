@@ -10,7 +10,7 @@
     background-color: var(--backgroundColor);
     border-radius: 4px;
 }
-@media (min-width: 768px) {
+@media (min-width: 985px) {
     .filter {
         --dropdownCategoriesWidth: 256px;
     }
