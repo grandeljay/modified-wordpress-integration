@@ -35,11 +35,13 @@ class Entity
     private int $id;
 
     protected array $translations;
+    private string $language_code;
 
     public function __construct(protected array $response_data)
     {
         $this->setId();
         $this->setTranslations();
+        $this->setLanguageCode();
     }
 
     private function setId(): void
@@ -52,6 +54,11 @@ class Entity
         $this->translations = $this->response_data['translations'];
     }
 
+    private function setLanguageCode(): void
+    {
+        $this->language_code = $this->response_data['lang'];
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -62,6 +69,10 @@ class Entity
         return $this->translations;
     }
 
+    public function getLanguageCode(): string
+    {
+        return $this->language_code;
+    }
     public function toArray(): array
     {
         return [

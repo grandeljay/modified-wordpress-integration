@@ -81,7 +81,7 @@ if ($languages_count > 1) {
 foreach ($posts as $post) {
     $post_original_id            = $post->getId();
     $post_original_link          = $post->getLink();
-    $post_original_language      = $post->getLanguage();
+    $post_original_language      = $post->getLanguageCode();
     $post_original_translations  = $post->getTranslations();
     $post_original_date_modified = $post->getDateModified();
 

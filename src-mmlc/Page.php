@@ -33,7 +33,6 @@ class Page extends Entity
     private string $title;
     private string $excerpt;
     private string $content;
-    private string $language;
 
     public function __construct(array $response_data)
     {
@@ -42,7 +41,6 @@ class Page extends Entity
         $this->setTitle();
         $this->setExcerpt();
         $this->setContent();
-        $this->setLanguage();
     }
 
     private function setTitle(): void
@@ -60,11 +58,6 @@ class Page extends Entity
         $this->content = $this->response_data['content']['rendered'];
     }
 
-    private function setLanguage(): void
-    {
-        $this->language = $this->response_data['lang'];
-    }
-
     public function getTitle(): string
     {
         return $this->title;
@@ -80,11 +73,6 @@ class Page extends Entity
         return $this->content;
     }
 
-    public function getLanguage(): string
-    {
-        return $this->language;
-    }
-
     public function toArray(): array
     {
         $array = parent::toArray();
@@ -94,7 +82,7 @@ class Page extends Entity
                 'title'    => $this->getTitle(),
                 'excerpt'  => $this->getExcerpt(),
                 'content'  => $this->getContent(),
-                'language' => $this->getLanguage(),
+                'language' => $this->getLanguageCode(),
             ]
         );
 

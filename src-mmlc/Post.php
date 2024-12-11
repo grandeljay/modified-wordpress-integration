@@ -44,8 +44,6 @@ class Post extends Entity
     private string $content;
     private Media $featured_image;
 
-    private string $language;
-
     private int $date_published;
     private int $date_modified;
 
@@ -60,7 +58,6 @@ class Post extends Entity
         $this->setExcerpt();
         $this->setLink();
         $this->setContent();
-        $this->setLanguage();
         $this->setDatePublished();
         $this->setDateModified();
 
@@ -96,11 +93,6 @@ class Post extends Entity
     private function setContent(): void
     {
         $this->content = $this->response_data['content']['rendered'];
-    }
-
-    private function setLanguage(): void
-    {
-        $this->language = $this->response_data['lang'];
     }
 
     private function setDatePublished(): void
@@ -189,11 +181,6 @@ class Post extends Entity
         return $this->content;
     }
 
-    public function getLanguage(): string
-    {
-        return $this->language;
-    }
-
     public function getFeaturedImage(): Media|null
     {
         if (!isset($this->featured_image)) {
@@ -216,7 +203,7 @@ class Post extends Entity
     public function getDateFormatted(int $timestamp, string $language_code = null): string
     {
         if (null === $language_code) {
-            $language_code = $this->getLanguage();
+            $language_code = $this->getLanguageCode();
         }
 
         $pattern = match ($language_code) {
@@ -255,7 +242,7 @@ class Post extends Entity
 
         $date_published = $this->getDateFormatted(
             $this->getDatePublished(),
-            $this->getLanguage()
+            $this->getLanguageCode()
         );
 
         $categories = \array_map(
@@ -279,7 +266,7 @@ class Post extends Entity
                 'excerpt'        => $this->getExcerpt(),
                 'link'           => $this->getLink(),
                 'content'        => $this->getContent(),
-                'language'       => $this->getLanguage(),
+                'language'       => $this->getLanguageCode(),
                 'featured_image' => $featured_image,
                 'date_published' => $date_published,
                 'categories'     => $categories,
