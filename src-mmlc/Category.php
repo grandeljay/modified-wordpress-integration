@@ -9,6 +9,7 @@ class Category extends Taxonomy
         $fields_defaults = \array_merge(
             parent::getDefaultFields(),
             [
+                /** WordPress */
                 '_links',
                 '_embedded',
             ]
@@ -22,9 +23,13 @@ class Category extends Taxonomy
         $options_default = \array_merge(
             parent::getDefaultOptions(),
             [
-                '_fields' => \implode(',', self::getDefaultFields()),
+                /** WordPress */
+                '_fields' => self::getDefaultFields(),
                 '_embed'  => true,
                 'page'    => 1,
+
+                /** Polylang */
+                'lang'    => Blog::getLanguageCode(),
             ]
         );
 

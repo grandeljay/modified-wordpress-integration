@@ -8,9 +8,7 @@ class Taxonomy extends Entity
     {
         $fields_defaults = \array_merge(
             parent::getDefaultFields(),
-            [
-                'name',
-            ]
+            []
         );
 
         return $fields_defaults;
@@ -22,7 +20,7 @@ class Taxonomy extends Entity
             parent::getDefaultOptions(),
             [
                 /** WordPress */
-                '_fields'    => \implode(',', self::getDefaultFields()),
+                '_fields'    => self::getDefaultFields(),
                 'hide_empty' => true,
             ]
         );

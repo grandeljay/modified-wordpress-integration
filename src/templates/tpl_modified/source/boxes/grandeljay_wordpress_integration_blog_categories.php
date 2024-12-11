@@ -21,8 +21,8 @@ if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
 include \DIR_FS_BOXES_INC . 'smarty_default.php';
 
 $categories_options     = \array_merge(
-    Category::getDefaultOptions(),
     [
+        /** WordPress */
         'per_page' => 9,
     ]
 );

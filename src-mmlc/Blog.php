@@ -6,11 +6,16 @@ use Grandeljay\Translator\Translations;
 
 class Blog
 {
+    public static function getLanguageCodeDefault(): string
+    {
+        return \DEFAULT_LANGUAGE;
+    }
+
     public static function getLanguageCode(): string
     {
         $language_code = $_GET['language']
-                       ?? $_SESSION['language_code']
-                       ?? \DEFAULT_LANGUAGE;
+                      ?? $_SESSION['language_code']
+                      ?? self::getLanguageCodeDefault();
 
         return $language_code;
     }
@@ -66,12 +71,25 @@ class Blog
         $options_default = Post::getDefaultOptions();
 
         /**
+         * Merge fields
+         */
+        $fields_default   = $options_default['_fields'] ?? [];
+        $fields_requested = $options['_fields']         ?? [];
+
+        foreach ($fields_requested as $field) {
+            if (!\in_array($field, $fields_default)) {
+                $fields_default[] = $field;
+            }
+        }
+
+        /**
          * If the input arrays have the same string keys, then the later value
          * for that key will overwrite the previous one.
          *
          * @link https://www.php.net/manual/en/function.array-merge.php
          */
-        $options = \array_merge($options_default, $options);
+        $options            = \array_merge($options_default, $options);
+        $options['_fields'] = $fields_default;
 
         $url = new Url($endpoint);
         $url->addParameters($options);
@@ -190,12 +208,25 @@ class Blog
         $options_default = Category::getDefaultOptions();
 
         /**
+         * Merge fields
+         */
+        $fields_default   = $options_default['_fields'] ?? [];
+        $fields_requested = $options['_fields']         ?? [];
+
+        foreach ($fields_requested as $field) {
+            if (!\in_array($field, $fields_default)) {
+                $fields_default[] = $field;
+            }
+        }
+
+        /**
          * If the input arrays have the same string keys, then the later value
          * for that key will overwrite the previous one.
          *
          * @link https://www.php.net/manual/en/function.array-merge.php
          */
-        $options = \array_merge($options_default, $options);
+        $options            = \array_merge($options_default, $options);
+        $options['_fields'] = $fields_default;
 
         $url = new Url($endpoint);
         $url->addParameters($options);
@@ -251,12 +282,25 @@ class Blog
         $options_default = Tag::getDefaultOptions();
 
         /**
+         * Merge fields
+         */
+        $fields_default   = $options_default['_fields'] ?? [];
+        $fields_requested = $options['_fields']         ?? [];
+
+        foreach ($fields_requested as $field) {
+            if (!\in_array($field, $fields_default)) {
+                $fields_default[] = $field;
+            }
+        }
+
+        /**
          * If the input arrays have the same string keys, then the later value
          * for that key will overwrite the previous one.
          *
          * @link https://www.php.net/manual/en/function.array-merge.php
          */
-        $options = \array_merge($options_default, $options);
+        $options            = \array_merge($options_default, $options);
+        $options['_fields'] = $fields_default;
 
         $url = new Url($endpoint);
         $url->addParameters($options);
@@ -352,42 +396,6 @@ class Blog
         }
 
         return $posts_page_links;
-    }
-
-    public static function getCategoryTags(array $posts, bool $as_array = false): array
-    {
-        $category_tags = [];
-
-        foreach ($posts as $post) {
-            $post_tags = $post->getTags();
-
-            if (empty($post_tags)) {
-                continue;
-            }
-
-            foreach ($post_tags as $tag) {
-                $tag_id = $tag->getId();
-
-                if (isset($category_tags[$tag_id])) {
-                    continue;
-                }
-
-                $category_tags[$tag_id] = $tag;
-            }
-        }
-
-        if (!$as_array) {
-            return $category_tags;
-        }
-
-        $category_tags_array = \array_map(
-            function (Tag $tag) {
-                return $tag->toArray();
-            },
-            $category_tags
-        );
-
-        return $category_tags_array;
     }
 
     public static function getFilterHtml(\Smarty &$smarty, array $tags): string

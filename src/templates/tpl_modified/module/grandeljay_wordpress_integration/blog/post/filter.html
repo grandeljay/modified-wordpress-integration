@@ -36,17 +36,8 @@
 
         {include file="module/grandeljay_wordpress_integration/blog/post/filter_tags.html"}
 
-        {if $category_tags}
-            {foreach $category_tags as $category_tag}
-                <label>
-                    <input type="checkbox" name="tag_id" value="{$category_tag.id}">
-                    {$category_tag.name}
-                </label>
-            {/foreach}
-        {/if}
-
         <div class="actions">
-            <input type="submit" value="Suchen">
+            <input type="submit" value="{#filter_submit#}">
         </div>
     </form>
 </div>

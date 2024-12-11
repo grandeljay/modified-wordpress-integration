@@ -37,7 +37,9 @@ class Tag extends Taxonomy
 
     private function setName(): void
     {
-        $this->name = $this->response_data['name'];
+        if (isset($this->response_data['name'])) {
+            $this->name = $this->response_data['name'];
+        }
     }
 
     private function setLink(): void
@@ -70,7 +72,7 @@ class Tag extends Taxonomy
             return false;
         }
 
-        $translations = $this->getTranslations();
+        $translations   = $this->getTranslations();
         $passed_tag_ids = $_GET['tag_id'];
 
         foreach ($passed_tag_ids as $passed_tag_id) {

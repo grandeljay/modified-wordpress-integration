@@ -38,7 +38,21 @@ $tags       = [];
 
 if (empty($_GET['post'])) {
     $categories = Blog::getCategories();
-    $tags       = Blog::getTags();
+    $tags       = Blog::getTags(
+        [
+            /** WordPress */
+            '_fields' => [
+                /** WordPress */
+                'name',
+
+                /** Polylang */
+                'lang',
+            ],
+
+            /** Polylang */
+            'lang'    => Blog::getLanguageCode(),
+        ],
+    );
     $tags_array = \array_map(
         function (Tag $tag) {
             return $tag->toArray();
@@ -52,9 +66,15 @@ if (empty($_GET['post'])) {
 $breadcrumb_title = 'UNKNOWN';
 $breadcrumb_link  = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
 
+$redirect_parameters = [];
+
 if (!empty($_GET['post'])) {
-    $post       = Blog::getPost($_GET['post']);
-    $post_array = $post->toArray();
+    $post_id = $_GET['post'];
+    $post    = Blog::getPost($post_id);
+
+    if (!$post->isInCurrentLanguage() && $post->existsInCurrentLanguage()) {
+        $redirect_parameters['post'] = $post->getIdForLanguage();
+    }
 
     $breadcrumb->add(
         $post->getTitle(),
@@ -75,6 +95,8 @@ if (!empty($_GET['post'])) {
             $smarty->assign('post_edit_link', $post_edit_link);
         }
 
+        $post_array = $post->toArray();
+
         $smarty->assign('post', $post_array);
 
         $main_content = $smarty->fetch(\CURRENT_TEMPLATE . '/module/grandeljay_wordpress_integration/blog/post/template.html');
@@ -91,23 +113,7 @@ if (!empty($_GET['category_id'])) {
     $category    = Blog::getCategory($category_id);
 
     if (!$category->isInCurrentLanguage() && $category->existsInCurrentLanguage()) {
-        $redirect_language_code = Blog::getLanguageCode();
-        $category_translations  = $category->getTranslations();
-        $category_id_target     = $category_translations[$redirect_language_code];
-
-        $redirect_url = new Url(Constants::BLOG_URL_POSTS);
-        $redirect_url->addParameters(
-            [
-                'category_id' => $category_id_target,
-            ]
-        );
-
-        \header(
-            \sprintf(
-                'Location: %s',
-                $redirect_url->toString()
-            )
-        );
+        $redirect_parameters['category_id'] = $category->getIdForLanguage();
     }
 
     $breadcrumb_title = $category->getName();
@@ -122,7 +128,12 @@ if (!empty($_GET['tag_id'])) {
     $tag_names        = [];
 
     foreach ($tag_ids_request as $tag_id) {
-        $tag                = Blog::getTag($tag_id);
+        $tag = Blog::getTag($tag_id);
+
+        if (!$tag->isInCurrentLanguage() && $tag->existsInCurrentLanguage()) {
+            $redirect_parameters['tag_id'][] = $tag->getIdForLanguage();
+        }
+
         $tag_ids_response[] = $tag->getId();
         $tag_names[$tag_id] = $tag->getName();
     }
@@ -156,6 +167,18 @@ if (empty($_GET['post'])) {
     $posts_with_meta = Blog::getPosts($posts_options);
 
     $main_content = Blog::getListingHtml($posts_with_meta, $posts_options);
+}
+
+if (!empty($redirect_parameters)) {
+    $redirect_url = new Url(Constants::BLOG_URL_POSTS);
+    $redirect_url->addParameters($redirect_parameters);
+
+    \header(
+        \sprintf(
+            'Location: %s',
+            $redirect_url->toString()
+        )
+    );
 }
 
 /**

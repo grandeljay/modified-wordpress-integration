@@ -9,7 +9,11 @@ class Page extends Entity
         $fields_defaults = \array_merge(
             parent::getDefaultFields(),
             [
+                /** WordPress */
                 'title',
+
+                /** Polylang */
+                'lang',
             ]
         );
 

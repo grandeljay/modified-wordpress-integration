@@ -9,10 +9,14 @@ class Media extends Entity
         $fields_defaults = \array_merge(
             parent::getDefaultFields(),
             [
+                /** WordPress */
                 'title',
                 'alt_text',
                 'source_url',
                 'media_details',
+
+                /** Polylang */
+                'lang',
             ]
         );
 

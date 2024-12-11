@@ -18,7 +18,21 @@ if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
     return;
 }
 
-$tags        = Blog::getTags();
+$tags = Blog::getTags(
+    [
+        /** WordPress */
+        '_fields' => [
+            /** WordPress */
+            'name',
+
+            /** Polylang */
+            'lang',
+        ],
+
+        /** Polylang */
+        'lang'    => Blog::getLanguageCode(),
+    ]
+);
 $html_filter = Blog::getFilterHtml($box_smarty, $tags);
 $box_smarty->assign('filter', $html_filter);
 

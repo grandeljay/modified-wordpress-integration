@@ -11,7 +11,6 @@ class Entity
             'id',
 
             /** Polylang */
-            'lang',
             'translations',
         ];
 
@@ -22,11 +21,8 @@ class Entity
     {
         $options_default = [
             /** WordPress */
-            '_fields'  => \implode(',', self::getDefaultFields()),
+            '_fields'  => self::getDefaultFields(),
             'per_page' => 100,
-
-            /** Polylang */
-            'lang'     => Blog::getLanguageCode(),
         ];
 
         return $options_default;
@@ -55,7 +51,9 @@ class Entity
 
     private function setLanguageCode(): void
     {
-        $this->language_code = $this->response_data['lang'];
+        if (isset($this->response_data['lang'])) {
+            $this->language_code = $this->response_data['lang'];
+        }
     }
 
     public function getId(): int
@@ -83,14 +81,30 @@ class Entity
         return $entity_is_current_language;
     }
 
-    public function existsInCurrentLanguage(): bool
+    public function existsInCurrentLanguage(string $language_code = null): bool
     {
-        $language_code_current = Blog::getLanguageCode();
-        $translations          = $this->getTranslations();
+        if (null === $language_code) {
+            $language_code = Blog::getLanguageCode();
+        }
 
-        $exists_in_current_language = isset($translations[$language_code_current]);
+        $translations = $this->getTranslations();
 
-        return $exists_in_current_language;
+        $exists_in_language = isset($translations[$language_code]);
+
+        return $exists_in_language;
+    }
+
+    public function getIdForLanguage(string $language_code = null): int
+    {
+        if (null === $language_code) {
+            $language_code = Blog::getLanguageCode();
+        }
+
+        $entity_translations    = $this->getTranslations();
+        $entity_id_for_language =  $entity_translations[$language_code]
+                                ?? $this->getId();
+
+        return $entity_id_for_language;
     }
 
     public function toArray(): array

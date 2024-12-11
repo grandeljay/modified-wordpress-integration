@@ -9,6 +9,7 @@ class Post extends Entity
         $fields_defaults = \array_merge(
             parent::getDefaultFields(),
             [
+                /** WordPress */
                 'title',
                 'excerpt',
                 'content',
@@ -16,6 +17,9 @@ class Post extends Entity
                 'modified',
                 '_links',
                 '_embedded',
+
+                /** Polylang */
+                'lang',
             ]
         );
 
@@ -28,10 +32,13 @@ class Post extends Entity
             parent::getDefaultOptions(),
             [
                 /** WordPress */
-                '_fields'  => \implode(',', self::getDefaultFields()),
+                '_fields'  => self::getDefaultFields(),
                 '_embed'   => true,
                 'per_page' => 8,
                 'page'     => $_GET['page'] ?? 1,
+
+                /** Polylang */
+                'lang'     => Blog::getLanguageCode(),
             ]
         );
 
@@ -256,7 +263,17 @@ class Post extends Entity
             function (Tag $tag) {
                 return $tag->toArray();
             },
-            $this->getTags()
+            $this->getTags(
+                [
+                    '_fields' => [
+                        /** WordPress */
+                        'name',
+
+                        /** Polylang */
+                        'lang',
+                    ],
+                ]
+            )
         );
 
         $array = \array_merge(

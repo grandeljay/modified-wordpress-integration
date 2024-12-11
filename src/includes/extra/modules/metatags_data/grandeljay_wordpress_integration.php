@@ -34,6 +34,12 @@ if (!\in_array($current_page, $allowed_pages)) {
 $meta_robots = \META_ROBOTS;
 
 /** Set meta */
+$tag_ids = Blog::getTags(
+    [
+        'lang' => Blog::getLanguageCodeDefault(),
+    ]
+);
+
 if (isset($post) && $post instanceof Post) {
     $metadata_array['description'] = $post->getExcerpt();
 }
