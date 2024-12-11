@@ -137,10 +137,6 @@ ul.category_listing li.category.no_image .image {
  */
 
 /** Posts Recent Show All */
-section#posts_recent .posts_show_all {
-    text-align: center;
-}
-
 section#posts_recent .posts_show_all a.button {
     width: 100%;
 
@@ -148,6 +144,6 @@ section#posts_recent .posts_show_all a.button {
 }
 @media (min-width: 985px) {
     section#posts_recent .posts_show_all a.button {
-        width: 50%;
+        width: 256px;
     }
 }

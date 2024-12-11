@@ -119,22 +119,7 @@
 }
 
 .filter .actions input[type="submit"] {
-    display: inline-block;
     width: var(--dropdownCategoriesWidth);
-    padding: 12px 8px;
-
-    color: inherit;
-    font-weight: inherit;
-    background-color: var(--backgroundColor);
-    border: 1px solid #d9d9d9;
-    border-radius: 4px;
-    text-align: center;
-    cursor: pointer;
-}
-.filter .actions input[type="submit"]:hover {
-    color: #fff;
-    border-color: var(--colorPrimary);
-    background-color: var(--colorPrimary);
 }
 
 /** Slick */

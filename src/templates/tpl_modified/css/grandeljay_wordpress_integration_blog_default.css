@@ -44,3 +44,26 @@ section .layout_content_inner.cf h2 {
         font-size: 1.6rem;
     }
 }
+
+/**
+ * Buttons
+ */
+input[type="submit"],
+a.button {
+    display: inline-block;
+    padding: 12px 8px;
+
+    color: inherit;
+    font-weight: inherit;
+    background-color: var(--backgroundColor);
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+}
+input[type="submit"]:hover,
+a.button:hover {
+    color: #fff;
+    border-color: var(--colorPrimary);
+    background-color: var(--colorPrimary);
+}
