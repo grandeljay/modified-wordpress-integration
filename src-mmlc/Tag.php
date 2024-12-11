@@ -70,10 +70,11 @@ class Tag extends Taxonomy
             return false;
         }
 
+        $translations = $this->getTranslations();
         $passed_tag_ids = $_GET['tag_id'];
 
         foreach ($passed_tag_ids as $passed_tag_id) {
-            if (\in_array($passed_tag_id, $this->translations)) {
+            if (\in_array($passed_tag_id, $translations)) {
                 return true;
             }
         }

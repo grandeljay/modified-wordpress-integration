@@ -33,8 +33,7 @@ class Entity
     }
 
     private int $id;
-
-    protected array $translations;
+    private array $translations;
     private string $language_code;
 
     public function __construct(protected array $response_data)

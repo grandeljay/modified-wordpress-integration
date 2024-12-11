@@ -98,7 +98,8 @@ class Category extends Taxonomy
 
     public function isUncategorised(): bool
     {
-        $contains_id_1    = \in_array(1, $this->translations);
+        $translations     = $this->getTranslations();
+        $contains_id_1    = \in_array(1, $translations);
         $is_uncategorised = $contains_id_1;
 
         return $is_uncategorised;
