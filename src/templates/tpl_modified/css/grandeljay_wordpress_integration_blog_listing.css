@@ -146,7 +146,6 @@ ul.post_listing {
     margin-bottom: var(--gap);
 
     list-style: none;
-    hyphens: auto;
 }
 
 ul.post_listing > li {

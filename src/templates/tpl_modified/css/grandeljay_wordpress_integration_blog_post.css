@@ -66,7 +66,6 @@ p.is-style-h2 {
     padding-bottom: calc(var(--margin) / 2);
     border-bottom: 1px solid #ccc;
 
-    hyphens: auto;
     font-size: smaller;
 }
 @media (min-width: 500px) {
