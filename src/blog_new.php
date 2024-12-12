@@ -23,13 +23,14 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
 $smarty = new \Smarty();
 $smarty->assign('language', $_SESSION['language']);
 
-$wp_page_front       = Blog::getFrontPage();
-$wp_page_front_title = $wp_page_front->getTitle();
+$wp_page_front         = Blog::getFrontPage();
+$wp_page_front_title   = $wp_page_front->getTitle();
+$wp_page_front_content = Blog::getIntroductionHtml();
 
 $breadcrumb->add($wp_page_front_title, Constants::BLOG_URL_HOME);
 
 $smarty->assign('blog_title', $wp_page_front_title);
-$smarty->assign('blog_introduction', Blog::getIntroductionHtml($wp_page_front));
+$smarty->assign('blog_introduction', $wp_page_front_content);
 require \DIR_WS_INCLUDES . 'header.php';
 require \DIR_FS_CATALOG . 'templates/' . \CURRENT_TEMPLATE . '/source/boxes.php';
 
