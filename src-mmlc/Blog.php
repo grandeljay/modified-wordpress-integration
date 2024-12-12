@@ -490,7 +490,15 @@ class Blog
          * It would be better to use the `/wp/v2/settings` endpoint to determine
          * which page is used as the home page (`page_on_front`).
          */
-        $wp_page_front = Blog::getPage(952);
+        $wp_page_front_id = match ($language_code) {
+            'de' => 952,
+            'en'=> 1028,
+            'es'=> 1030,
+            'fr'=> 1024,
+            'it'=> 1026,
+            default => 952,
+        };
+        $wp_page_front = Blog::getPage($wp_page_front_id);
 
         $_SESSION['grandeljay']['wordpress_integration']['front_page'][$language_code] = $wp_page_front;
 
