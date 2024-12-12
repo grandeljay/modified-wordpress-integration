@@ -32,6 +32,10 @@ $x_default_link = xtc_href_link(basename($PHP_SELF), xtc_get_all_get_params_incl
 
 /**
  * WordPress Integration
+ *
+ * @author  Jay Trees
+ * @link    https://github.com/grandeljay/modified-wordpress-integration
+ * @package GrandeljayWordpressIntegration
  */
 include DIR_FS_EXTERNAL . 'grandeljay/wordpress_integration/metatags_x_default.php';
 /** */
@@ -44,6 +48,10 @@ $alternate_link = xtc_href_link(basename($PHP_SELF), xtc_get_all_get_params_incl
 
 /**
  * WordPress Integration
+ *
+ * @author  Jay Trees
+ * @link    https://github.com/grandeljay/modified-wordpress-integration
+ * @package GrandeljayWordpressIntegration
  */
 include DIR_FS_EXTERNAL . 'grandeljay/wordpress_integration/metatags_alternate.php';
 /** */
