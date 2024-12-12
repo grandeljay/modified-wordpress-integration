@@ -40,7 +40,7 @@ h3.wp-block-heading {
 }
 
 /** Fake Heading */
-.wp-block-paragraph.is-style-h2 {
+p.is-style-h2 {
     display: block;
     margin: 20px 0 8px 0;
     padding: 0 0 5px 0;
