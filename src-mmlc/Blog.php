@@ -491,12 +491,11 @@ class Blog
          * which page is used as the home page (`page_on_front`).
          */
         $wp_page_front_id = match ($language_code) {
-            'de' => 952,
-            'en'=> 1028,
-            'es'=> 1030,
-            'fr'=> 1024,
-            'it'=> 1026,
-            default => 952,
+            'en'    => 1028,
+            'es'    => 1030,
+            'fr'    => 1024,
+            'it'    => 1026,
+            default => 952
         };
         $wp_page_front = Blog::getPage($wp_page_front_id);
 
