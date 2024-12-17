@@ -516,27 +516,29 @@ class Blog
 
         \ob_start();
         ?>
-        <div class="excerpt">
-            <?= $page_excerpt ?>
-        </div>
-
-        <?php if ($page_content) { ?>
-            <div id="read_more_content" class="content">
-                <?= $page_content ?>
+        <section id="introduction">
+            <div class="excerpt">
+                <?= $page_excerpt ?>
             </div>
 
-            <a id="read_more_link" class="hide">
-                <i class="fas fa-angle-double-down"></i>
-                <?= $text_read_more ?>
-                <i class="fas fa-angle-double-down"></i>
-            </a>
+            <?php if ($page_content) { ?>
+                <div id="read_more_content" class="content">
+                    <?= $page_content ?>
+                </div>
 
-            <a id="read_less_link" class="hide">
-                <i class="fas fa-angle-double-up"></i>
-                <?= $text_read_less ?>
-                <i class="fas fa-angle-double-up"></i>
-            </a>
-        <?php } ?>
+                <a id="read_more_link" class="hide">
+                    <i class="fas fa-angle-double-down"></i>
+                    <?= $text_read_more ?>
+                    <i class="fas fa-angle-double-down"></i>
+                </a>
+
+                <a id="read_less_link" class="hide">
+                    <i class="fas fa-angle-double-up"></i>
+                    <?= $text_read_less ?>
+                    <i class="fas fa-angle-double-up"></i>
+                </a>
+            <?php } ?>
+        </section>
         <?php
         $introduction = \ob_get_clean();
 
