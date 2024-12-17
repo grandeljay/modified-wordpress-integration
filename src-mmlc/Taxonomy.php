@@ -8,7 +8,10 @@ class Taxonomy extends Entity
     {
         $fields_defaults = \array_merge(
             parent::getDefaultFields(),
-            []
+            [
+                /** WordPress */
+                'name',
+            ]
         );
 
         return $fields_defaults;

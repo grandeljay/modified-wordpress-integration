@@ -37,7 +37,7 @@ class Category extends Taxonomy
          * Categories must not use `_fields` until the custom featured
          * image is compatible with it.
          */
-        unset($options_default['_fields']);
+        // unset($options_default['_fields']);
 
         return $options_default;
     }
