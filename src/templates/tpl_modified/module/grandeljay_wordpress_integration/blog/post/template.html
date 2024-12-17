@@ -28,10 +28,10 @@
         </div>
     </div>
 
-    <div class="taxonomy categories">
-        <div><i class="fas fa-folder"></i><span>{#meta_categories#}</span></div>
+    {if $post.categories}
+        <div class="taxonomy categories">
+            <div><i class="fas fa-folder"></i><span>{#meta_categories#}</span></div>
 
-        {if $post.categories}
             <div class="terms">
                 <ul>
                     {foreach $post.categories as $category}
@@ -39,15 +39,13 @@
                     {/foreach}
                 </ul>
             </div>
-        {else}
-            <div>{#meta_none#}</div>
-        {/if}
-    </div>
+        </div>
+    {/if}
 
-    <div class="taxonomy tags">
-        <div><i class="fas fa-tags"></i><span>{#meta_tags#}</span></div>
+    {if $post.tags}
+        <div class="taxonomy tags">
+            <div><i class="fas fa-tags"></i><span>{#meta_tags#}</span></div>
 
-        {if $post.tags}
             <div class="terms">
                 <ul>
                     {foreach $post.tags as $tag}
@@ -55,10 +53,8 @@
                     {/foreach}
                 </ul>
             </div>
-        {else}
-            <div>{#meta_none#}</div>
-        {/if}
-    </div>
+        </div>
+    {/if}
 </div>
 
 <div class="content">
