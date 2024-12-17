@@ -16,7 +16,7 @@ use RobinTheHood\ModifiedStdModule\Classes\StdModule;
 
 class grandeljay_wordpress_integration extends StdModule
 {
-    public const VERSION = '0.12.0';
+    public const VERSION = '0.12.1';
 
     public function __construct()
     {
