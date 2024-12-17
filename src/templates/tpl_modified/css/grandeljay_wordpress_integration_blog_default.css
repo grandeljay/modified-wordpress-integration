@@ -10,13 +10,16 @@
 /**
  * Sections
  */
-section {
+section,
+section#search {
     margin: 2rem 0 4rem 0;
 }
-section:first-of-type {
+section:first-of-type,
+section#first:first-of-type {
     margin-top: 0;
 }
-section:last-of-type {
+section:last-of-type,
+section#search:last-of-type {
     margin-bottom: 0;
 }
 
