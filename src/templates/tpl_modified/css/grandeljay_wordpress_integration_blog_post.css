@@ -371,3 +371,14 @@ ul.wp-block-list {
     background-color: #f4f4f4;
     border-radius: 4px 4px 0 0;
 }
+
+/**
+ * Box (Grey)
+ */
+.wp-block-group.is-style-box-grey {
+    padding: 1rem;
+
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: var(--backgroundColor, #f9f9f9);
+}
