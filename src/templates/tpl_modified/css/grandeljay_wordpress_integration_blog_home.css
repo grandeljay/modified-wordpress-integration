@@ -62,7 +62,7 @@ ul.category_listing {
 }
 @media (min-width: 600px) {
     ul.category_listing {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 @media (min-width: 1180px) {
@@ -115,7 +115,6 @@ ul.category_listing li.category .name {
 @media (min-width: 600px) {
     ul.category_listing li.category .name {
         margin: var(--margin);
-        margin-bottom: 0;
     }
 }
 
@@ -128,6 +127,7 @@ ul.category_listing li.category .image {
     ul.category_listing li.category .image {
         display: block;
         margin: var(--margin);
+        margin-top: 0;
 
         background-size: contain;
         background-repeat: no-repeat;
@@ -135,9 +135,7 @@ ul.category_listing li.category .image {
     }
 }
 ul.category_listing li.category.no_image .image {
-    flex: 0 1 auto;
-
-    background: none;
+    display: none;
 }
 
 /**
