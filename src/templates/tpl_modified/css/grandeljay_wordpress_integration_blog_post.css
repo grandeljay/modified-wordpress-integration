@@ -213,6 +213,8 @@ p.is-style-h2 {
     gap: 1rem;
     justify-content: space-between;
     flex-direction: column;
+
+    margin-bottom: 1rem;
 }
 @media (min-width: 768px) {
     .wp-block-columns.is-layout-flex {
