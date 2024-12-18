@@ -279,6 +279,9 @@ figure.wp-block-table > figcaption.wp-element-caption {
 .hybridsupply.grid > .wp-block-group__inner-container > .wp-block-columns {
     margin-top: 1rem;
 }
+.hybridsupply.grid > .wp-block-group__inner-container > .wp-block-columns:first-child {
+    margin-top: 0;
+}
 
 .hybridsupply.grid .first > .wp-block-column {
     padding: 1rem;
