@@ -73,7 +73,8 @@ if (!empty($_GET['post'])) {
     $post    = Blog::getPost($post_id);
 
     if (!$post->isInCurrentLanguage() && $post->existsInCurrentLanguage()) {
-        $redirect_parameters['post'] = $post->getIdForLanguage();
+        $redirect_parameters['language'] = Blog::getLanguageCode();
+        $redirect_parameters['post']     = $post->getIdForLanguage();
     }
 
     $breadcrumb->add(
@@ -113,6 +114,7 @@ if (!empty($_GET['category_id'])) {
     $category    = Blog::getCategory($category_id);
 
     if (!$category->isInCurrentLanguage() && $category->existsInCurrentLanguage()) {
+        $redirect_parameters['language']    = Blog::getLanguageCode();
         $redirect_parameters['category_id'] = $category->getIdForLanguage();
     }
 
@@ -131,6 +133,7 @@ if (!empty($_GET['tag_id'])) {
         $tag = Blog::getTag($tag_id);
 
         if (!$tag->isInCurrentLanguage() && $tag->existsInCurrentLanguage()) {
+            $redirect_parameters['language'] = Blog::getLanguageCode();
             $redirect_parameters['tag_id'][] = $tag->getIdForLanguage();
         }
 
