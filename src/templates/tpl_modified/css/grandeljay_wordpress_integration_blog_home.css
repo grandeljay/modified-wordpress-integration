@@ -78,6 +78,7 @@ ul.category_listing li.category {
     border-radius: 4px;
     box-shadow: 2px 2px 4px var(--colorPrimary);
     color: var(--colorPrimary);
+    hyphens: manual;
 }
 @media (min-width: 600px) {
     ul.category_listing li.category {
