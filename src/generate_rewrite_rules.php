@@ -20,6 +20,19 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
     return;
 }
 
+$languages = [
+    'de',
+    'en',
+    'es',
+    'fr',
+    'it',
+];
+
+echo '<pre>';
+
+/**
+ * Posts
+ */
 $posts_options   = [
     'lang' => Blog::getLanguageCodeDefault(),
 ];
@@ -50,16 +63,6 @@ $old_id_to_new_id = [
     'blog_cat=2&blog_item=23' => 299,
     'blog_cat=2&blog_item=24' => 805,
 ];
-
-$languages = [
-    'de',
-    'en',
-    'es',
-    'fr',
-    'it',
-];
-
-echo '<pre>';
 
 foreach ($old_id_to_new_id as $query_old => $id_new) {
     $post_title        = 'Unknown Post';
@@ -102,11 +105,75 @@ foreach ($old_id_to_new_id as $query_old => $id_new) {
 
     echo \sprintf(
         'RewriteRule ^blog\.php$ /blog_listing.php?post=%d [R=301,L]<br>',
-        $post_id
+        $id_new
     );
     /** */
 
     echo '<br>';
 }
+
+/**
+ * Categories
+ */
+$categories_options = [
+    'lang' => Blog::getLanguageCodeDefault(),
+];
+$categories         = Blog::getCategories($categories_options);
+
+$old_category_id_to_new = [
+    'blog_cat=2' => 22,
+    'blog_cat=3' => 97,
+];
+foreach ($old_category_id_to_new as $query_old => $id_new) {
+    $category_title        = 'Unknown Category';
+    $category_translations = [];
+
+    foreach ($categories as $category) {
+        if ($id_new === $category->getId()) {
+            $category_title        = $category->getName();
+            $category_translations = $category->getTranslations();
+
+            break;
+        }
+    }
+
+    echo \sprintf(
+        '# %s<br>',
+        $category_title
+    );
+
+    foreach ($languages as $language_code) {
+        $category_id = $category_translations[$language_code];
+
+        echo \sprintf(
+            'RewriteCond %%{QUERY_STRING} ^%s&language=(%s)<br>',
+            $query_old,
+            $language_code
+        );
+
+        echo \sprintf(
+            'RewriteRule ^blog\.php$ /blog_listing.php?language=$1&category_id=%d [R=301,L]<br>',
+            $category_id
+        );
+    }
+
+    /** Fallback without language parameter */
+    echo \sprintf(
+        'RewriteCond %%{QUERY_STRING} ^%s<br>',
+        $query_old
+    );
+
+    echo \sprintf(
+        'RewriteRule ^blog\.php$ /blog_listing.php?category_id=%d [R=301,L]<br>',
+        $id_new
+    );
+    /** */
+
+    echo '<br>';
+}
+
+/** Blog home */
+echo 'Redirect 301 "/blog.php" "/blog_new.php"';
+/** */
 
 echo '</pre>';
