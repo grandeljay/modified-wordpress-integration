@@ -33,7 +33,7 @@
 
     margin-bottom: var(--gap);
 }
-@media (min-width: 768px) {
+@media (min-width: 985px) {
     .filter .category_and_search {
         flex-direction: row;
     }
