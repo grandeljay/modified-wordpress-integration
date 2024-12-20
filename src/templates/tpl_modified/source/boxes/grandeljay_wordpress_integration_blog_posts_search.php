@@ -18,7 +18,7 @@ if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
     return;
 }
 
-$html_filter = Blog::getFilterHtml($box_smarty);
+$html_filter = Blog::getFilterHtml($box_smarty, false, true);
 $box_smarty->assign('filter', $html_filter);
 
 $box_blog_posts_search = $box_smarty->fetch(\CURRENT_TEMPLATE . '/boxes/grandeljay_wordpress_integration_blog_posts_search.html');

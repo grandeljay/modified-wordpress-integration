@@ -398,44 +398,48 @@ class Blog
         return $posts_page_links;
     }
 
-    public static function getFilterHtml(\Smarty &$smarty): string
+    public static function getFilterHtml(\Smarty &$smarty, bool $with_categories = true, bool $with_tags = true): string
     {
         /** Filter categories */
-        $categories_options = [
-            /** WordPress */
-            '_fields' => 'name',
-        ];
-        $categories         = Blog::getCategories($categories_options);
-        $categories         = \array_filter(
-            $categories,
-            function (Category $category) {
-                return !$category->isUncategorised();
+        if ($with_categories) {
+            $categories_options = [
+                /** WordPress */
+                '_fields' => 'name',
+            ];
+            $categories         = Blog::getCategories($categories_options);
+            $categories         = \array_filter(
+                $categories,
+                function (Category $category) {
+                    return !$category->isUncategorised();
+                }
+            );
+            $categories_array   = \array_map(
+                function (Category $category) {
+                    return $category->toArray();
+                },
+                $categories
+            );
+
+            $smarty->assign('categories', $categories_array);
+
+            if (!empty($_GET['category_id'])) {
+                $smarty->assign('category_id', $_GET['category_id']);
             }
-        );
-        $categories_array   = \array_map(
-            function (Category $category) {
-                return $category->toArray();
-            },
-            $categories
-        );
-
-        $smarty->assign('categories', $categories_array);
-
-        if (!empty($_GET['category_id'])) {
-            $smarty->assign('category_id', $_GET['category_id']);
         }
 
         /** Filter tags */
-        $tags_options = [];
-        $tags         = Blog::getTags($tags_options);
-        $tags_array   = \array_map(
-            function (Tag $tag) {
-                return $tag->toArray();
-            },
-            $tags
-        );
+        if ($with_tags) {
+            $tags_options = [];
+            $tags         = Blog::getTags($tags_options);
+            $tags_array   = \array_map(
+                function (Tag $tag) {
+                    return $tag->toArray();
+                },
+                $tags
+            );
 
-        $smarty->assign('tags', $tags_array);
+            $smarty->assign('tags', $tags_array);
+        }
 
         /** Get HTML */
         $translations           = Blog::getModuleTranslations();
@@ -471,7 +475,7 @@ class Blog
         $smarty->assign('posts', $posts_array);
 
         /** Filter */
-        $html_filter = self::getFilterHtml($smarty);
+        $html_filter = self::getFilterHtml($smarty, true, true);
         $smarty->assign('filter', $html_filter);
 
         /** HTML */
