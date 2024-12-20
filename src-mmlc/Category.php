@@ -8,11 +8,7 @@ class Category extends Taxonomy
     {
         $fields_defaults = \array_merge(
             parent::getDefaultFields(),
-            [
-                /** WordPress */
-                '_links',
-                '_embedded',
-            ]
+            []
         );
 
         return $fields_defaults;
@@ -25,7 +21,6 @@ class Category extends Taxonomy
             [
                 /** WordPress */
                 '_fields' => self::getDefaultFields(),
-                '_embed'  => true,
                 'page'    => 1,
             ]
         );
