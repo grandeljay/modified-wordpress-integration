@@ -99,7 +99,7 @@ foreach ($old_id_to_new_id as $query_old => $id_new) {
 
     /** Fallback without language parameter */
     echo \sprintf(
-        'RewriteCond %%{QUERY_STRING} ^%s<br>',
+        'RewriteCond %%{QUERY_STRING} ^%s$<br>',
         $query_old
     );
 
@@ -159,7 +159,7 @@ foreach ($old_category_id_to_new as $query_old => $id_new) {
 
     /** Fallback without language parameter */
     echo \sprintf(
-        'RewriteCond %%{QUERY_STRING} ^%s<br>',
+        'RewriteCond %%{QUERY_STRING} ^%s$<br>',
         $query_old
     );
 
