@@ -18,22 +18,7 @@ if (Constants::BLOG_URL_HOME !== $PHP_SELF) {
     return;
 }
 
-$tags = Blog::getTags(
-    [
-        /** WordPress */
-        '_fields' => [
-            /** WordPress */
-            'name',
-
-            /** Polylang */
-            'lang',
-        ],
-
-        /** Polylang */
-        'lang'    => Blog::getLanguageCode(),
-    ]
-);
-$html_filter = Blog::getFilterHtml($box_smarty, $tags);
+$html_filter = Blog::getFilterHtml($box_smarty);
 $box_smarty->assign('filter', $html_filter);
 
 $box_blog_posts_search = $box_smarty->fetch(\CURRENT_TEMPLATE . '/boxes/grandeljay_wordpress_integration_blog_posts_search.html');
