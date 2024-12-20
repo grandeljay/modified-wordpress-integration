@@ -16,6 +16,8 @@ $url_parameters_include = [
 
     'blog_cat',
     'blog_item',
+
+    'search',
 ];
 $url_x_default          = new Url($url_server . $PHP_SELF);
 $url_x_default->addParameters(

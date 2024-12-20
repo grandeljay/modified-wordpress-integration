@@ -4,6 +4,8 @@
  * Performs search engine optimisations.
  *
  * @see /includes/modules/metatags.php
+ * @see /includes/external/grandeljay/wordpress_integration/metatags_alternate.php
+ * @see /includes/external/grandeljay/wordpress_integration/metatags_x_default.php
  */
 
 namespace Grandeljay\WordpressIntegration;
