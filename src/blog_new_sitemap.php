@@ -21,7 +21,7 @@ if (\rth_is_module_disabled(Constants::MODULE_NAME)) {
 }
 
 $options         = [
-    'lang'     => Blog::getLanguageCode(),
+    'lang'     => Blog::getLanguageCodeDefault(),
     'per_page' => 100,
     'page'     => 1,
 
