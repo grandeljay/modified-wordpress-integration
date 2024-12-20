@@ -27,9 +27,6 @@ class Category extends Taxonomy
                 '_fields' => self::getDefaultFields(),
                 '_embed'  => true,
                 'page'    => 1,
-
-                /** Polylang */
-                'lang'    => Blog::getLanguageCode(),
             ]
         );
 

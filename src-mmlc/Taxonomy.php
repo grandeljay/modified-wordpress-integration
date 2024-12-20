@@ -25,6 +25,9 @@ class Taxonomy extends Entity
                 /** WordPress */
                 '_fields'    => self::getDefaultFields(),
                 'hide_empty' => true,
+
+                /** Polylang */
+                'lang'       => Blog::getLanguageCode(),
             ]
         );
 

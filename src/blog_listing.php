@@ -33,36 +33,6 @@ $breadcrumb->add(
     Constants::BLOG_URL_HOME
 );
 
-$categories = [];
-$tags       = [];
-
-if (empty($_GET['post'])) {
-    $categories = Blog::getCategories();
-    $tags       = Blog::getTags(
-        [
-            /** WordPress */
-            '_fields' => [
-                /** WordPress */
-                'name',
-
-                /** Polylang */
-                'lang',
-            ],
-
-            /** Polylang */
-            'lang'    => Blog::getLanguageCode(),
-        ],
-    );
-    $tags_array = \array_map(
-        function (Tag $tag) {
-            return $tag->toArray();
-        },
-        $tags
-    );
-
-    $smarty->assign('tags', $tags_array);
-}
-
 $breadcrumb_title = 'UNKNOWN';
 $breadcrumb_link  = \ENABLE_SSL ? \HTTPS_SERVER : \HTTP_SERVER;
 

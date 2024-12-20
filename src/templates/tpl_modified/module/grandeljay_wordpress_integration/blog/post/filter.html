@@ -8,14 +8,14 @@
             {if $categories}
                 <div class="category">
                     <select name="category_id">
-                        {if $category}
+                        {if $category_id}
                             <option value="">--- {#filter_category#} ---</option>
                         {else}
                             <option value="" selected="selected">--- {#filter_category#} ---</option>
                         {/if}
 
                         {foreach $categories as $category_item}
-                            {if $category && $category.id === $category_item.id}
+                            {if $category_id && $category.id === $category_item.id}
                                 <option value="{$category_item.id}" selected>{$category_item.name}</option>
                             {else}
                                 <option value="{$category_item.id}">{$category_item.name}</option>

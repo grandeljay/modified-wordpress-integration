@@ -398,40 +398,44 @@ class Blog
         return $posts_page_links;
     }
 
-    public static function getFilterHtml(\Smarty &$smarty, array $tags): string
+    public static function getFilterHtml(\Smarty &$smarty): string
     {
-        $filter_tags = \array_map(
+        /** Filter categories */
+        $categories_options = [
+            /** WordPress */
+            '_fields' => 'name',
+        ];
+        $categories         = Blog::getCategories($categories_options);
+        $categories         = \array_filter(
+            $categories,
+            function (Category $category) {
+                return !$category->isUncategorised();
+            }
+        );
+        $categories_array   = \array_map(
+            function (Category $category) {
+                return $category->toArray();
+            },
+            $categories
+        );
+
+        $smarty->assign('categories', $categories_array);
+
+        if (!empty($_GET['category_id'])) {
+            $smarty->assign('category_id', $_GET['category_id']);
+        }
+
+        /** Filter tags */
+        $tags_options = [];
+        $tags         = Blog::getTags($tags_options);
+        $tags_array   = \array_map(
             function (Tag $tag) {
                 return $tag->toArray();
             },
             $tags
         );
 
-        $smarty->assign('filter_tags', $filter_tags);
-
-        /** Filter categories */
-        global $categories, $category;
-
-        if (isset($categories)) {
-            $categories       = \array_filter(
-                $categories,
-                function (Category $category) {
-                    return !$category->isUncategorised();
-                }
-            );
-            $categories_array = \array_map(
-                function (Category $category) {
-                    return $category->toArray();
-                },
-                $categories
-            );
-
-            $smarty->assign('categories', $categories_array);
-        }
-
-        if (!empty($_GET['category_id'])) {
-            $smarty->assign('category', $category->toArray());
-        }
+        $smarty->assign('tags', $tags_array);
 
         /** Get HTML */
         $translations           = Blog::getModuleTranslations();
@@ -450,7 +454,7 @@ class Blog
 
     public static function getListingHtml(array $posts_with_meta, $options): string
     {
-        global $smarty, $tags;
+        global $smarty;
 
         /** Pagination */
         $html_pagination = self::getPaginationHtml($options, $posts_with_meta);
@@ -467,7 +471,7 @@ class Blog
         $smarty->assign('posts', $posts_array);
 
         /** Filter */
-        $html_filter = self::getFilterHtml($smarty, $tags);
+        $html_filter = self::getFilterHtml($smarty);
         $smarty->assign('filter', $html_filter);
 
         /** HTML */
