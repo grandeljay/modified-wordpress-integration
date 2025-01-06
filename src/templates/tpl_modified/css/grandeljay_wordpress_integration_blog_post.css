@@ -250,6 +250,8 @@ p.is-style-h2 {
 figure.wp-block-table,
 figure.wp-block-table > table {
     width: 100%;
+
+    overflow-x: auto;
 }
 
 figure.wp-block-table {
