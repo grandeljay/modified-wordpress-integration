@@ -86,9 +86,15 @@ foreach ($old_id_to_new_id as $query_old => $id_new) {
         $post_id = $post_translations[$language_code];
 
         echo \sprintf(
-            'RewriteCond %%{QUERY_STRING} ^%s&language=(%s)<br>',
+            'RewriteCond %%{QUERY_STRING} ^%s&language=(%s) [OR]<br>',
             $query_old,
             $language_code
+        );
+
+        echo \sprintf(
+            'RewriteCond %%{QUERY_STRING} ^language=(%s)&%s<br>',
+            $language_code,
+            $query_old
         );
 
         echo \sprintf(
@@ -146,9 +152,15 @@ foreach ($old_category_id_to_new as $query_old => $id_new) {
         $category_id = $category_translations[$language_code];
 
         echo \sprintf(
-            'RewriteCond %%{QUERY_STRING} ^%s&language=(%s)<br>',
+            'RewriteCond %%{QUERY_STRING} ^%s&language=(%s) [OR]<br>',
             $query_old,
             $language_code
+        );
+
+        echo \sprintf(
+            'RewriteCond %%{QUERY_STRING} ^language=(%s)&%s<br>',
+            $language_code,
+            $query_old
         );
 
         echo \sprintf(
