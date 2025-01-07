@@ -45,7 +45,7 @@ $sitemap_xml        = <<<XML
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" />
 XML;
 
-$blog_url_home = \htmlentities($sitemap_server . Constants::BLOG_URL_HOME, \ENT_XHTML);
+$blog_url_home = \htmlentities($sitemap_server . Constants::BLOG_URL_HOME, \ENT_QUOTES, 'UTF-8');
 
 $sitemap          = new \SimpleXMLElement($sitemap_xml);
 $sitemap_url_home = $sitemap->addChild('url');
@@ -86,7 +86,7 @@ foreach ($posts as $post) {
     $post_original_date_modified = $post->getDateModified();
 
     $url_post = $sitemap->addChild('url');
-    $url_post->addChild('loc', \htmlentities($post_original_link, \ENT_XHTML));
+    $url_post->addChild('loc', \htmlentities($post_original_link, \ENT_QUOTES, 'UTF-8'));
     $url_post->addChild('lastmod', date('c', $post_original_date_modified));
 
     foreach ($post_original_translations as $post_translation_language_code => $post_translation_id) {
